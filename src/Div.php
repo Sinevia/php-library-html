@@ -65,7 +65,7 @@ class Div extends Element {
         }
         $html = $indent . '<div' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
             } else {
                 $html .= $indent . $tab . $child . $nl;
@@ -99,7 +99,7 @@ class Div extends Element {
         }
         $html = $indent . '<div' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toXhtml($compressed, $level + 1) . $nl;
             } else {
                 $html .= $indent . $tab . $child . $nl;
