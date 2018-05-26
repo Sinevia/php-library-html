@@ -19,10 +19,12 @@
             "src/BorderLayout.php",
             "src/Button.php",
             "src/Div.php",
+            "src/Input.php",
             "src/Header.php",
             "src/Footer.php",
             "src/Heading.php",
             "src/Hyperlink.php",
+            "src/Span.php",
             "src/Textarea.php",
             "src/Webpage.php"
         ]
