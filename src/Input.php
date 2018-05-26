@@ -35,6 +35,22 @@ class Input extends Element {
         $this->setAttribute("placeholder", $text);
         return $this;
     }
+    
+    public function setType($type) {
+        if (is_string($type) == false AND is_numeric($type) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setType($type): Parameter $type MUST BE of type String - ' . (is_object($text) ? get_class($type) : gettype($type)) . ' given!');
+        }
+        $this->setAttribute("type", $type);
+        return $this;
+    }
+
+    public function setValue($text) {
+        if (is_string($text) == false AND is_numeric($text) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setValue($text): Parameter $text MUST BE of type String - ' . (is_object($text) ? get_class($text) : gettype($text)) . ' given!');
+        }
+        $this->setAttribute("value", $text);
+        return $this;
+    }
 
     /**
      * Returns the HTML representation of this widget
