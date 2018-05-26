@@ -26,6 +26,7 @@
             "src/Hyperlink.php",
             "src/Paragraph.php",
             "src/Span.php",
+            "src/Table.php",
             "src/Textarea.php",
             "src/Webpage.php"
         ]
