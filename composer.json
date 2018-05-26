@@ -25,6 +25,7 @@
             "src/Header.php",
             "src/Heading.php",
             "src/Hyperlink.php",
+            "src/Label.php",
             "src/Paragraph.php",
             "src/Span.php",
             "src/Table.php",
