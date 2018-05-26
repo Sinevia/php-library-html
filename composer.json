@@ -16,9 +16,14 @@
     "autoload": {
         "files": [
             "src/Element.php",
+            "src/BorderLayout.php",
             "src/Button.php",
             "src/Div.php",
+            "src/Header.php",
+            "src/Footer.php",
+            "src/Heading.php",
             "src/Hyperlink.php",
+            "src/Textarea.php",
             "src/Webpage.php"
         ]
     }
