@@ -57,7 +57,7 @@ class Textarea extends Element {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
             } else {
-                $html .= $indent . $tab . $child . $nl;
+                $html .= $child;
             }
         }
         $html .= $indent . '</textarea>';
