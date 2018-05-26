@@ -19,7 +19,10 @@ namespace Sinevia\Html;
 // CLASS: Input                                                           //
 //===========================================================================//
 class Input extends Element {
-
+    const TYPE_FILE = 'file';
+    const TYPE_HIDDEN = 'hidden';
+    const TYPE_TEXT = 'text';
+    
     /**
      * The constructor of this LightPanel.
      * @construct
