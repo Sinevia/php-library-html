@@ -19,10 +19,11 @@ namespace Sinevia\Html;
 // CLASS: Input                                                           //
 //===========================================================================//
 class Input extends Element {
+
     const TYPE_FILE = 'file';
     const TYPE_HIDDEN = 'hidden';
     const TYPE_TEXT = 'text';
-    
+
     /**
      * The constructor of this LightPanel.
      * @construct
@@ -31,14 +32,6 @@ class Input extends Element {
         parent::__construct();
     }
 
-    public function setPlaceHolder($text) {
-        if (is_string($text) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setPlaceHolder($text): Parameter $text MUST BE of type String - ' . (is_object($text) ? get_class($text) : gettype($text)) . ' given!');
-        }
-        $this->setAttribute("placeholder", $text);
-        return $this;
-    }
-    
     public function setType($type) {
         if (is_string($type) == false AND is_numeric($type) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setType($type): Parameter $type MUST BE of type String - ' . (is_object($text) ? get_class($type) : gettype($type)) . ' given!');
@@ -48,10 +41,18 @@ class Input extends Element {
     }
 
     public function setValue($text) {
-        if (is_string($text) == false AND is_numeric($text) == false) {
+        if (is_string($text) == false AND is_numeric($text) == false AND is_null($text) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setValue($text): Parameter $text MUST BE of type String - ' . (is_object($text) ? get_class($text) : gettype($text)) . ' given!');
         }
         $this->setAttribute("value", $text);
+        return $this;
+    }
+
+    public function setPlaceHolder($text) {
+        if (is_string($text) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setPlaceHolder($text): Parameter $text MUST BE of type String - ' . (is_object($text) ? get_class($text) : gettype($text)) . ' given!');
+        }
+        $this->setAttribute("placeholder", $text);
         return $this;
     }
 
