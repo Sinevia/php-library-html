@@ -1,7 +1,5 @@
 <?php
 
-
-<?php
 // ========================================================================= //
 // SINEVIA PUBLIC                                        http://sinevia.com  //
 // ------------------------------------------------------------------------- //
@@ -14,6 +12,7 @@
 // Dissemination or reproduction of this information is strictly forbidden   //
 // unless prior written permission is obtained from Sinevia Ltd per domain.  //
 //===========================================================================//
+
 namespace Sinevia\Html;
 
 /**
@@ -22,16 +21,17 @@ namespace Sinevia\Html;
 * It is suitable, if we want to add several widgets to a parent widget, without
 * being wrapped in extra code. It will accept no style, attribute, etc.
 * configurations. If you need to access the parent widget from children, use the
-* S_Containers parent widget.
+* Containers parent widget.
+
 * <code>
 * // Creating a new instance of Container
-* $container = new S_Container();
+* $container = new Container();
 *     $container->child(s_label()->text("One")->foreground("red"));
 *     $container->child(s_label()->text("Two")->foreground("green"));
 *     $container->child(s_label()->text("Three")->foreground("blue"));
 *
 * // Using the shortcut function
-* $container = s_container()
+* $container = (new Container())
 *     ->child(s_label()->text("One")->foreground("red"));
 *     ->child(s_label()->text("Two")->foreground("green"));
 *     ->child(s_label()->text("Three")->foreground("blue"));
@@ -52,7 +52,7 @@ class Container extends Element{
         if($compressed==false){$nl = "\n";$tab="    ";$indent=str_pad("",($level*4));}else{$nl="";$tab="";$indent="";}
         $html="";
 		foreach($this->children as $child){
-	        if(is_object($child) && is_subclass_of($child,"S_Widget")){
+	        if(is_object($child) && is_subclass_of($child,"Sinevia\Html\Element")){
 		        $html .= $child->to_xhtml($compressed,$level).$nl;
 		    }else{
 			    $html .= $indent.$tab.$child.$nl;
@@ -77,7 +77,7 @@ class Container extends Element{
         if($compressed==false){$nl = "\n";$tab="    ";$indent=str_pad("",($level*4));}else{$nl="";$tab="";$indent="";}
         $xhtml="";
 		foreach($this->children as $child){
-	        if(is_object($child) && is_subclass_of($child,"S_Widget")){
+	        if(is_object($child) && is_subclass_of($child,"Sinevia\Html\Element")){
 		        $xhtml .= $child->to_xhtml($compressed,$level).$nl;
 		    }else{
 			    $xhtml .= $indent.$tab.$child.$nl;
