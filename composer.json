@@ -18,6 +18,7 @@
             "src/Element.php",
             "src/BorderLayout.php",
             "src/Button.php",
+            "src/Container.php",
             "src/Div.php",
             "src/Footer.php",
             "src/Form.php",
