@@ -52,7 +52,7 @@ class Textarea extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<textarea' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
+        $html = $indent . '<textarea' . $this->attributesToHtml() . $this->cssToHtml() . '>';
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
@@ -60,7 +60,7 @@ class Textarea extends Element {
                 $html .= $child;
             }
         }
-        $html .= $indent . '</textarea>';
+        $html .= '</textarea>';
         return $html;
     }
 
@@ -86,7 +86,7 @@ class Textarea extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<textarea' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
+        $html = $indent . '<textarea' . $this->attributesToHtml() . $this->cssToHtml() . '>';
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toXhtml($compressed, $level + 1) . $nl;
@@ -94,7 +94,7 @@ class Textarea extends Element {
                 $html .= $child;
             }
         }
-        $html .= $indent . '</textarea>';
+        $html .= '</textarea>';
         return $html;
     }
 
