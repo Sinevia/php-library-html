@@ -160,7 +160,7 @@ class Element {
     }
 
     function getClass() {
-        return $this->attributes("class");
+        return $this->attributes["class"];
     }
 
     function setClass($classname = null) {
