@@ -35,6 +35,9 @@ namespace Sinevia\Html;
  */
 class UnorderedList extends Element {
 
+    //========================= START OF METHOD ===========================//
+    //  CONSTRUCTOR: __construct                                           //
+    //=====================================================================//
     /**
      * The constructor of UnorderedList
      * @construct
@@ -43,7 +46,13 @@ class UnorderedList extends Element {
         parent::__construct();
         //$this->style("padding-left","30px");
     }
-	
+
+    //=====================================================================//
+    //  CONSTRUCTOR: __construct                                           //
+    //========================== END OF METHOD ============================//
+    //========================= START OF METHOD ===========================//
+    //  METHOD: child                                                      //
+    //=====================================================================//
     /** Adds a list item to this UnorderedList.
      * @param mixed the list item (String as S_Widget)
      * @param S_UnorderedList sublist to this list item
@@ -68,6 +77,12 @@ class UnorderedList extends Element {
         $this->children[$id] = $child;
     }
 
+    //=====================================================================//
+    //  METHOD: __child                                               //
+    //========================== END OF METHOD ============================//
+    //========================= START OF METHOD ===========================//
+    //  METHOD: to_html                                                   //
+    //=====================================================================//
     /**
      * Returns the HTML representation of this UnorderedList with its children.
      * @param compressed compresses the HTML, removing the new lines and indent
@@ -84,23 +99,18 @@ class UnorderedList extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<ul';
-        if (count($this->attribute) > 0) {
-            $html .= $this->attributes_to_html();
-        } if (count($this->style) > 0) {
-            $html .= ' ' . $this->styles_to_html();
-        } $html .= '>' . $nl;
+        $html = $indent . '<ul' . $this->attributesToHtml() . '>' . $nl;
         for ($i = 0; $i < count($this->children); $i++) {
-            if (is_object($this->children[$i]) && is_subclass_of($this->children[$i], "Sinevia\Html\Elements")) {
+            if (is_object($this->children[$i]) && is_subclass_of($this->children[$i], "Sinevia\Html\Element")) {
                 $html .= $indent . $tab . '<li>' . $nl . $this->children[$i]->toHtml($compressed, $level + 2) . $nl;
                 if (isset($this->sublist[$i])) {
-                    $html .= $this->sublist[$i]->to_xhtml($compressed, $level + 3) . $nl;
+                    $html .= $this->sublist[$i]->toHtml($compressed, $level + 3) . $nl;
                 }
                 $html .= $indent . $tab . '</li>' . $nl;
             } else {
                 if (isset($this->sublist[$i])) {
                     $html .= $indent . $tab . '<li>' . $this->children[$i] . $nl;
-                    $html .= $this->sublist[$i]->to_xhtml($compressed, $level + 3) . $nl;
+                    $html .= $this->sublist[$i]->toHtml($compressed, $level + 3) . $nl;
                     $html .= $indent . $tab . '</li>' . $nl;
                 } else {
                     $html .= $indent . $tab . '<li>' . $this->children[$i] . '</li>' . $nl;
@@ -110,7 +120,13 @@ class UnorderedList extends Element {
         $html .= $indent . '</ul>';
         return $html;
     }
-	
+
+    //=====================================================================//
+    //  METHOD: toHtml                                                   //
+    //========================== END OF METHOD ============================//
+    //========================= START OF METHOD ===========================//
+    //  METHOD: toXhtml                                                   //
+    //=====================================================================//
     /**
      * Returns the XHTML representation of this UnorderedList with its children.
      * @param compressed compresses the XHTML, removing the new lines and indent
@@ -137,13 +153,13 @@ class UnorderedList extends Element {
             if (is_object($this->children[$i]) && is_subclass_of($this->children[$i], "Sinevia\Html\Element")) {
                 $html .= $indent . $tab . '<li>' . $nl . $this->children[$i]->toXhtml($compressed, $level + 2) . $nl;
                 if (isset($this->sublist[$i])) {
-                    $html .= $this->sublist[$i]->to_xhtml($compressed, $level + 3) . $nl;
+                    $html .= $this->sublist[$i]->toXhtml($compressed, $level + 3) . $nl;
                 }
                 $html .= $indent . $tab . '</li>' . $nl;
             } else {
                 if (isset($this->sublist[$i])) {
                     $html .= $indent . $tab . '<li>' . $this->children[$i] . $nl;
-                    $html .= $this->sublist[$i]->to_xhtml($compressed, $level + 3) . $nl;
+                    $html .= $this->sublist[$i]->toXhtml($compressed, $level + 3) . $nl;
                     $html .= $indent . $tab . '</li>' . $nl;
                 } else {
                     $html .= $indent . $tab . '<li>' . $this->children[$i] . '</li>' . $nl;
@@ -154,4 +170,7 @@ class UnorderedList extends Element {
         return $html;
     }
 
+    //=====================================================================//
+    //  METHOD: toXhtml                                                   //
+    //========================== END OF METHOD ============================//
 }
