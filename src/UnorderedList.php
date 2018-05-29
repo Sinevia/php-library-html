@@ -1,12 +1,23 @@
 <?php
-/**
- * @package GUI
- */
+// ========================================================================= //
+// SINEVIA PUBLIC                                        http://sinevia.com  //
+// ------------------------------------------------------------------------- //
+// COPYRIGHT (c) 2018 Sinevia Ltd                        All rights resrved! //
+// ------------------------------------------------------------------------- //
+// LICENCE: All information contained herein is, and remains, property of    //
+// Sinevia Ltd at all times.  Any intellectual and technical concepts        //
+// are proprietary to Sinevia Ltd and may be covered by existing patents,    //
+// patents in process, and are protected by trade secret or copyright law.   //
+// Dissemination or reproduction of this information is strictly forbidden   //
+// unless prior written permission is obtained from Sinevia Ltd per domain.  //
+//===========================================================================//
+namespace Sinevia\Html;
+
     /**
      * Creates an HTML unordered list.
      * <code>
      * // Creating a new instance of UnorderedList
-     * $ul = new S_UnorderedList();
+     * $ul = new UnorderedList();
      *     $ul->background("yellow");
      *     for($i=0;$i<100;$i++){
 	 *         $ul->item($i." years");
@@ -14,14 +25,12 @@
      * </code>
      * @package GUI
      * // The same as above using the shortcut function and method chaining
-     * $ul = s_unordered_list()->background("yellow");
+     * $ul = (new UnorderedList)->background("yellow");
      *     for($i=0;$i<100;$i++){
 	 *         $ul->item($i." years");
      *     }
      * </code>
-     * @package GUI
      */
-
 class UnorderedList extends Element{
 	//========================= START OF METHOD ===========================//
     //  CONSTRUCTOR: __construct                                           //
