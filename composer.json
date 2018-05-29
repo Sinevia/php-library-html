@@ -32,6 +32,9 @@
             "src/Table.php",
             "src/Textarea.php",
             "src/Webpage.php"
-        ]
+        ],
+        "psr-4": {
+            "Sinevia\\Html\\": "src"
+        }
     }
 }
