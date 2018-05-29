@@ -20,12 +20,14 @@ namespace Sinevia\Html;
 //===========================================================================//
 /**
  * The Span class can display either text, an image, or both.
+ * The [span] tag is used to group inline-elements in a document.
+ * The [span] tag provides no visual change by itself.
  * <code>
  * $label = new Span();
  *     $label->addChild("LABEL 1");
  *     
  * // Using the shortcut function
- * $label = Ui::Span()->addChild"LABEL 1");
+ * $label = (new Span)->addChild("LABEL 1");
  * </code>
  */
 class Span extends Element {
