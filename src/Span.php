@@ -15,9 +15,6 @@
 
 namespace Sinevia\Html;
 
-//============================= START OF CLASS ==============================//
-// CLASS: Span                                                            //
-//===========================================================================//
 /**
  * The Span class can display either text, an image, or both.
  * The [span] tag is used to group inline-elements in a document.
@@ -61,7 +58,7 @@ class Span extends Element {
         }
         $html = $indent . '<span' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
             } else {
                 if ($child == '')
@@ -94,7 +91,7 @@ class Span extends Element {
         }
         $html = $indent . '<span' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toXhtml($compressed, $level + 1) . $nl;
             } else {
                 if ($child == '')
@@ -107,7 +104,3 @@ class Span extends Element {
     }
 
 }
-
-//===========================================================================//
-// CLASS: Span                                                               //
-//============================== END OF CLASS ===============================//
