@@ -40,7 +40,6 @@ class Element {
      * The constructor of Element
      * @construct
      */
-
     function __construct() {
         $this->uid = uniqid(); // Setting auto unique id
     }
@@ -95,37 +94,21 @@ class Element {
         }
         return $this;
     }
-
-//=====================================================================//
-//  METHOD: addChild                                                   //
-//========================== END OF METHOD ============================//
-//========================= START OF METHOD ===========================//
-//  METHOD: hasChildren                                               //
-//=====================================================================//
+    
     /** Returns, whether the Element has children
      * @access public
      */
     function hasChildren() {
         return count($this->children) ? true : false;
     }
-
-//=====================================================================//
-//  METHOD: hasChildren                                               //
-//========================== END OF METHOD ============================//
-//========================= START OF METHOD ===========================//
-//  METHOD: getChildren                                                //
-//=====================================================================//
+    
     /** Returns the children of this Element.
      * @access public
      */
     function getChildren() {
         return $this->children;
     }
-
-//=====================================================================//
-//  METHOD: getChildren                                                //
-//========================== END OF METHOD ============================//
-
+    
     /**
      * Traverses and returns the children with all sub children
      * @return Element[]
@@ -140,20 +123,11 @@ class Element {
         }
         return $children;
     }
-
-//========================= START OF METHOD ===========================//
-//  METHOD: equals                                                     //
-//=====================================================================//
+    
     function equals($object) {
         return ($this === $object);
     }
-
-//=====================================================================//
-//  METHOD: equals                                                     //
-//========================== END OF METHOD ============================//
-//========================= START OF METHOD ===========================//
-//  METHOD: getAttribute                                               //
-//=====================================================================//
+    
     /**
      * Returns an attribute value from given attribute name
      * <code>
@@ -230,10 +204,7 @@ class Element {
         $this->js_files[] = $js_file;
         return $this;
     }
-
-//========================= START OF METHOD ===========================//
-//  METHOD: getId                                                      //
-//=====================================================================//
+    
     /**
      * Returns the id of this object
      * @return string the id of the object
@@ -296,23 +267,20 @@ class Element {
         if (is_string($attribute) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $attribute MUST BE of type String. ' . (is_object($attribute) ? get_class($attribute) : gettype($attribute)) . ' given!');
         }
+        
         if (is_string($value) == false && is_null($value) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $value MUST BE of type String. ' . (is_object($value) ? get_class($value) : gettype($value)) . ' given!');
         }
-// Updating the ID in the global dataspace
+        
+        // Updating the ID in the global dataspace
         if (strtolower($attribute) == "id") {
-            $this->set_id($value);
+            $this->setId($value);
         }
+        
         $this->attributes[$attribute] = $value;
         return $this;
     }
-
-//=====================================================================//
-//  METHOD: setAttribute                                              //
-//========================== END OF METHOD ============================//
-//========================= START OF METHOD ===========================//
-//  METHOD: setCss                                                    //
-//=====================================================================//
+    
     /** Sets and css name value pair to this object
      * <code>
      *     $button->setCss("color","red");
@@ -333,10 +301,6 @@ class Element {
         $this->css[$name] = $value;
         return $this;
     }
-
-//=====================================================================//
-//  METHOD: setCss                                                     //
-//========================== END OF METHOD ============================//
 
     /** Sets the id of this object
      * @return Element or an instance of this Element
@@ -489,7 +453,6 @@ class Element {
     }
 
 }
-
 //===========================================================================//
 // CLASS: Element                                                            //
 //============================== END OF CLASS ===============================//
