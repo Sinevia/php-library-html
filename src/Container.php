@@ -26,23 +26,19 @@ namespace Sinevia\Html;
  * <code>
  * // Creating a new instance of Container
  * $container = new Container();
- *     $container->child(s_label()->text("One")->foreground("red"));
- *     $container->child(s_label()->text("Two")->foreground("green"));
- *     $container->child(s_label()->text("Three")->foreground("blue"));
+ *     $container->addChild((new Span)->setText("One")->setForeground("red"));
+ *     $container->addChild((new Span)->setText("Two")->setForeground("green"));
+ *     $container->addChild((new Span)->setText("Three")->setForeground("blue"));
  *
  * // Using the shortcut function
  * $container = (new Container())
- *     ->child(s_label()->text("One")->foreground("red"));
- *     ->child(s_label()->text("Two")->foreground("green"));
- *     ->child(s_label()->text("Three")->foreground("blue"));
+ *     ->addChild((new Span)->setText("One")->setForeground("red"));
+ *     ->addChild((new Span)->setText("Two")->setForeground("green"));
+ *     ->addChild((new Span)->setText("Three")->setForeground("blue"));
  * </code>
- * @package GUI
  */
 class Container extends Element {
-
-    //========================= START OF METHOD ===========================//
-    //  METHOD: toHtml                                                    //
-    //=====================================================================//
+    
     /**
      * Returns the HTML representation of this Panel with its children.
      * @param compressed compresses the HTML, removing the new lines and indent
@@ -62,20 +58,14 @@ class Container extends Element {
         $html = "";
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
-                $html .= $child->to_xhtml($compressed, $level) . $nl;
+                $html .= $child->toHtml($compressed, $level) . $nl;
             } else {
                 $html .= $indent . $tab . $child . $nl;
             }
         }
         return $html;
     }
-
-    //=====================================================================//
-    //  METHOD: toHtml                                                    //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: toXhtml                                                   //
-    //=====================================================================//
+    
     /**
      * Returns the XHTML representation of the children of this Container.
      * @param compressed compresses the XHTML, removing the new lines and indent
@@ -95,15 +85,11 @@ class Container extends Element {
         $xhtml = "";
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
-                $xhtml .= $child->to_xhtml($compressed, $level) . $nl;
+                $xhtml .= $child->toZhtml($compressed, $level) . $nl;
             } else {
                 $xhtml .= $indent . $tab . $child . $nl;
             }
         }
         return $xhtml;
     }
-
-    //=====================================================================//
-    //  METHOD: toXhtml                                                   //
-    //========================== END OF METHOD ============================//
 }
