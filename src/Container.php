@@ -85,7 +85,7 @@ class Container extends Element {
         $xhtml = "";
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
-                $xhtml .= $child->toZhtml($compressed, $level) . $nl;
+                $xhtml .= $child->toXhtml($compressed, $level) . $nl;
             } else {
                 $xhtml .= $indent . $tab . $child . $nl;
             }
