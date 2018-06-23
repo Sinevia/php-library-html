@@ -258,13 +258,7 @@ class BorderLayout extends Element {
             $this->addChild("&nbsp;", "center");
         }
 
-        $html = $indent . '<table';
-
-        if (count($this->attributes) > 0) {
-            $html .= $this->attributesToHtml();
-        } if (count($this->css) > 0) {
-            $html .= ' ' . $this->cssToHtml;
-        } $html .= '>' . $nl;
+        $html = $indent . '<table' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
 
         // TOP CONTAINER
         if (isset($this->containers['top']) == true) {
@@ -394,7 +388,6 @@ class BorderLayout extends Element {
     //=====================================================================//
     //  METHOD: toHtml                                                    //
     //========================== END OF METHOD ============================//
-    
     //========================= START OF METHOD ===========================//
     //  METHOD: toXhtml                                                   //
     //=====================================================================//
@@ -422,7 +415,7 @@ class BorderLayout extends Element {
         } if (count($this->css) > 0) {
             $html .= ' ' . $this->cssToHtml();
         } $html .= '>' . $nl;
-        
+
         // TOP CONTAINER
         if (isset($this->containers['top']) == true) {
             $container = $this->containers['top'];
@@ -571,6 +564,7 @@ class BorderLayout extends Element {
     //  METHOD: toXhtml                                                   //
     //========================== END OF METHOD ============================//
 }
+
 //===========================================================================//
 // CLASS: BorderLayout                                                     //
 //============================== END OF CLASS ===============================//
