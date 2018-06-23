@@ -60,6 +60,8 @@ class Element {
      * @access private
      */
     protected function attributesToHtml() {
+        $this->attributes['id'] = $this->id;
+
         if (count($this->attributes) < 1) {
             return '';
         }
@@ -67,8 +69,9 @@ class Element {
         ksort($this->attributes);
         $attributes = array();
         foreach ($this->attributes as $name => $value) {
-            if ($value != "" || $value != null)
+            if ($value != "" || $value != null) {
                 $attributes[] = $name . '="' . addcslashes($value, '"') . '"';
+            }
         }
         return " " . implode(" ", $attributes);
     }
