@@ -85,7 +85,7 @@ class FlowLayout extends Element {
      * @return Widget the container containing this child
      * @return void
      */
-    function child($widget, $position = null, $halign = "center", $valign = "middle") {
+    function addChild($widget, $position = null, $halign = "center", $valign = "middle") {
         //echo "In FlowLayout adding:".$widget."<br/>";
         //if(is_subclass_of($widget,"Widget"))echo "In add_child start CHILD UID: ".$widget->uid."PARENT UID: ".$this->uid."<br />";
         if ($position != null && is_int($position) == false)
@@ -177,15 +177,17 @@ class FlowLayout extends Element {
             $tab = "";
             $indent = "";
         }
-        if (count($this->containers) == 0) {
-            $this->child((new Span())->addChild("&nbsp;"));
-        }
         
-        $html = $indent . '<table' . $this->attributesToHtml() . '>' . $nl;
+        var_dump(count($this->containers));
+        if (count($this->containers) == 0) {
+            $this->addChild((new Span())->addChild("&nbsp;"));
+        }
+        var_dump(count($this->containers));
+        $html = $indent . '<table' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         if ($this->getProperty("flow") == "vertical") {
             foreach ($this->containers as $container) {
                 $html .= $indent . $tab . '<tr>' . $nl;
-                $html .= $indent . $tab . $tab . '<td' . $container->attributesToHtml() . '>' . $nl;
+                $html .= $indent . $tab . $tab . '<td' . $container->attributesToHtml() . $container->cssToHtml() . '>' . $nl;
                 if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                     $html .= $container->widget->toHtml($compressed, ($level + 3)) . $nl;
                 } else {
@@ -201,7 +203,7 @@ class FlowLayout extends Element {
         } else {
             $html .= $indent . $tab . '<tr>' . $nl;
             foreach ($this->containers as $container) {
-                $html .= $indent . $tab . $tab . '<td' . $container->attributesToHtml() . '>' . $nl;
+                $html .= $indent . $tab . $tab . '<td' . $container->attributesToHtml() . $container->cssToHtml() . '>' . $nl;
                 if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                     $html .= $container->widget->toHtml($compressed, ($level + 3)) . $nl;
                 } else {
@@ -236,9 +238,9 @@ class FlowLayout extends Element {
             $indent = "";
         }
         if (count($this->containers) == 0) {
-            $this->child(s_label()->text("&nbsp;"));
+            $this->addChild((new Span)->addChild("&nbsp;"));
         }
-        
+
         $html = $indent . '<table' . $this->attributesToHtml() . '>' . $nl;
         if ($this->getProperty("flow") == "vertical") {
             foreach ($this->containers as $container) {
