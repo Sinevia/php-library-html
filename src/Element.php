@@ -607,8 +607,9 @@ class Element {
         ksort($this->css);
         $styles = array();
         foreach ($this->css as $name => $value) {
-            if ($value != "" || $value != null)
+            if ($value != "" || $value != null) {
                 $styles[] = $name . ':' . $value;
+            }
         }
         return ' style="' . addcslashes(implode(";", $styles), '"') . '"'; // Don't remove beginning white space
     }
