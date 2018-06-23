@@ -379,7 +379,7 @@ class Webpage extends Element {
         /* External CSS Files */
         $inline_css_and_scripts .= $this->_get_css_files($tab, $nl);
         /* Inline CSS Styles */
-        $inline_css_and_scripts .= $this->_get_css($tab, $nl);
+        //$inline_css_and_scripts .= $this->_get_css($tab, $nl);
         /* External JavaScript Files */
         $inline_css_and_scripts .= $this->_get_js_files($tab, $nl);
         /* Inline JavaScript Scripts */
@@ -457,7 +457,7 @@ class Webpage extends Element {
         /* External CSS Files */
         $inline_css_and_scripts .= $this->_get_css_files($tab, $nl);
         /* Inline CSS Styles */
-        $inline_css_and_scripts .= $this->_get_css($tab, $nl);
+        //$inline_css_and_scripts .= $this->_get_css($tab, $nl);
         /* External JavaScript Files */
         $inline_css_and_scripts .= $this->_get_js_files($tab, $nl);
         /* Inline JavaScript Scripts */
@@ -469,14 +469,14 @@ class Webpage extends Element {
 
     private function _get_css($tab = "", $nl = "") {
         $inline_css_and_scripts = "";
-        foreach ($this->css as $css) {
-            $inline_css_and_scripts .= $tab . '<style type="text/css">' . $css . '</style>' . $nl;
+        foreach ($this->css as $cssProperty => $cssValue) {
+            $inline_css_and_scripts .= $tab . '<style type="text/css">' . $cssProperty . ':' . $cssValue . ';</style>' . $nl;
         }
         $children = $this->childrenTraverse();
         foreach ($children as $child) {
             if ($child instanceof Element) {
-                foreach ($child->css as $css) {
-                    $inline_css_and_scripts .= $tab . '<style type="text/css">' . $css . '</style>' . $nl;
+                foreach ($child->css as $cssProperty => $cssValue) {
+                    $inline_css_and_scripts .= $tab . '<style type="text/css">' . $cssProperty . ':' . $cssValue . ';</style>' . $nl;
                 }
             }
         }
@@ -533,6 +533,11 @@ class Webpage extends Element {
         }
         $js_files = array_unique($js_files);
         foreach ($js_files as $js) {
+            // If Local GZIP compress!
+            if (stripos($js, s::rurl()) !== false) {
+                $js = s::url_to_path($js);
+                $js = s::surl() . "/includes/phpc.php?f=" . base64_encode($js);
+            }
             $inline_css_and_scripts .= $tab . '<script src="' . $js . '" type="text/javascript"></script>' . $nl;
         }
         return $inline_css_and_scripts;
