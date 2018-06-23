@@ -178,7 +178,7 @@ class FlowLayout extends Element {
             $indent = "";
         }
         if (count($this->containers) == 0) {
-            $this->child(s_label()->text("&nbsp;"));
+            $this->child((new Span())->addChild("&nbsp;"));
         }
         
         $html = $indent . '<table' . $this->attributesToHtml() . '>' . $nl;
