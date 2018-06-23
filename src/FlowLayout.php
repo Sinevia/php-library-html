@@ -178,11 +178,10 @@ class FlowLayout extends Element {
             $indent = "";
         }
         
-        var_dump(count($this->containers));
         if (count($this->containers) == 0) {
             $this->addChild((new Span())->addChild("&nbsp;"));
         }
-        var_dump(count($this->containers));
+        
         $html = $indent . '<table' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         if ($this->getProperty("flow") == "vertical") {
             foreach ($this->containers as $container) {
