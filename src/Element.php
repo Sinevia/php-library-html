@@ -192,7 +192,8 @@ class Element {
         $this->setCss('border', $width . 'px ' . $style . ' ' . $color);
         return $this;
     }
-/**
+
+    /**
      * Retrieves the border of this widget.
      * The border is specified by its width, style and color.
      * <code>
@@ -416,6 +417,37 @@ class Element {
         return $this;
     }
 
+    /** Retrieves the padding of this Widget.
+     * @return string The padding as String (null, if not set)
+     * @access public
+     */
+    function getPadding() {
+        return $this->getCss('padding');
+    }
+    
+    /** Sets the padding of this Widget.
+     * @param int padding from the top of the widget
+     * @param int padding from the left of the widget
+     * @param int padding from the bottom of the widget
+     * @param int padding from the right the widget
+     * @return mixed An instance of this Widget
+     * @throws IllegalArgumentException if parameter $top,$left,$bottom or $right is not Integer
+     * @access public
+     */
+    function setPadding($top = 0, $left = 0, $bottom = 0, $right = 0) {
+        if (is_int($top) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$top</b> MUST BE of type Integer - <b style="color:red">' . (is_object($top) ? get_class($top) : gettype($top)) . '</b> given!');
+        if (is_int($left) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$left</b> MUST BE of type Integer - <b style="color:red">' . (is_object($left) ? get_class($left) : gettype($left)) . '</b> given!');
+        if (is_int($bottom) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$bottom</b> MUST BE of type Integer - <b style="color:red">' . (is_object($bottom) ? get_class($bottom) : gettype($bottom)) . '</b> given!');
+        if (is_int($right) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$right</b> MUST BE of type Integer - <b style="color:red">' . (is_object($right) ? get_class($right) : gettype($right)) . '</b> given!');
+        $this->style('padding', $top . 'px ' . $left . 'px ' . $bottom . 'px ' . $right . 'px;');
+        return $this;
+    }
+    
+
     /**
      * Sets a property name-value pair to this Element
      * Properties represent private data available to the Element
@@ -437,6 +469,84 @@ class Element {
     function getHeight() {
         return $this->getAttribute('height');
     }
+
+    //========================= START OF METHOD ===========================//
+    //  METHOD: font                                                       //
+    //=====================================================================//
+    /** Sets or retrieves the Font of this Widget.
+     * <code>
+     * $font = s_font()->size(16)->bold(true);
+     * $textfield = s_textfield()->font($font);
+     * </code>
+     * @param S_Font the font of this Widget
+     * @return mixed The Font as Font (null, if not set) or an instance of this Widget
+     * @access public
+     */
+    function getFont($font = null) {
+        return $this->property('font');
+    }
+
+    //=====================================================================//
+    //  METHOD: font                                                       //
+    //========================== END OF METHOD ============================//
+    //========================= START OF METHOD ===========================//
+    //  METHOD: font                                                       //
+    //=====================================================================//
+    /** Sets or retrieves the Font of this Widget.
+     * <code>
+     * $font = s_font()->size(16)->bold(true);
+     * $textfield = s_textfield()->font($font);
+     * </code>
+     * @param S_Font the font of this Widget
+     * @return mixed The Font as Font (null, if not set) or an instance of this Widget
+     * @access public
+     */
+    function setFont($font = null) {
+        if (($font instanceof Font) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>font($font)</b>: Parameter <b>$fonte</b> MUST BE of type S_Font - <b style="color:red">' . (is_object($font) ? get_class($font) : gettype($font)) . '</b> given!');
+        }
+        if (!is_null($font->family())) {
+            $this->setCss('font-family', $font->family());
+        }
+        if (!is_null($font->color())) {
+            $this->setCss('color', $font->color());
+        }
+        if (!is_null($font->size())) {
+            $this->setCss('font-size', $font->size() . "px");
+        }
+        if (!is_null($font->bold())) {
+            if ($font->bold() == true) {
+                $this->setCss('font-weight', 'bold');
+            } else {
+                $this->setCss('font-weight', 'normal');
+            }
+        }
+        if (!is_null($font->italic())) {
+            if ($font->italic() == true) {
+                $this->setCss('font-style', 'italic');
+            } else {
+                $this->setCss('font-style', 'normal');
+            }
+        }
+        if (!is_null($font->underline())) {
+            if ($font->underline() == true) {
+                $this->setCss('text-decoration', 'underline');
+            } else {
+                $this->setCss('text-decoration', 'none');
+            }
+        }
+        if (!is_null($font->spacing())) {
+            $this->setCss('letter-spacing', $font->spacing() . 'px');
+        }
+
+        $this->setProperty('font', $font);
+
+        return $this;
+    }
+
+    //=====================================================================//
+    //  METHOD: font                                                       //
+    //========================== END OF METHOD ============================//
 
     function setHeight($value) {
         $this->setAttribute('height', (string) $value);
