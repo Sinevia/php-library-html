@@ -534,10 +534,10 @@ class Webpage extends Element {
         $js_files = array_unique($js_files);
         foreach ($js_files as $js) {
             // If Local GZIP compress!
-            if (stripos($js, s::rurl()) !== false) {
-                $js = s::url_to_path($js);
-                $js = s::surl() . "/includes/phpc.php?f=" . base64_encode($js);
-            }
+            //if (stripos($js, s::rurl()) !== false) {
+            //    $js = s::url_to_path($js);
+            //    $js = s::surl() . "/includes/phpc.php?f=" . base64_encode($js);
+            //}
             $inline_css_and_scripts .= $tab . '<script src="' . $js . '" type="text/javascript"></script>' . $nl;
         }
         return $inline_css_and_scripts;
