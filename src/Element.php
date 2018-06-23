@@ -40,6 +40,7 @@ class Element {
      * The constructor of Element
      * @construct
      */
+
     function __construct() {
         $this->uid = uniqid(); // Setting auto unique id
     }
@@ -94,21 +95,21 @@ class Element {
         }
         return $this;
     }
-    
+
     /** Returns, whether the Element has children
      * @access public
      */
     function hasChildren() {
         return count($this->children) ? true : false;
     }
-    
+
     /** Returns the children of this Element.
      * @access public
      */
     function getChildren() {
         return $this->children;
     }
-    
+
     /**
      * Traverses and returns the children with all sub children
      * @return Element[]
@@ -123,11 +124,11 @@ class Element {
         }
         return $children;
     }
-    
+
     function equals($object) {
         return ($this === $object);
     }
-    
+
     /**
      * Returns an attribute value from given attribute name
      * <code>
@@ -161,6 +162,50 @@ class Element {
 
     function getClass() {
         return $this->attributes["class"];
+    }
+
+    /**
+     * Sets the border of this widget.
+     * The border is specified by its width, style and color.
+     * <code>
+     * // Setting border to a textfield
+     * $textfield = (new Textfield)->setBorder(3,"outset","blue");
+     * // Getting the border of a textfield
+     * echo $textfield->getBorder(); // will print "3px outset blue"
+     * </code>
+     * @param numeric The width of the border (numeric - Integer or String)
+     * @param String The style of the border (solid, outset, inset, dashed, etc.)
+     * @param String the color of the border (i.e "red","#FFFFFF")
+     * @return mixed an instance of this Widget
+     * @access public
+     */
+    function setBorder($width = null, $style = "solid", $color = "black") {
+        if (is_numeric($width) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>border($width,$style,$color)</b>: Parameter <b>$width</b> MUST BE of type String - <b style="color:red">' . (is_object($width) ? get_class($width) : gettype($width)) . '</b> given!');
+        }
+        if (is_string($style) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>border($width,$style,$color)</b>: Parameter <b>$style</b> MUST BE of type String - <b style="color:red">' . (is_object($style) ? get_class($style) : gettype($style)) . '</b> given!');
+        }
+        if (is_string($color) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>border($widthe,$style,$color)</b>: Parameter <b>$color</b> MUST BE of type String - <b style="color:red">' . (is_object($color) ? get_class($color) : gettype($color)) . '</b> given!');
+        }
+        $this->setCss('border', $width . 'px ' . $style . ' ' . $color);
+        return $this;
+    }
+/**
+     * Retrieves the border of this widget.
+     * The border is specified by its width, style and color.
+     * <code>
+     * // Setting border to a textfield
+     * $textfield = (new Textfield)->setBorder(3,"outset","blue");
+     * // Getting the border of a textfield
+     * echo $textfield->getBorder(); // will print "3px outset blue"
+     * </code>
+     * @return string The background border as String (null, if not set) or an instance of this Widget
+     * @access public
+     */
+    function getBorder() {
+        return $this->getCss('border');
     }
 
     function setClass($classname = null) {
@@ -204,7 +249,7 @@ class Element {
         $this->js_files[] = $js_file;
         return $this;
     }
-    
+
     /**
      * Returns the id of this object
      * @return string the id of the object
@@ -267,20 +312,20 @@ class Element {
         if (is_string($attribute) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $attribute MUST BE of type String. ' . (is_object($attribute) ? get_class($attribute) : gettype($attribute)) . ' given!');
         }
-        
+
         if (is_string($value) == false && is_null($value) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $value MUST BE of type String. ' . (is_object($value) ? get_class($value) : gettype($value)) . ' given!');
         }
-        
+
         // Updating the ID in the global dataspace
         if (strtolower($attribute) == "id") {
             $this->setId($value);
         }
-        
+
         $this->attributes[$attribute] = $value;
         return $this;
     }
-    
+
     /** Sets and css name value pair to this object
      * <code>
      *     $button->setCss("color","red");
@@ -453,6 +498,7 @@ class Element {
     }
 
 }
+
 //===========================================================================//
 // CLASS: Element                                                            //
 //============================== END OF CLASS ===============================//
