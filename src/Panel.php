@@ -197,7 +197,7 @@ class Panel extends Element {
         if (is_numeric($width) == false && (is_string($width) == true && Utils::stringEndsWith($width, "%")) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>width($width)</b>: Parameter <b>$width</b> MUST BE of type Integer or String(i.e "100%") - <b style="color:red">' . (is_object($width) ? get_class($width) : gettype($width)) . '</b> given!');
         }
-        
+
         if (Utils::stringEndsWith($width, "%")) {
             $this->setAttribute("width", $width);
         } else {
@@ -228,12 +228,7 @@ class Panel extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<table';
-        if (count($this->attribute) > 0) {
-            $html .= $this->attributes_to_html();
-        } if (count($this->style) > 0) {
-            $html .= ' ' . $this->styles_to_html();
-        } $html .= '>' . $nl;
+        $html = $indent . '<table' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         $html .= $indent . $tab . '<tr>' . $nl;
         $html .= $indent . $tab . $tab . '<td align="' . $this->halign . '" valign="' . $this->valign . '"';
         $html .= '>' . $nl;
@@ -241,8 +236,8 @@ class Panel extends Element {
         if (count($this->children) == 0)
             $this->child(g::label()->text("&nbsp;"));
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "S_Widget")) {
-                $html .= $child->to_html($compressed, $level + 3) . $nl;
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
+                $html .= $child->toHtml($compressed, $level + 3) . $nl;
             } else {
                 $html .= $indent . $tab . $child . $nl;
             }
@@ -275,12 +270,7 @@ class Panel extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<table';
-        if (count($this->attribute) > 0) {
-            $html .= $this->attributes_to_html();
-        } if (count($this->style) > 0) {
-            $html .= ' ' . $this->styles_to_html();
-        } $html .= '>' . $nl;
+        $html = $indent . '<table' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         $html .= $indent . $tab . '<tr>' . $nl;
         $html .= $indent . $tab . $tab . '<td align="' . $this->halign . '" valign="' . $this->valign . '"';
         $html .= '>' . $nl;
@@ -288,8 +278,8 @@ class Panel extends Element {
         if (count($this->children) == 0)
             $this->child(g::label()->text("&nbsp;"));
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "S_Widget")) {
-                $html .= $child->to_xhtml($compressed, $level + 3) . $nl;
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
+                $html .= $child->toXhtml($compressed, $level + 3) . $nl;
             } else {
                 $html .= $indent . $tab . $child . $nl;
             }
