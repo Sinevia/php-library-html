@@ -424,7 +424,7 @@ class Element {
     function getPadding() {
         return $this->getCss('padding');
     }
-    
+
     /** Sets the padding of this Widget.
      * @param int padding from the top of the widget
      * @param int padding from the left of the widget
@@ -435,18 +435,21 @@ class Element {
      * @access public
      */
     function setPadding($top = 0, $left = 0, $bottom = 0, $right = 0) {
-        if (is_int($top) == false)
+        if (is_int($top) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$top</b> MUST BE of type Integer - <b style="color:red">' . (is_object($top) ? get_class($top) : gettype($top)) . '</b> given!');
-        if (is_int($left) == false)
+        }
+        if (is_int($left) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$left</b> MUST BE of type Integer - <b style="color:red">' . (is_object($left) ? get_class($left) : gettype($left)) . '</b> given!');
-        if (is_int($bottom) == false)
+        }
+        if (is_int($bottom) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$bottom</b> MUST BE of type Integer - <b style="color:red">' . (is_object($bottom) ? get_class($bottom) : gettype($bottom)) . '</b> given!');
-        if (is_int($right) == false)
+        }
+        if (is_int($right) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$right</b> MUST BE of type Integer - <b style="color:red">' . (is_object($right) ? get_class($right) : gettype($right)) . '</b> given!');
-        $this->style('padding', $top . 'px ' . $left . 'px ' . $bottom . 'px ' . $right . 'px;');
+        }
+        $this->setCss('padding', $top . 'px ' . $left . 'px ' . $bottom . 'px ' . $right . 'px;');
         return $this;
     }
-    
 
     /**
      * Sets a property name-value pair to this Element
