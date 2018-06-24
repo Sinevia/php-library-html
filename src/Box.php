@@ -37,7 +37,7 @@ class Box extends BorderLayout {
     }
 
     function getTitle() {
-        return $this->property('title');
+        return $this->getProperty('title');
     }
 
     function setTitle($title = null, $halign = "center", $valign = "middle") {
