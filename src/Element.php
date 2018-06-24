@@ -128,14 +128,27 @@ class Element {
         return $children;
     }
 
+    /**
+     * @param Object $object
+     * @return bool
+     */
     function equals($object) {
         return ($this === $object);
     }
 
     /**
+     * Retrieves the display style of this Widget.
+     * @return mixed The display style as String (null, if not set)
+     * @access public
+     */
+    function getDisplay() {
+        return $this->getProperty("display");
+    }
+
+    /**
      * Returns an attribute value from given attribute name
      * <code>
-     *     $html_panel->getAttribute("text-align");
+     *     (new Div)->getAttribute("text-align");
      * </code>
      * @return string The attribute as String (null, if not set)
      * @param String the name of the attribute
@@ -146,6 +159,51 @@ class Element {
             return $this->attributes[$attribute];
         }
         return null;
+    }
+
+    /** Retrieves the background color of this Element.
+     * <code>
+     * // Getting background for webpage
+     * (new Webpage)->getBackground("#FFFFFF");
+     * </code>
+     * @return string | null The background color as String (null, if not set)
+     * @access public
+     */
+    function getBackground() {
+        return $this->getProperty('background');
+    }
+
+    /**
+     * Retrieves the background image URL of this Element.
+     * <code>
+     * // Setting background image for webpage
+     * (new Webpage)->getBackgroundImage();
+     * </code>
+     * @return mixed The background image URL as String (null, if not set)
+     * @access public
+     */
+    function getBackgroundImage() {
+        return $this->getProperty('background_image');
+    }
+
+    /**
+     * Retrieves the border of this widget.
+     * The border is specified by its width, style and color.
+     * <code>
+     * // Setting border to a textfield
+     * $textfield = (new Textfield)->setBorder(3,"outset","blue");
+     * // Getting the border of a textfield
+     * echo $textfield->getBorder(); // will print "3px outset blue"
+     * </code>
+     * @return string The background border as String (null, if not set) or an instance of this Widget
+     * @access public
+     */
+    function getBorder() {
+        return $this->getCss('border');
+    }
+
+    function getClass() {
+        return $this->attributes["class"];
     }
 
     /**
@@ -163,8 +221,222 @@ class Element {
         return null;
     }
 
-    function getClass() {
-        return $this->attributes["class"];
+    /**
+     * Retrieves the CSS float property of this Widget.
+     * 
+     * @return mixed The horizontal alignment as String (null, if not set)
+     * @throws IllegalArgumentException if parameter $halign is not String
+     * @access public
+     */
+    function getFloat($float = null) {
+        return $this->getProperty('float');
+    }
+
+    /** Sets or retrieves the Font of this Widget.
+     * <code>
+     * $font = s_font()->size(16)->bold(true);
+     * $textfield = s_textfield()->font($font);
+     * </code>
+     * @param S_Font the font of this Widget
+     * @return mixed The Font as Font (null, if not set) or an instance of this Widget
+     * @access public
+     */
+    function getFont() {
+        return $this->getProperty('font');
+    }
+
+    /**
+     * Retrieves the foreground color of this Element.
+     * @param string the foreground color (i.e. "blue","#FFFFFF")
+     * @return string The foreground color as String (null, if not set)
+     * @throws IllegalArgumentException if parameter $color is not String
+     * @access public
+     */
+    function getForeground() {
+        return $this->getProperty('foreground');
+    }
+
+    /** Sets or retrieves the horizontal alignment of the content of this Widget.
+     * 
+     * <code>
+     * // Setting background for webpage
+     * s_paragraph()->halign("right");
+     * </code>
+     * @param String the horizontal alignment (left,center,right)
+     * @return mixed The horizontal alignment as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if paremeter $halign is not String
+     * @access public
+     */
+    function getHalign() {
+        return $this->getProperty('halign');
+    }
+
+    function getHeight() {
+        return $this->getAttribute('height');
+    }
+
+    /**
+     * Returns the id of this object
+     * @return string the id of the object
+     * @access public
+     */
+    function getId() {
+        return $this->id;
+    }
+
+    /**
+     * Returns the name attributes of this Element.
+     * @throws \InvalidArgumentException if parameter $name is not String
+     * @return string The name as String (null, if not set)
+     * @access public
+     */
+    function getName($name = null) {
+        return $this->getAttribute('name');
+    }
+
+    /**
+     * Returns the onclick Javascript event(s) attached to this Element.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The on_click action as String (null, if not set) or an instance of this Element
+     * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function getOnClick() {
+        return $this->getAttribute("onclick");
+    }
+
+    /**
+     * Retrieves the padding of this Widget.
+     * @return string The padding as String (null, if not set)
+     * @access public
+     */
+    function getPadding() {
+        return $this->getCss('padding');
+    }
+
+    /**
+     * Returns the specified property to this Element.
+     * @param String the name of the property
+     * @return string The property as String (null, if not set)
+     * @throws \InvalidArgumentException if parameter $property is not String
+     * @access protected
+     */
+    protected function getProperty($property) {
+        if (is_string($property) == false)
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method property($property,$value): Parameter $property MUST BE of type String - ' . (is_object($property) ? get_class($property) : gettype($property)) . ' given!');
+
+        if (isset($this->property[$property])) {
+            return $this->property[$property];
+        }
+        return null;
+    }
+
+    /**
+     * Sets the vertical alignment of Panel.
+     * @param String horizontal alignment (top,bottom or middle)
+     * @return Element an instance of this object
+     */
+    function getValign() {
+        $this->getCss("vertical-align", $valign);
+        return $this;
+    }
+
+    function getWidth() {
+        return $this->getAttribute('width');
+    }
+
+    /** Sets and attribute name value pair to this object
+     * <code>
+     *     $div->setAttribure("text-align","center");
+     * </code>
+     * @return Element an instance of this Element
+     * @param String the name of the attribute
+     * @param String the value of the attribute
+     * @throws \InvalidArgumentException if parameter $attribute or $value is not String
+     * @access public
+     */
+    function setAttribute($attribute, $value) {
+        if (is_string($attribute) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $attribute MUST BE of type String. ' . (is_object($attribute) ? get_class($attribute) : gettype($attribute)) . ' given!');
+        }
+
+        if (is_string($value) == false && is_null($value) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $value MUST BE of type String. ' . (is_object($value) ? get_class($value) : gettype($value)) . ' given!');
+        }
+
+        // Updating the ID in the global dataspace
+        if (strtolower($attribute) == "id") {
+            $this->setId($value);
+        }
+
+        $this->attributes[$attribute] = $value;
+        return $this;
+    }
+
+    /** Sets the background color of this Widget.
+     * <code>
+     * // Setting background for webpage
+     * (new Webpage)->setBackground("#FFFFFF");
+     * </code>
+     * @param String the color name (i.e. "red","#FFFFFF")
+     * @return mixed An instance of this Element
+     * @throws IllegalArgumentException if parameter $color is not String
+     * @access public
+     */
+    function setBackground($color) {
+        if (is_string($color) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>background($color)</b>: Parameter <b>$color</b> MUST BE of type String - <b style="color:red">' . (is_object($color) ? get_class($color) : gettype($color)) . '</b> given!');
+        }
+        $this->setProperty('background', $color);
+        $this->setCss('background', $color);
+        return $this;
+    }
+
+    /**
+     * Sets the background image URL of this Widget.
+     * You can set the background to be repeated, not to be repeated,
+     * or to be horizontally or vertically repeated.
+     * <code>
+     * // Setting background image for webpage
+     * (new Webpage)->setBackgroundImage("/images/bg.gif");
+     * // Setting the same background to a form as the webpage
+     * (new Form)->setBackgroundImage($webpage->getBackgroundImage());
+     * // Setting background with no repeating
+     * (new Form)->setBackgroundImage("bg.gif",false);
+     * // Repeating the image horizontally
+     * (new Form)->setBackgroundImage("bg.gif","h");
+     * * // Repeating the image vertically
+     * (new Form)->setBackgroundImage("bg.gif","v");
+     * </code>
+     * @param String the path to the image
+     * @param mixed Boolean or String ("yes","y","no","n","vertical","v","horizontal","h")
+     * @return mixed The background image URL as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if paremeter $image is not String, or $repeat is not Boolean or String ("yes","y","no","n")
+     * @access public
+     */
+    function setBackgroundImage($image = null, $repeat = "y", $axis = "both") {
+        if (is_string($image) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>background_image($image,$repeat)</b>: Parameter <b>$image</b> MUST BE of type String - <b style="color:red">' . (is_object($image) ? get_class($image) : gettype($image)) . '</b> given!');
+        if (is_string($repeat) == false && is_bool($repeat) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>background_image($image,$repeat)</b>: Parameter <b>$repeat</b> MUST BE of type String ("yes","y","no","n") or Boolean (true, false) - <b style="color:red">' . (is_object($repeat) ? get_class($repeat) : gettype($repeat)) . '</b> given!');
+        $this->setProperty('background_image', $image);
+        $this->setCss('background-image', 'url(' . $image . ')');
+        if ($repeat == "yes" || $repeat == "y" || $repeat === true) {
+            $repeat = "repeat";
+        }
+        if ($repeat == "no" || $repeat == "n" || $repeat === false) {
+            $repeat = "no-repeat";
+        }
+        if ($repeat == "vertical" || $repeat == "v") {
+            $repeat = "repeat-y";
+        }
+        if ($repeat == "horizontal" || $repeat == "h") {
+            $repeat = "repeat-x";
+        }
+        $this->setCss('background-repeat', $repeat);
+        return $this;
     }
 
     /**
@@ -196,137 +468,11 @@ class Element {
         return $this;
     }
 
-    /**
-     * Retrieves the border of this widget.
-     * The border is specified by its width, style and color.
-     * <code>
-     * // Setting border to a textfield
-     * $textfield = (new Textfield)->setBorder(3,"outset","blue");
-     * // Getting the border of a textfield
-     * echo $textfield->getBorder(); // will print "3px outset blue"
-     * </code>
-     * @return string The background border as String (null, if not set) or an instance of this Widget
-     * @access public
-     */
-    function getBorder() {
-        return $this->getCss('border');
-    }
-
     function setClass($classname = null) {
         if (is_string($classname) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method classname($classname): Parameter $classname MUST BE of type String - ' . (is_object($classname) ? get_class($classname) : gettype($classname)) . ' given!');
         }
         $this->attributes["class"] = $classname;
-        return $this;
-    }
-
-    function setStyle($style) {
-        if (is_string($style) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method css_style($style): Parameter $style MUST BE of type String - ' . (is_object($style) ? get_class($style) : gettype($style)) . ' given!');
-        }
-        $styles = explode(';', $style);
-        foreach ($styles as $style) {
-            if (trim($style) == '')
-                continue;
-            $css = explode(':', trim($style));
-            $this->setCss(trim($css[0]), trim($css[1]));
-        }
-        return $this;
-    }
-
-    /**
-     * Adds a CSS stylesheet to the Element
-     * @param unknown $css_file
-     * @return \Sinevia\Ui\Element
-     */
-    function setCssFile($css_file) {
-        $this->css_files[] = $css_file;
-        return $this;
-    }
-
-    /**
-     * Adds a CSS stylesheet to the Element
-     * @param unknown $css_file
-     * @return \Sinevia\Ui\Element
-     */
-    function setJavaScriptFile($js_file) {
-        $this->js_files[] = $js_file;
-        return $this;
-    }
-
-    /**
-     * Returns the id of this object
-     * @return string the id of the object
-     * @access public
-     */
-    function getId() {
-        return $this->id;
-    }
-
-    /**
-     * Returns the name attributes of this Element.
-     * @throws \InvalidArgumentException if parameter $name is not String
-     * @return string The name as String (null, if not set)
-     * @access public
-     */
-    function getName($name = null) {
-        return $this->getAttribute('name');
-    }
-
-    /**
-     * Sets the name attribute of this Element.
-     * @param String the name of the Element
-     * @throws \InvalidArgumentException if parameter $name is not String
-     */
-    public function setName($name) {
-        if (is_string($name) == false)
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method name($name): Parameter $name MUST BE of type String - ' . (is_object($name) ? get_class($name) : gettype($name)) . ' given!');
-        $this->setAttribute('name', $name);
-        return $this;
-    }
-
-    /**
-     * Returns the specified property to this Element.
-     * @param String the name of the property
-     * @return String The property as String (null, if not set)
-     * @throws \InvalidArgumentException if parameter $property is not String
-     * @access protected
-     */
-    protected function getProperty($property) {
-        if (is_string($property) == false)
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method property($property,$value): Parameter $property MUST BE of type String - ' . (is_object($property) ? get_class($property) : gettype($property)) . ' given!');
-
-        if (isset($this->property[$property])) {
-            return $this->property[$property];
-        }
-        return null;
-    }
-
-    /** Sets and attribute name value pair to this object
-     * <code>
-     *     $div->setAttribure("text-align","center");
-     * </code>
-     * @return Element an instance of this Element
-     * @param String the name of the attribute
-     * @param String the value of the attribute
-     * @throws \InvalidArgumentException if parameter $attribute or $value is not String
-     * @access public
-     */
-    function setAttribute($attribute, $value) {
-        if (is_string($attribute) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $attribute MUST BE of type String. ' . (is_object($attribute) ? get_class($attribute) : gettype($attribute)) . ' given!');
-        }
-
-        if (is_string($value) == false && is_null($value) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $value MUST BE of type String. ' . (is_object($value) ? get_class($value) : gettype($value)) . ' given!');
-        }
-
-        // Updating the ID in the global dataspace
-        if (strtolower($attribute) == "id") {
-            $this->setId($value);
-        }
-
-        $this->attributes[$attribute] = $value;
         return $this;
     }
 
@@ -351,153 +497,58 @@ class Element {
         return $this;
     }
 
-    /** Sets the id of this object
-     * @return Element or an instance of this Element
-     * @throws \InvalidArgumentException if id is not String
-     * @access public
+    /**
+     * Adds a CSS stylesheet to the Element
+     * @param unknown $css_file
+     * @return \Sinevia\Ui\Element
      */
-    function setId($id) {
-        if (is_string($id) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method id($id): Parameter $id MUST BE of type String - ' . gettype($id) . ' given!');
-        }
-        $this->id = $id;
+    function setCssFile($css_file) {
+        $this->css_files[] = $css_file;
         return $this;
     }
 
     /**
-     * Adds an inline JavaScript of this Element
-     * @return Element or an instance of this Element
-     * @throws \InvalidArgumentException if the supplied argument is not String
+     * Sets the display style of this Widget.
+     * @return mixed An instance of this Element
+     * @throws IllegalArgumentException if parameter $display is not String
      * @access public
      */
-    function setJavaScript($js) {
-        if (is_string($js) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setJavaScipt($id): Parameter $js MUST BE of type String - ' . gettype($js) . ' given!');
+    function setDisplay($display) {
+        if (is_string($display) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>display($display)</b>: Parameter <b>$display</b> MUST BE of type String - <b style="color:red">' . (is_object($display) ? get_class($display) : gettype($display)) . '</b> given!');
         }
-        $this->js[] = $js;
-        return $this;
+        $this->setCss("display", $display);
+        $this->setProperty("display", $display);
     }
 
-    /**
-     * Returns the onclick Javascript event(s) attached to this Element.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_click action as String (null, if not set) or an instance of this Element
-     * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function getOnClick() {
-        return $this->getAttribute("onclick");
-    }
-
-    /**
-     * Adds an onclick Javascript event to this Element.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_click action as String (null, if not set) or an instance of this Element
-     * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function setOnClick($action = null) {
-//if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
-//if(($action instanceof S_Ajax)==true)$action = $action->to_js();
-        if ($this->getAttribute("onclick") == null) {
-            $this->setAttribute("onclick", htmlentities($action));
-        } else {
-            $onclick = html_entity_decode($this->getAttribute("onclick"));
-            if (substr($onclick, -1) != ";") {
-                $onclick .= ";";
-            }
-            $this->setAttribute("onclick", htmlentities($onclick . $action));
-        }
-        return $this;
-    }
-
-    function setParent($parent) {
-        $parent->addChild($this);
-        return $this;
-    }
-
-    /** Retrieves the padding of this Widget.
-     * @return string The padding as String (null, if not set)
-     * @access public
-     */
-    function getPadding() {
-        return $this->getCss('padding');
-    }
-
-    /** Sets the padding of this Widget.
-     * @param int padding from the top of the widget
-     * @param int padding from the left of the widget
-     * @param int padding from the bottom of the widget
-     * @param int padding from the right the widget
-     * @return mixed An instance of this Widget
-     * @throws IllegalArgumentException if parameter $top,$left,$bottom or $right is not Integer
-     * @access public
-     */
-    function setPadding($top = 0, $left = 0, $bottom = 0, $right = 0) {
-        if (is_int($top) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$top</b> MUST BE of type Integer - <b style="color:red">' . (is_object($top) ? get_class($top) : gettype($top)) . '</b> given!');
-        }
-        if (is_int($left) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$left</b> MUST BE of type Integer - <b style="color:red">' . (is_object($left) ? get_class($left) : gettype($left)) . '</b> given!');
-        }
-        if (is_int($bottom) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$bottom</b> MUST BE of type Integer - <b style="color:red">' . (is_object($bottom) ? get_class($bottom) : gettype($bottom)) . '</b> given!');
-        }
-        if (is_int($right) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$right</b> MUST BE of type Integer - <b style="color:red">' . (is_object($right) ? get_class($right) : gettype($right)) . '</b> given!');
-        }
-        $this->setCss('padding', $top . 'px ' . $left . 'px ' . $bottom . 'px ' . $right . 'px;');
-        return $this;
-    }
-
-    /**
-     * Sets a property name-value pair to this Element
-     * Properties represent private data available to the Element
-     *
-     * @param String the name of the property
-     * @param mixed the value of the property
-     * @return mixed The property as String (null, if not set) or an instance of this Element
-     * @throws \InvalidArgumentException if parameter $property is not String
-     * @access protected
-     */
-    protected function setProperty($property, $value) {
-        if (is_string($property) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method property($property,$value): Parameter $property MUST BE of type String - ' . (is_object($property) ? get_class($property) : gettype($property)) . ' given!');
-        }
-        $this->property[$property] = $value;
-        return $this;
-    }
-
-    function getHeight() {
-        return $this->getAttribute('height');
-    }
-
-    //========================= START OF METHOD ===========================//
-    //  METHOD: font                                                       //
-    //=====================================================================//
-    /** Sets or retrieves the Font of this Widget.
+    /** Sets the CSS float property of this Widget.
+     * 
+     * The float property sets where a Widget will appear in another Widget.
+     * <b>Note:</b> If there is too little space on a line for the floating
+     * Widget, it will jump down on the next line, and continue until a line
+     * has enough space.<br />
      * <code>
-     * $font = s_font()->size(16)->bold(true);
-     * $textfield = s_textfield()->font($font);
+     * // Floating a Widget left
+     * (new Div)->setWidth(200)->setFloat("left");
      * </code>
-     * @param S_Font the font of this Widget
-     * @return mixed The Font as Font (null, if not set) or an instance of this Widget
+     * @param String the horizontal alignment (left,center,right)
+     * @return mixed An instance of this Widget
+     * @throws IllegalArgumentException if paremeter $halign is not String
      * @access public
      */
-    function getFont($font = null) {
-        return $this->property('font');
+    function setFloat($float = null) {
+        if (is_string($float) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>float($float)</b>: Parameter <b>$float</b> MUST BE of type String - <b style="color:red">' . (is_object($float) ? get_class($float) : gettype($float)) . '</b> given!');
+        // Checking position
+        $allowed_params = array("left", "right", "none");
+        if (in_array($float, $allowed_params) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>float($float)</b>: Parameter <b>$float</b> MUST BE of type String(' . implode(", ", $allowed_params) . ') - <b>' . ($float) . '</b> given!');
+        }
+        $this->setProperty('flooat', $float);
+        $this->setCss('float', $float);
+        return $this;
     }
 
-    //=====================================================================//
-    //  METHOD: font                                                       //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: font                                                       //
-    //=====================================================================//
     /** Sets or retrieves the Font of this Widget.
      * <code>
      * $font = s_font()->size(16)->bold(true);
@@ -550,17 +601,201 @@ class Element {
         return $this;
     }
 
-    //=====================================================================//
-    //  METHOD: font                                                       //
-    //========================== END OF METHOD ============================//
+    /** Sets the foreground color of this Element.
+     * <code>
+     * $textfield = (new Textfield)->setForeground("red");
+     * </code>
+     * @param String the foreground color (i.e. "blue","#FFFFFF")
+     * @return mixed An instance of this Widget
+     * @throws IllegalArgumentException if parameter $color is not String
+     * @access public
+     */
+    function setForeground($color = null) {
+        if (is_string($color) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>foreground($color)</b>: Parameter <b>$color</b> MUST BE of type String - <b style="color:red">' . (is_object($color) ? get_class($color) : gettype($color)) . '</b> given!');
+        }
+        $this->setProperty('foreground', $color);
+        $this->setCss('color', $color);
+        return $this;
+    }
+
+    /** Sets or retrieves the horizontal alignment of the content of this Widget.
+     * 
+     * <code>
+     * // Setting background for webpage
+     * s_paragraph()->halign("right");
+     * </code>
+     * @param String the horizontal alignment (left,center,right)
+     * @return mixed The horizontal alignment as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if paremeter $halign is not String
+     * @access public
+     */
+    function setHalign($halign) {
+        if (is_string($halign) == false)
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>halign($halign)</b>: Parameter <b>$halign</b> MUST BE of type String - <b style="color:red">' . (is_object($halign) ? get_class($halign) : gettype($halign)) . '</b> given!');
+        // Checking position
+        $allowed_params = array("left", "center", "right");
+        if (in_array($halign, $allowed_params) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>halign($halign)</b>: Parameter <b>$halign</b> MUST BE of type String(' . implode(", ", $allowed_params) . ') - <b>' . ($halign) . '</b> given!');
+        }
+        $this->setProperty('halign', $halign);
+        $this->setCss('text-align', $halign);
+        return $this;
+    }
 
     function setHeight($value) {
         $this->setAttribute('height', (string) $value);
         return $this;
     }
 
-    function getWidth() {
-        return $this->getAttribute('width');
+    /** Sets the id of this object
+     * @return Element or an instance of this Element
+     * @throws \InvalidArgumentException if id is not String
+     * @access public
+     */
+    function setId($id) {
+        if (is_string($id) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method id($id): Parameter $id MUST BE of type String - ' . gettype($id) . ' given!');
+        }
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * Adds an inline JavaScript of this Element
+     * @return Element or an instance of this Element
+     * @throws \InvalidArgumentException if the supplied argument is not String
+     * @access public
+     */
+    function setJavaScript($js) {
+        if (is_string($js) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setJavaScipt($id): Parameter $js MUST BE of type String - ' . gettype($js) . ' given!');
+        }
+        $this->js[] = $js;
+        return $this;
+    }
+
+    /**
+     * Adds a CSS stylesheet to the Element
+     * @param unknown $css_file
+     * @return \Sinevia\Ui\Element
+     */
+    function setJavaScriptFile($js_file) {
+        $this->js_files[] = $js_file;
+        return $this;
+    }
+
+    /**
+     * Sets the name attribute of this Element.
+     * @param String the name of the Element
+     * @throws \InvalidArgumentException if parameter $name is not String
+     */
+    public function setName($name) {
+        if (is_string($name) == false)
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method name($name): Parameter $name MUST BE of type String - ' . (is_object($name) ? get_class($name) : gettype($name)) . ' given!');
+        $this->setAttribute('name', $name);
+        return $this;
+    }
+
+    /**
+     * Adds an onclick Javascript event to this Element.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The on_click action as String (null, if not set) or an instance of this Element
+     * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnClick($action = null) {
+//if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
+//if(($action instanceof S_Ajax)==true)$action = $action->to_js();
+        if ($this->getAttribute("onclick") == null) {
+            $this->setAttribute("onclick", htmlentities($action));
+        } else {
+            $onclick = html_entity_decode($this->getAttribute("onclick"));
+            if (substr($onclick, -1) != ";") {
+                $onclick .= ";";
+            }
+            $this->setAttribute("onclick", htmlentities($onclick . $action));
+        }
+        return $this;
+    }
+
+    /** Sets the padding of this Widget.
+     * @param int padding from the top of the widget
+     * @param int padding from the left of the widget
+     * @param int padding from the bottom of the widget
+     * @param int padding from the right the widget
+     * @return mixed An instance of this Widget
+     * @throws IllegalArgumentException if parameter $top,$left,$bottom or $right is not Integer
+     * @access public
+     */
+    function setPadding($top = 0, $left = 0, $bottom = 0, $right = 0) {
+        if (is_int($top) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$top</b> MUST BE of type Integer - <b style="color:red">' . (is_object($top) ? get_class($top) : gettype($top)) . '</b> given!');
+        }
+        if (is_int($left) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$left</b> MUST BE of type Integer - <b style="color:red">' . (is_object($left) ? get_class($left) : gettype($left)) . '</b> given!');
+        }
+        if (is_int($bottom) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$bottom</b> MUST BE of type Integer - <b style="color:red">' . (is_object($bottom) ? get_class($bottom) : gettype($bottom)) . '</b> given!');
+        }
+        if (is_int($right) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$right</b> MUST BE of type Integer - <b style="color:red">' . (is_object($right) ? get_class($right) : gettype($right)) . '</b> given!');
+        }
+        $this->setCss('padding', $top . 'px ' . $left . 'px ' . $bottom . 'px ' . $right . 'px;');
+        return $this;
+    }
+
+    function setParent($parent) {
+        $parent->addChild($this);
+        return $this;
+    }
+
+    /**
+     * Sets a property name-value pair to this Element
+     * Properties represent private data available to the Element
+     *
+     * @param String the name of the property
+     * @param mixed the value of the property
+     * @return mixed The property as String (null, if not set) or an instance of this Element
+     * @throws \InvalidArgumentException if parameter $property is not String
+     * @access protected
+     */
+    protected function setProperty($property, $value) {
+        if (is_string($property) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method property($property,$value): Parameter $property MUST BE of type String - ' . (is_object($property) ? get_class($property) : gettype($property)) . ' given!');
+        }
+        $this->property[$property] = $value;
+        return $this;
+    }
+
+    function setStyle($style) {
+        if (is_string($style) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method css_style($style): Parameter $style MUST BE of type String - ' . (is_object($style) ? get_class($style) : gettype($style)) . ' given!');
+        }
+        $styles = explode(';', $style);
+        foreach ($styles as $style) {
+            if (trim($style) == '')
+                continue;
+            $css = explode(':', trim($style));
+            $this->setCss(trim($css[0]), trim($css[1]));
+        }
+        return $this;
+    }
+
+    /**
+     * Sets the vertical alignment of Panel.
+     * @param String horizontal alignment (top,bottom or middle)
+     * @return LightPanel an instance of this object
+     */
+    function setValign($valign) {
+        $allowed_params = array("top", "middle", "bottom");
+        if (in_array($valign, $allowed_params) == false) {
+            trigger_error('ERROR: In class <b>' . get_class($this) . '</b> in method <b>set_valign($halign)</b>: Parameter <b>$valign</b> MUST BE of type String(' . implode(", ", $allowed_params) . ') - <b style="color:red">' . gettype($valign) . '</b> given!', E_USER_ERROR);
+        }
+        $this->setCss("vertical-align", $valign);
+        return $this;
     }
 
     function setWidth($value) {
