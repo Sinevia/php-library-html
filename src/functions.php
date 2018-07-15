@@ -1,5 +1,22 @@
 <?php
+// ========================================================================= //
+// SINEVIA PUBLIC                                        http://sinevia.com  //
+// ------------------------------------------------------------------------- //
+// COPYRIGHT (c) 2018 Sinevia Ltd                        All rights resrved! //
+// ------------------------------------------------------------------------- //
+// LICENCE: All information contained herein is, and remains, property of    //
+// Sinevia Ltd at all times.  Any intellectual and technical concepts        //
+// are proprietary to Sinevia Ltd and may be covered by existing patents,    //
+// patents in process, and are protected by trade secret or copyright law.   //
+// Dissemination or reproduction of this information is strictly forbidden   //
+// unless prior written permission is obtained from Sinevia Ltd per domain.  //
+//===========================================================================//
+namespace Sinevia\Html;
 
+/**
+ * Validates form fields in a Laravel installation
+ * @param array $fields
+ */
 function formValidateLaravel($fields) {
     $rules = [];
     foreach ($fields as $field) {
@@ -31,6 +48,11 @@ function formValidateLaravel($fields) {
     return true;
 }
 
+/**
+ * Builds a Bootstrap 4 form
+ * @param array $fields
+ * @param array $options
+ */
 function formBuildBootstrap($fields, $options = []) {
     $submitText = $options['submit_text'] ?? 'Submit';
 
