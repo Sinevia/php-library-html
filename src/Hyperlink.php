@@ -170,7 +170,7 @@ class Hyperlink extends Element {
             $html .= $indent . $tab . $this->getProperty("text") . $nl;
         }
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
             } else {
                 $html .= $indent . $tab . $child . $nl;
@@ -186,7 +186,7 @@ class Hyperlink extends Element {
      * @param level the level of this widget
      * @return String html string
      */
-    function to_xhtml($compressed = true, $level = 0) {
+    function toXhtml($compressed = true, $level = 0) {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -204,7 +204,7 @@ class Hyperlink extends Element {
             $html .= $indent . $tab . $this->getProperty("text") . $nl;
         }
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toXhtml($compressed, $level + 1) . $nl;
             } else {
                 $html .= $indent . $tab . $child . $nl;
