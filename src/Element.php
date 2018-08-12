@@ -313,11 +313,22 @@ class Element {
      * Returns the onclick Javascript event(s) attached to this Element.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
-     * @return string The on_click action as String (null, if not set)
+     * @return string The onclick action as String (null, if not set)
      * @access public
      */
     function getOnClick() {
         return $this->getAttribute("onclick");
+    }
+    
+    /**
+     * Returns the ondblclick Javascript event(s) attached to this Element.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @return string The ondblclick action as String (null, if not set)
+     * @access public
+     */
+    function getOnDoubleClick() {
+        return $this->getAttribute("ondblclick");
     }
 
     /**
@@ -819,6 +830,32 @@ class Element {
         }
         return $this;
     }
+    
+    /**
+     * Adds an ondblclick Javascript event to this Element.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return Element The ondblclick action as String (null, if not set) or an instance of this Element
+     * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnDoubleClick($action = null) {
+//if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
+//if(($action instanceof S_Ajax)==true)$action = $action->to_js();
+        if ($this->getAttribute("ondblclick") == null) {
+            $this->setAttribute("ondblclick", htmlentities($action));
+        } else {
+            $onclick = html_entity_decode($this->getAttribute("ondblclick"));
+            if (substr($onclick, -1) != ";") {
+                $onclick .= ";";
+            }
+            $this->setAttribute("ondblclick", htmlentities($onclick . $action));
+        }
+        return $this;
+    }
+    
+    
 
     /**
      * Sets the padding of this Widget.
@@ -964,41 +1001,6 @@ class Element {
 
     // TODO //////////////////////////////
     
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_double_click                                            //
-    //=====================================================================//
-    /** Sets or retrieves the ondblclick Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_double_click action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_double_click($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_double_click($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("ondblclick") == null) {
-                $this->attribute("ondblclick", htmlentities($action));
-            } else {
-                $ondblclick = html_entity_decode($this->attribute("ondblclick"));
-                if (s::str_ends_with($ondblclick, ";") == false) {
-                    $ondblclick .= ";";
-                }
-                $this->attribute("ondblclick", htmlentities($ondblclick . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("ondblclick");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_double_click                                            //
-    //========================== END OF METHOD ============================//
     //========================= START OF METHOD ===========================//
     //  METHOD: on_focus                                                   //
     //=====================================================================//
