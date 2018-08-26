@@ -33,18 +33,29 @@ namespace Sinevia\Html;
  *     $borderlayout->addChild("ADDS","right");
  *
  * // Using the shortcut function
- * $borderlayout = (new BorderLayout())->addTop("HEADER")->addCenter("CONTENT")->addBottom("FOOTER")->addLeft("MENU")->addRight("ADDS");
+ * $borderlayout = (new BorderLayout())
+     ->addTop("HEADER")
+     ->addCenter("CONTENT")
+     ->addBottom("FOOTER")
+     ->addLeft("MENU")
+     ->addRight("ADDS");
  * </code>
  * @package GUI
  */
 class BorderLayout extends Element {
 
+    const POSITION_BOTTOM = 'bottom';
+    const POSITION_CENTER = 'center';
+    const POSITION_LEFT = 'left';
+    const POSITION_RIGHT = 'right';
+    const POSITION_TOP = 'top';
+
     //========================= START OF METHOD ===========================//
     //  CONSTRUCTOR: __construct                                           //
     //=====================================================================//
     /**
-     * The constructor of S_BorderLayout.
-     * As a default the BorderLayout stretches to fit its parent widget.
+     * The constructor of the BorderLayout element.
+     * By default the BorderLayout stretches to fit its parent widget.
      * @construct
      */
     function __construct() {
@@ -122,6 +133,7 @@ class BorderLayout extends Element {
         $container->setAttribute("valign", $valign);
         $this->containers[$position] = $container;
         $this->children[] = $widget;
+        return $this;
     }
 
     /**
@@ -566,5 +578,5 @@ class BorderLayout extends Element {
 }
 
 //===========================================================================//
-// CLASS: BorderLayout                                                     //
+// CLASS: BorderLayout                                                       //
 //============================== END OF CLASS ===============================//
