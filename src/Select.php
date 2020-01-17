@@ -116,18 +116,18 @@ class Select extends Element {
             if (is_string($action) == false) {
                 throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>onChange($action)</b>: Parameter <b>$action</b> MUST BE of type String - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
             }
-            if ($this->attribute("onchange") == null) {
-                $this->attribute("onchange", htmlentities($action));
+            if ($this->getAttribute("onchange") == null) {
+                $this->setAttribute("onchange", htmlentities($action));
             } else {
-                $onchange = html_entity_decode($this->attribute("onchange"));
+                $onchange = html_entity_decode($this->getAttribute("onchange"));
                 if (Utils::stringEndsWith($onchange, ";") == false) {
                     $onchange .= ";";
                 }
-                $this->attribute("onchange", htmlentities($onchange . $action));
+                $this->setAttribute("onchange", htmlentities($onchange . $action));
             }
             return $this;
         } else {
-            return $this->attribute("onchange");
+            return $this->getAttribute("onchange");
         }
     }
 
