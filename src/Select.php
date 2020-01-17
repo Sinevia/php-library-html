@@ -3,7 +3,7 @@
 // ========================================================================= //
 // SINEVIA PUBLIC                                        http://sinevia.com  //
 // ------------------------------------------------------------------------- //
-// COPYRIGHT (c) 2019 Sinevia Ltd                        All rights resrved! //
+// COPYRIGHT (c) 2020 Sinevia Ltd                        All rights resrved! //
 // ------------------------------------------------------------------------- //
 // LICENCE: All information contained herein is, and remains, property of    //
 // Sinevia Ltd at all times.  Any intellectual and technical concepts        //
@@ -20,18 +20,18 @@ namespace Sinevia\Html;
  * It is most often used in Forms.
  * <code>
  * // Creating a new instance of Select
- * $select = new S_Select();
- *     $select->rows(10);
- *     $select->width(200);
- *     for($i=0;$i<100;$i++){
- *         $select->item($i,$i." years");
- *     }
+ * $select = new Select();
+ * $select->rows(10);
+ * $select->width(200);
+ * for($i=0;$i<100;$i++){
+ *     $select->item($i,$i." years");
+ * }
  *
  * // The same as above using the shortcut function and method chaining
- * $select = s_select()->rows(10)->width(200);
- *     for($i=0;$i<100;$i++){
- *         $select->item($i,$i." years");
- *     }
+ * $select = (new Select())->rows(10)->width(200);
+ * for($i=0;$i<100;$i++){
+ *   $select->addItem($i,$i." years");
+ * }
  * </code>
  */
 class Select extends Element {
@@ -45,7 +45,7 @@ class Select extends Element {
     function __construct($items = array()) {
         parent::__construct();
         if (is_array($items)) {
-            $this->items = $items;
+            $this->addItems($items);
         } else {
             s_throw_error("The Items For The Select Widget Must Be An Array!");
         }
