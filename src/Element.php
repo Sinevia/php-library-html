@@ -156,7 +156,7 @@ class Element {
      * @access public
      */
     function getAttribute($attribute) {
-        if (isset($this->attribute[$attribute])) {
+        if (isset($this->attributes[$attribute])) {
             return $this->attributes[$attribute];
         }
         return null;
