@@ -38,4 +38,36 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($children[0],'child1');
         $this->assertEquals($children[1],'child2');
     }
+
+    public function testAttributesToHtml(){
+        $element = new \Sinevia\Html\Element;
+
+        $testMethod = new \ReflectionMethod($element,'attributesToHtml');
+        $testMethod->setAccessible(true);
+
+        $this->assertEquals($testMethod->invoke($element),'');
+        
+        $element->setAttribute('key1','value1');
+        $this->assertEquals($element->getAttribute('key1'),'value1');
+        $element->setAttribute('key2','value2');
+        $this->assertEquals($element->getAttribute('key2'),'value2');
+ 
+        $this->assertEquals($testMethod->invoke($element),' key1="value1" key2="value2"');
+    }
+
+    public function testCssToHtml(){
+        $element = new \Sinevia\Html\Element;
+
+        $testMethod = new \ReflectionMethod($element,'cssToHtml');
+        $testMethod->setAccessible(true);
+
+        $this->assertEquals($testMethod->invoke($element),'');
+        
+        $element->setCss('key1','value1');
+        $this->assertEquals($element->getCss('key1'),'value1');
+        $element->setCss('key2','value2');
+        $this->assertEquals($element->getCss('key2'),'value2');
+ 
+        $this->assertEquals($testMethod->invoke($element),' style="key1:value1;key2:value2"');
+    }
 }

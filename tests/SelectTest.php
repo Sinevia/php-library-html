@@ -9,7 +9,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
 
     public function testInit(){
         $select = new \Sinevia\Html\Select;
-        $this->assertEquals($select->toHtml(),'<select ></select>');
+        $this->assertEquals($select->toHtml(),'<select></select>');
     }
 
     public function testAddItem(){
@@ -17,7 +17,7 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $select->addItem('1','1');
         $select->addItem('2','2');
         $select->addItem('3','3');
-        $this->assertEquals($select->toHtml(),'<select ><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>');
+        $this->assertEquals($select->toHtml(),'<select><option value="1">1</option><option value="2">2</option><option value="3">3</option></select>');
     }
 
     public function testOnChange(){

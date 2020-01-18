@@ -74,7 +74,7 @@ class Element {
                 $attributes[] = $name . '="' . addcslashes($value, '"') . '"';
             }
         }
-        return " " . implode(" ", $attributes);
+        return count($attributes)>0 ? (" " . implode(" ", $attributes)) : "";
     }
 
     /** Adds a child element to this Element
@@ -216,8 +216,8 @@ class Element {
      * @param String the name of the css
      */
     public function getCss($style) {
-        if (isset($this->style[$style])) {
-            return $this->style[$style];
+        if (isset($this->css[$style])) {
+            return $this->css[$style];
         }
         return null;
     }
