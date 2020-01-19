@@ -51,10 +51,6 @@ class Select extends Element {
         }
     }
 
-    //=====================================================================//
-    //  CONSTRUCTOR: __construct                                           //
-    //========================== END OF METHOD ============================//
-
     /**
      * Adds an item to the options
      * @param string $key
@@ -85,89 +81,32 @@ class Select extends Element {
         return $this;
     }
 
-    /**
-     * Sets the selected item by key
-     * @param string $key
-     * @return $this
-     */
-    function setSelectedItem($key) {
-        foreach ($this->items as $index => $entry) {
-            if ($entry[0] == $key) {
-                $entry[2] = 'selected="selected"';
-            } else {
-                $entry[2] = "";
-            }
-            $this->items[$index] = $entry;
-        }
-        return $this;
-    }
-
-    /**
-     * Fires a JavaScript action on text change in the TextField
-     * <code>
-     * // Displays the selected option on change
-     * $select->on_change('alert(this.options[this.selectedIndex].value)');
-     * </code>
-     * @param String the JavaScript action
-     * @todo To add Ajax
-     */
-    function onChange($action) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false) {
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>onChange($action)</b>: Parameter <b>$action</b> MUST BE of type String - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
-            }
-            if ($this->getAttribute("onchange") == null) {
-                $this->setAttribute("onchange", htmlentities($action));
-            } else {
-                $onchange = html_entity_decode($this->getAttribute("onchange"));
-                if (Utils::stringEndsWith($onchange, ";") == false) {
-                    $onchange .= ";";
-                }
-                $this->setAttribute("onchange", htmlentities($onchange . $action));
-            }
-            return $this;
-        } else {
-            return $this->getAttribute("onchange");
-        }
-    }
-
-    /** Sets or retrieves the visible rows in the Select widget.
-     * @return mixed The rows as Integer (null, if not set) or an instance of this Select
+    /** 
+     * Retrieves if this select is multiple
+     * @return boolean The multiple as Boolean
      * @access public
      */
-    function rows($rows) {
-        if (func_num_args() > 0) {
-            if (is_int($rows) == false)
-                trigger_error('ERROR: In class <b>' . get_class($this) . '</b> in method <b>rows($rows)</b>: Parameter <b>$rows</b> MUST BE of type Integer - <b style="color:red">' . gettype($rows) . '</b> given!', E_USER_ERROR);
-            $this->attribute("size", (string) $rows);
-            return $this;
-        } else {
-            return $this->attribute("size");
-        }
-    }
-    
-    /** Sets or retrieves whether multiple selected options are to be allowed.
-     * @return mixed The permission as Boolean or an instance of this Select
-     * @access public
-     */
-    function multiple($multiple) {
-        if (func_num_args() > 0) {
-            if (is_bool($multiple) == false)
-                trigger_error('ERROR: In class <b>' . get_class($this) . '</b> in method <b>multiple($multiple)</b>: Parameter <b>$multiple</b> MUST BE of type Boolean - <b style="color:red">' . gettype($multiple) . '</b> given!', E_USER_ERROR);
-            if ($multiple == true) {
-                $this->attribute("multiple", "multiple");
-            } else {
-                $this->attribute("multiple", "");
-            }
-            return $this;
-        } else {
-            return ($this->attribute("multiple") == "multiple") ? true : false;
-        }
+    function getMultiple() {
+        return ($this->getAttribute("multiple") == "multiple") ? true : false;
     }
 
-    //=====================================================================//
-    //  METHOD: multiple                                                   //
-    //========================== END OF METHOD ============================//
+    /** 
+     * Retrieves the onchange event.
+     * @return mixed The onchange event as String (null, if not set)
+     * @access public
+     */
+    function getOnChange() {
+        return $this->getAttribute("onchange");
+    }
+
+    /** 
+     * Retrieves the visible rows in the Select widget.
+     * @return mixed The rows as Integer (null, if not set)
+     * @access public
+     */
+    function getRows() {
+        return $this->getAttribute("size");
+    }
 
     /**
      * Returns the HTML representation of this Select widget
@@ -220,6 +159,83 @@ class Select extends Element {
         }
         $html .= $indent . '</select>';
         return $html;
+    }
+
+    /** 
+     * Sets whether multiple selected options are to be allowed.
+     * @return void The permission as Boolean or an instance of this Select
+     * @access public
+     */
+    function setMultiple($isMultiple) {
+        if (is_bool($isMultiple) == false) {
+            throw new RuntimeException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>setMultiple($multiple)</b>: Parameter <b>$isMultiple</b> MUST BE of type Boolean - <b style="color:red">' . gettype($isMultiple) . '</b> given!');
+        }
+
+        if ($isMultiple == true) {
+            $this->setAttribute("multiple", "multiple");
+        } else {
+            $this->setAttribute("multiple", "");
+        }
+
+        return $this;
+    }
+
+    /**
+     * Fires a JavaScript action on text change in the TextField
+     * <code>
+     * // Displays the selected option on change
+     * $select->setOnChange('alert(this.options[this.selectedIndex].value)');
+     * </code>
+     * @param String the JavaScript action
+     * @todo To add Ajax
+     */
+    function setOnChange($action) {
+        if (is_string($action) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>onChange($action)</b>: Parameter <b>$action</b> MUST BE of type String - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
+        }
+
+        if ($this->getAttribute("onchange") == null) {
+            $this->setAttribute("onchange", htmlentities($action));
+        } else {
+            $onchange = html_entity_decode($this->getAttribute("onchange"));
+            if (Utils::stringEndsWith($onchange, ";") == false) {
+                $onchange .= ";";
+            }
+            $this->setAttribute("onchange", htmlentities($onchange . $action));
+        }
+        return $this;
+    }
+
+    /** 
+     * Sets the visible rows in the Select widget.
+     * @return mixed The rows as Integer (null, if not set) or an instance of this Select
+     * @access public
+     */
+    function setRows($numberOfRows) {
+        if (is_int($numberOfRows) == false) {
+            throw new RuntimeException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>rows($rows)</b>: Parameter <b>$rows</b> MUST BE of type Integer - <b style="color:red">' . gettype($numberOfRows) . '</b> given!');
+        }
+
+        $this->setAttribute("size", (string) $numberOfRows);
+
+        return $this;
+    }
+
+    /**
+     * Sets the selected item by key
+     * @param string $key
+     * @return $this
+     */
+    function setSelectedItem($key) {
+        foreach ($this->items as $index => $entry) {
+            if ($entry[0] == $key) {
+                $entry[2] = 'selected="selected"';
+            } else {
+                $entry[2] = "";
+            }
+            $this->items[$index] = $entry;
+        }
+        return $this;
     }
 
 }
