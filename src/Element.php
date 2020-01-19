@@ -3,7 +3,7 @@
 // ========================================================================= //
 // SINEVIA PUBLIC                                        http://sinevia.com  //
 // ------------------------------------------------------------------------- //
-// COPYRIGHT (c) 2018 Sinevia Ltd                        All rights resrved! //
+// COPYRIGHT (c) 2020 Sinevia Ltd                        All rights resrved! //
 // ------------------------------------------------------------------------- //
 // LICENCE: All information contained herein is, and remains, property of    //
 // Sinevia Ltd at all times.  Any intellectual and technical concepts        //
@@ -160,6 +160,18 @@ class Element {
             return $this->attributes[$attribute];
         }
         return null;
+    }
+
+    /** Retrieves the opacity of this Element.
+     * <code>
+     * // Getting background for webpage
+     * (new Webpage)->getOpacity();
+     * </code>
+     * @return string | null The opacity as String (null, if not set)
+     * @access public
+     */
+    function getOpacity() {
+        return $this->getCss('opacity');
     }
 
     /** Retrieves the background color of this Element.
@@ -341,12 +353,55 @@ class Element {
     function getOnFocus() {
         return $this->getAttribute("onfocus");
     }
+
+    /** 
+     * Retrieves the onkeydown Javascript event(s) to this widget.
+     * @return mixed The onkeydown action as String (null, if not set)
+     * @access public
+     */
+    function getOnKeyDown() {
+        return $this->getAttribute("onkeydown");
+    }
+
+    /** 
+     * Retrieves the onkeypress Javascript event(s) to this widget.
+     * @return mixed The onkeypress action as String (null, if not set)
+     * @access public
+     */
+    function getOnKeyPress() {
+        return $this->getAttribute("onkeypress");
+    }
+
+    /** 
+     * Retrieves the onkeyup Javascript event(s) to this widget.
+     * @return mixed The onkeyup action as String (null, if not set)
+     * @access public
+     */
+    function getOnKeyUp() {
+        return $this->getAttribute("onkeyup");
+    }
+
+    /** 
+     * Retrieves the onmousedown Javascript event(s) to this widget.
+     * @return mixed The onmousedown action as String (null, if not set)
+     * @access public
+     */
+    function getOnMouseDown() {
+        return $this->getAttribute("onmousedown");
+    }
+
+    /** 
+     * Retrieves the onmousemove Javascript event(s) to this widget.
+     * @return mixed The onmousemove action as String (null, if not set)
+     * @access public
+     */
+    function getOnMouseMove() {
+        return $this->getAttribute("onmousemove");
+    }
     
     /** 
      * Retrieves the onmouseout Javascript event(s) to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @return mixed The on_mouse_out action as String (null, if not set)
+     * @return mixed The onmouseout action as String (null, if not set)
      * @access public
      */
     function getOnMouseOut() {
@@ -355,13 +410,20 @@ class Element {
 
     /** 
      * Retrieves the onmouseover Javascript event(s) to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
      * @return mixed The onmouseover action as String (null, if not set)
      * @access public
      */
     function getOnMouseOver() {
         return $this->getAttribute("onmouseover");
+    }
+
+    /** 
+     * Retrieves the onmouseup Javascript event(s) to this widget.
+     * @return mixed The onmouseup action as String (null, if not set)
+     * @access public
+     */
+    function getOnMouseUp() {
+        return $this->getAttribute("onmouseup");
     }
 
     /**
@@ -815,6 +877,36 @@ class Element {
         $this->setAttribute('name', $name);
         return $this;
     }
+
+    /** 
+     * Sets the opacity of this Widget. It will also make opaque all its
+     * child widgets.
+     * <code>
+     * $textfield = s_textfield()->opacity(20);
+     * </code>
+     * @param int the opaicity (from 0 to 100)
+     * @throws IllegalArgumentException if parameter $opacity is not Integer
+     * @return mixed The opacity as String (null, if not set) or an instance of this Widget
+     * @access public
+     */
+    function setOpacity($opacity) {
+        if (is_int($opacity) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>opacity($opacity)</b>: Parameter <b>$opacity</b> MUST BE of type Integer - <b style="color:red">' . (is_object($opacity) ? get_class($opacity) : gettype($opacity)) . '</b> given!');
+        }
+
+        $this->setCss('filter', 'alpha(opacity=' . $opacity . ')');
+        if ($opacity < 100) {
+            $this->setCss('-moz-opacity', '.' . $opacity);
+            $this->setCss('opacity', '.' . $opacity);
+            $this->setCss('-khtml-opacity', '.' . $opacity);
+        } else {
+            $this->setCss('-moz-opacity', '1.0');
+            $this->setCss('opacity', '1.0');
+            $this->setCss('-khtml-opacity', '1.0');
+        }
+
+        return $this;
+    }
     
     /**
      * Adds an onblur Javascript event to this Element.
@@ -916,6 +1008,88 @@ class Element {
         return $this->setOnEvent("onfocus", $action);
     }
 
+    /** Sets or retrieves the onkeydown Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The onkeydown action as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnKeyDown($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onkeydown", $action);
+    }
+
+    /** Sets or retrieves the onkeypress Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The onkeypress action as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnKeyPress($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyPress($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onkeypress", $action);
+    }
+
+    /** Sets or retrieves the onkeyup Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The onkeyup action as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnKeyUp($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onkeyup", $action);
+    }
+
+    /** 
+     * Sets the onmousedown Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The onmousedown action as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnMouseDown($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onmousedown", $action);
+    }
+
+    /** Sets or retrieves the onmousedown Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The onmousedown action as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnMouseMove($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseMove($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onmousemove", $action);
+    }
+
+    
     /** Sets or retrieves the onmouseout Javascript event to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
@@ -947,6 +1121,23 @@ class Element {
         }
 
         return $this->setOnEvent("onmouseover", $action);
+    }
+
+    /** 
+     * Sets the onmouseup Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The onmouseup action as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnMouseUp($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onmouseup", $action);
     }
 
     /**
@@ -1090,254 +1281,5 @@ class Element {
         }
         return ' style="' . addcslashes(implode(";", $styles), '"') . '"'; // Don't remove beginning white space
     }
-
-    // TODO //////////////////////////////
     
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_focus                                                   //
-    //=====================================================================//
-    /** Sets or retrieves the onfocus Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_focus_click action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_focus($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_focus($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onfocus") == null) {
-                $this->attribute("onfocus", htmlentities($action));
-            } else {
-                $onfocus = html_entity_decode($this->attribute("onfocus"));
-                if (s::str_ends_with($onfocus, ";") == false) {
-                    $onfocus .= ";";
-                }
-                $this->attribute("onfocus", htmlentities($onfocus . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onfocus");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_focus                                                   //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_key_down                                                //
-    //=====================================================================//
-    /** Sets or retrieves the onkeydown Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_key_down action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_key_down($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_key_down($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onkeydown") == null) {
-                $this->attribute("onkeydown", htmlentities($action));
-            } else {
-                $onkeydown = html_entity_decode($this->attribute("onkeydown"));
-                if (s::str_ends_with($onkeydown, ";") == false) {
-                    $onkeydown .= ";";
-                }
-                $this->attribute("onkeydown", htmlentities($onkeydown . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onkeydown");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_key_down                                                //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_key_press                                               //
-    //=====================================================================//
-    /** Sets or retrieves the onkeypress Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_key_press action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_key_press($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_key_press($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onkeypress") == null) {
-                $this->attribute("onkeypress", htmlentities($action));
-            } else {
-                $onkeypress = html_entity_decode($this->attribute("onkeypress"));
-                if (s::str_ends_with($onkeypress, ";") == false) {
-                    $onkeypress .= ";";
-                }
-                $this->attribute("onkeypress", htmlentities($onkeypress . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onkeypress");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_key_press                                               //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_key_up                                                  //
-    //=====================================================================//
-    /** Sets or retrieves the onkeyup Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_key_up action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_key_up($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_key_up($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onkeyup") == null) {
-                $this->attribute("onkeyup", htmlentities($action));
-            } else {
-                $onkeyup = html_entity_decode($this->attribute("onkeyup"));
-                if (s::str_ends_with($onkeyup, ";") == false) {
-                    $onkeyup .= ";";
-                }
-                $this->attribute("onkeyup", htmlentities($onkeyup . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onkeyup");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_key_up                                                  //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_mouse_down                                              //
-    //=====================================================================//
-    /** Sets or retrieves the onmousedown Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_mouse_down action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_mouse_down($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_down($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onmousedown") == null) {
-                $this->attribute("onmousedown", htmlentities($action));
-            } else {
-                $onmousedown = html_entity_decode($this->attribute("onmousedown"));
-                if (s::str_ends_with($onmousedown, ";") == false) {
-                    $onmousedown .= ";";
-                }
-                $this->attribute("onmousedown", htmlentities($onmousedown . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onmousedown");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_mouse_down                                              //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_mouse_move                                              //
-    //=====================================================================//
-    /** Sets or retrieves the onmousemove Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_mouse_move action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_mouse_move($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_move($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onmousemove") == null) {
-                $this->attribute("onmousemove", htmlentities($action));
-            } else {
-                $onmousemove = html_entity_decode($this->attribute("onmousemove"));
-                if (s::str_ends_with($onmousemove, ";") == false) {
-                    $onmousemove .= ";";
-                }
-                $this->attribute("onmousemove", htmlentities($onmousemove . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onmousemove");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_mouse_move                                              //
-    //========================== END OF METHOD ============================//
-    
-    //========================= START OF METHOD ===========================//
-    //  METHOD: opacity                                                    //
-    //=====================================================================//
-    /** Sets the opacity of this Widget. It will also make opaque all its
-     * child widgets.
-     * <code>
-     * $textfield = s_textfield()->opacity(20);
-     * </code>
-     * @param int the opaicity (from 0 to 100)
-     * @throws IllegalArgumentException if parameter $opacity is not Integer
-     * @return mixed The opacity as String (null, if not set) or an instance of this Widget
-     * @access public
-     */
-    function opacity($opacity) {
-        if (is_int($opacity) == false)
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>opacity($opacity)</b>: Parameter <b>$opacity</b> MUST BE of type Integer - <b style="color:red">' . (is_object($opacity) ? get_class($opacity) : gettype($opacity)) . '</b> given!');
-        $this->style('filter', 'alpha(opacity=' . $opacity . ')');
-        if ($opacity < 100) {
-            $this->style('-moz-opacity', '.' . $opacity);
-            $this->style('opacity', '.' . $opacity);
-            $this->style('-khtml-opacity', '.' . $opacity);
-        } else {
-            $this->style('-moz-opacity', '1.0');
-            $this->style('opacity', '1.0');
-            $this->style('-khtml-opacity', '1.0');
-        }
-        return $this;
-    }
-
-    //=====================================================================//
-    //  METHOD: opacity                                                    //
-    //========================== END OF METHOD ============================//
 }
-
-//===========================================================================//
-// CLASS: Element                                                            //
-//============================== END OF CLASS ===============================//

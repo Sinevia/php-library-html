@@ -80,6 +80,16 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
     }
 
+    public function testOnDoubleClick() {
+        $element = new \Sinevia\Html\Element;
+        $element->setOnDoubleClick('alert("Hello")');
+        $onEvent = $element->getOnDoubleClick();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
+        $element->setOnDoubleClick('alert("Hello1")');
+        $onEvent = $element->getOnDoubleClick();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
     public function testOnFocus() {
         $element = new \Sinevia\Html\Element;
         $element->setOnFocus('alert("Hello")');
@@ -87,6 +97,56 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
         $element->setOnFocus('alert("Hello1")');
         $onEvent = $element->getOnFocus();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
+    public function testOnKeyDown() {
+        $element = new \Sinevia\Html\Element;
+        $element->setOnKeyDown('alert("Hello")');
+        $onEvent = $element->getOnKeyDown();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
+        $element->setOnKeyDown('alert("Hello1")');
+        $onEvent = $element->getOnKeyDown();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
+    public function testOnKeyPress() {
+        $element = new \Sinevia\Html\Element;
+        $element->setOnKeyPress('alert("Hello")');
+        $onEvent = $element->getOnKeyPress();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
+        $element->setOnKeyPress('alert("Hello1")');
+        $onEvent = $element->getOnKeyPress();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
+    public function testOnKeyUp() {
+        $element = new \Sinevia\Html\Element;
+        $element->setOnKeyUp('alert("Hello")');
+        $onEvent = $element->getOnKeyUp();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
+        $element->setOnKeyUp('alert("Hello1")');
+        $onEvent = $element->getOnKeyUp();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
+    public function testOnMouseDown() {
+        $element = new \Sinevia\Html\Element;
+        $element->setOnMouseDown('alert("Hello")');
+        $onEvent = $element->getOnMouseDown();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
+        $element->setOnMouseDown('alert("Hello1")');
+        $onEvent = $element->getOnMouseDown();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
+    public function testOnMouseMove() {
+        $element = new \Sinevia\Html\Element;
+        $element->setOnMousemove('alert("Hello")');
+        $onEvent = $element->getOnMouseMove();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
+        $element->setOnMouseMove('alert("Hello1")');
+        $onEvent = $element->getOnMouseMove();
         $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
     }
 
@@ -108,6 +168,22 @@ class ElementTest extends \PHPUnit\Framework\TestCase
         $element->setOnMouseOver('alert("Hello1")');
         $onEvent = $element->getOnMouseOver();
         $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
+    public function testOnMouseUp() {
+        $element = new \Sinevia\Html\Element;
+        $element->setOnMouseUp('alert("Hello")');
+        $onEvent = $element->getOnMouseUp();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;)');
+        $element->setOnMouseUp('alert("Hello1")');
+        $onEvent = $element->getOnMouseUp();
+        $this->assertEquals($onEvent, 'alert(&quot;Hello&quot;);alert(&quot;Hello1&quot;)');
+    }
+
+    public function testSetGetOpacity(){
+        $element = new \Sinevia\Html\Element;
+        $element->setOpacity(12);
+        $this->assertEquals($element->getOpacity(), '.12');
     }
 
     public function testToHtmlThrowingRuntimeException(){
