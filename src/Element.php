@@ -331,6 +331,39 @@ class Element {
         return $this->getAttribute("ondblclick");
     }
 
+    /** 
+     * Retrieves the onfocus Javascript event(s) to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @return mixed The onfocus action as String (null, if not set)
+     * @access public
+     */
+    function getOnFocus() {
+        return $this->getAttribute("onfocus");
+    }
+    
+    /** 
+     * Retrieves the onmouseout Javascript event(s) to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @return mixed The on_mouse_out action as String (null, if not set)
+     * @access public
+     */
+    function getOnMouseOut() {
+        return $this->getAttribute("onmouseout");
+    }
+
+    /** 
+     * Retrieves the onmouseover Javascript event(s) to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @return mixed The onmouseover action as String (null, if not set)
+     * @access public
+     */
+    function getOnMouseOver() {
+        return $this->getAttribute("onmouseover");
+    }
+
     /**
      * Retrieves the padding of this Element.
      * @return string The padding as String (null, if not set)
@@ -793,18 +826,11 @@ class Element {
      * @access public
      */
     function setOnBlur($action = null) {
-//if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
-//if(($action instanceof S_Ajax)==true)$action = $action->to_js();
-        if ($this->getAttribute("onblur") == null) {
-            $this->setAttribute("onblur", htmlentities($action));
-        } else {
-            $onclick = html_entity_decode($this->getAttribute("onblur"));
-            if (substr($onclick, -1) != ";") {
-                $onclick .= ";";
-            }
-            $this->setAttribute("onblur", htmlentities($onclick . $action));
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnBlur($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
-        return $this;
+
+        return $this->setOnEvent("onblur", $action);
     }
 
     /**
@@ -854,8 +880,74 @@ class Element {
         }
         return $this;
     }
-    
-    
+
+    private function setOnEvent($eventname, $action){
+        if (($action instanceof S_Ajax) == true) {
+            $action = $action->to_js();
+        }
+
+        if ($this->getAttribute($eventname) == null) {
+            $this->setAttribute($eventname, htmlentities($action));
+        } else {
+            $onmouseout = html_entity_decode($this->getAttribute($eventname));
+            if (Utils::stringEndsWith($onmouseout, ";") == false) {
+                $onmouseout .= ";";
+            }
+            $this->setAttribute($eventname, htmlentities($onmouseout . $action));
+        }
+
+        return $this;
+    }
+
+    /** 
+     * Sets the onfocus Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnFocus($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnFocus($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onfocus", $action);
+    }
+
+    /** Sets or retrieves the onmouseout Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The on_mouse_out action as String (null, if not set) or an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnMouseOut($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_out($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onmouseout", $action);
+    }
+
+    /** 
+     * Sets the onmouseover Javascript event to this widget.
+     * The attached action must be valid JavaScript code, which will be evaluated
+     * when the event is triggered.
+     * @param String the JavaScript action
+     * @return mixed The an instance of this Widget
+     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @access public
+     */
+    function setOnMouseOver($action = null) {
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
+            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_over($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        }
+
+        return $this->setOnEvent("onmouseover", $action);
+    }
 
     /**
      * Sets the padding of this Widget.
@@ -1211,76 +1303,7 @@ class Element {
     //=====================================================================//
     //  METHOD: on_mouse_move                                              //
     //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_mouse_over                                              //
-    //=====================================================================//
-    /** Sets or retrieves the onmouseover Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_mouse_over action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_mouse_over($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_over($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onmouseover") == null) {
-                $this->attribute("onmouseover", htmlentities($action));
-            } else {
-                $onmouseover = html_entity_decode($this->attribute("onmouseover"));
-                if (s::str_ends_with($onmouseover, ";") == false) {
-                    $onmouseover .= ";";
-                }
-                $this->attribute("onmouseover", htmlentities($onmouseover . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onmouseover");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_mouse_over                                              //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: on_mouse_out                                            //
-    //=====================================================================//
-    /** Sets or retrieves the onmouseout Javascript event to this widget.
-     * The attached action must be valid JavaScript code, which will be evaluated
-     * when the event is triggered.
-     * @param String the JavaScript action
-     * @return mixed The on_mouse_out action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
-     * @access public
-     */
-    function on_mouse_out($action = null) {
-        if (func_num_args() > 0) {
-            if (is_string($action) == false && ($action instanceof S_Ajax) == false)
-                throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_out($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
-            if (($action instanceof S_Ajax) == true)
-                $action = $action->to_js();
-            if ($this->attribute("onmouseout") == null) {
-                $this->attribute("onmouseout", htmlentities($action));
-            } else {
-                $onmouseout = html_entity_decode($this->attribute("onmouseout"));
-                if (s::str_ends_with($onmouseout, ";") == false) {
-                    $onmouseout .= ";";
-                }
-                $this->attribute("onmouseout", htmlentities($onmouseout . $action));
-            }
-            return $this;
-        } else {
-            return $this->attribute("onmouseout");
-        }
-    }
-
-    //=====================================================================//
-    //  METHOD: on_mouse_out                                               //
-    //========================== END OF METHOD ============================//
+    
     //========================= START OF METHOD ===========================//
     //  METHOD: opacity                                                    //
     //=====================================================================//

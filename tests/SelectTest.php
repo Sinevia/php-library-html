@@ -31,6 +31,15 @@ class SelectTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse($isMultiple);
     }
 
+    public function testMultipleSelections(){
+        $select = new \Sinevia\Html\Select;
+        $select->setMultiple(true);
+        $select->addItem('1','1');
+        $select->addItem('2','2',true);
+        $select->addItem('3','3',true);
+        $this->assertEquals($select->toHtml(),'<select multiple="multiple"><option value="1">1</option><option value="2" selected="selected">2</option><option value="3" selected="selected">3</option></select>');
+    }
+
     public function testOnChange() {
         $select = new \Sinevia\Html\Select;
         $select->setOnChange('alert("Hello")');
