@@ -295,7 +295,7 @@ class Element {
      */
     function getId() {
         if ($this->id == null) {
-            $this->id = 'id_';
+            $this->id = 'id_'. uniqid();
         }
         return $this->id;
     }
