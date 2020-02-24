@@ -41,7 +41,6 @@ class Element {
      * The constructor of Element
      * @construct
      */
-
     function __construct() {
         $this->uid = uniqid(); // Setting auto unique id
     }
@@ -74,7 +73,7 @@ class Element {
                 $attributes[] = $name . '="' . addcslashes($value, '"') . '"';
             }
         }
-        return count($attributes)>0 ? (" " . implode(" ", $attributes)) : "";
+        return count($attributes) > 0 ? (" " . implode(" ", $attributes)) : "";
     }
 
     /** Adds a child element to this Element
@@ -127,6 +126,24 @@ class Element {
             }
         }
         return $children;
+    }
+
+    /**
+     * Converts the Element styles to (X)HTML
+     * @return String the Element style
+     */
+    protected function cssToHtml() {
+        if (count($this->css) < 1) {
+            return '';
+        }
+        ksort($this->css);
+        $styles = array();
+        foreach ($this->css as $name => $value) {
+            if ($value != "" || $value != null) {
+                $styles[] = $name . ':' . $value;
+            }
+        }
+        return ' style="' . addcslashes(implode(";", $styles), '"') . '"'; // Don't remove beginning white space
     }
 
     /**
@@ -295,7 +312,7 @@ class Element {
      */
     function getId() {
         if ($this->id == null) {
-            $this->id = 'id_'. uniqid();
+            $this->id = 'id_' . uniqid();
         }
         return $this->id;
     }
@@ -309,7 +326,7 @@ class Element {
     function getName() {
         return $this->getAttribute('name');
     }
-    
+
     /**
      * Returns the onblur Javascript event(s) attached to this Element.
      * The attached action must be valid JavaScript code, which will be evaluated
@@ -331,7 +348,7 @@ class Element {
     function getOnClick() {
         return $this->getAttribute("onclick");
     }
-    
+
     /**
      * Returns the ondblclick Javascript event(s) attached to this Element.
      * The attached action must be valid JavaScript code, which will be evaluated
@@ -343,7 +360,7 @@ class Element {
         return $this->getAttribute("ondblclick");
     }
 
-    /** 
+    /**
      * Retrieves the onfocus Javascript event(s) to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
@@ -354,7 +371,7 @@ class Element {
         return $this->getAttribute("onfocus");
     }
 
-    /** 
+    /**
      * Retrieves the onkeydown Javascript event(s) to this widget.
      * @return mixed The onkeydown action as String (null, if not set)
      * @access public
@@ -363,7 +380,7 @@ class Element {
         return $this->getAttribute("onkeydown");
     }
 
-    /** 
+    /**
      * Retrieves the onkeypress Javascript event(s) to this widget.
      * @return mixed The onkeypress action as String (null, if not set)
      * @access public
@@ -372,7 +389,7 @@ class Element {
         return $this->getAttribute("onkeypress");
     }
 
-    /** 
+    /**
      * Retrieves the onkeyup Javascript event(s) to this widget.
      * @return mixed The onkeyup action as String (null, if not set)
      * @access public
@@ -381,7 +398,7 @@ class Element {
         return $this->getAttribute("onkeyup");
     }
 
-    /** 
+    /**
      * Retrieves the onmousedown Javascript event(s) to this widget.
      * @return mixed The onmousedown action as String (null, if not set)
      * @access public
@@ -390,7 +407,7 @@ class Element {
         return $this->getAttribute("onmousedown");
     }
 
-    /** 
+    /**
      * Retrieves the onmousemove Javascript event(s) to this widget.
      * @return mixed The onmousemove action as String (null, if not set)
      * @access public
@@ -398,8 +415,8 @@ class Element {
     function getOnMouseMove() {
         return $this->getAttribute("onmousemove");
     }
-    
-    /** 
+
+    /**
      * Retrieves the onmouseout Javascript event(s) to this widget.
      * @return mixed The onmouseout action as String (null, if not set)
      * @access public
@@ -408,7 +425,7 @@ class Element {
         return $this->getAttribute("onmouseout");
     }
 
-    /** 
+    /**
      * Retrieves the onmouseover Javascript event(s) to this widget.
      * @return mixed The onmouseover action as String (null, if not set)
      * @access public
@@ -417,7 +434,7 @@ class Element {
         return $this->getAttribute("onmouseover");
     }
 
-    /** 
+    /**
      * Retrieves the onmouseup Javascript event(s) to this widget.
      * @return mixed The onmouseup action as String (null, if not set)
      * @access public
@@ -878,7 +895,7 @@ class Element {
         return $this;
     }
 
-    /** 
+    /**
      * Sets the opacity of this Widget. It will also make opaque all its
      * child widgets.
      * <code>
@@ -907,7 +924,7 @@ class Element {
 
         return $this;
     }
-    
+
     /**
      * Adds an onblur Javascript event to this Element.
      * The attached action must be valid JavaScript code, which will be evaluated
@@ -948,7 +965,7 @@ class Element {
         }
         return $this;
     }
-    
+
     /**
      * Adds an ondblclick Javascript event to this Element.
      * The attached action must be valid JavaScript code, which will be evaluated
@@ -973,7 +990,7 @@ class Element {
         return $this;
     }
 
-    private function setOnEvent($eventname, $action){
+    private function setOnEvent($eventname, $action) {
         if (($action instanceof S_Ajax) == true) {
             $action = $action->to_js();
         }
@@ -991,7 +1008,7 @@ class Element {
         return $this;
     }
 
-    /** 
+    /**
      * Sets the onfocus Javascript event to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
@@ -1017,7 +1034,7 @@ class Element {
      * @access public
      */
     function setOnKeyDown($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
@@ -1033,7 +1050,7 @@ class Element {
      * @access public
      */
     function setOnKeyPress($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyPress($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
@@ -1049,14 +1066,14 @@ class Element {
      * @access public
      */
     function setOnKeyUp($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onkeyup", $action);
     }
 
-    /** 
+    /**
      * Sets the onmousedown Javascript event to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
@@ -1066,7 +1083,7 @@ class Element {
      * @access public
      */
     function setOnMouseDown($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
@@ -1082,14 +1099,13 @@ class Element {
      * @access public
      */
     function setOnMouseMove($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseMove($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onmousemove", $action);
     }
 
-    
     /** Sets or retrieves the onmouseout Javascript event to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
@@ -1099,14 +1115,14 @@ class Element {
      * @access public
      */
     function setOnMouseOut($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_out($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onmouseout", $action);
     }
 
-    /** 
+    /**
      * Sets the onmouseover Javascript event to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
@@ -1123,7 +1139,7 @@ class Element {
         return $this->setOnEvent("onmouseover", $action);
     }
 
-    /** 
+    /**
      * Sets the onmouseup Javascript event to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
@@ -1133,7 +1149,7 @@ class Element {
      * @access public
      */
     function setOnMouseUp($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false){
+        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
             throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
@@ -1264,22 +1280,4 @@ class Element {
         }
     }
 
-    /**
-     * Converts the Element styles to (X)HTML
-     * @return String the Element style
-     */
-    protected function cssToHtml() {
-        if (count($this->css) < 1) {
-            return '';
-        }
-        ksort($this->css);
-        $styles = array();
-        foreach ($this->css as $name => $value) {
-            if ($value != "" || $value != null) {
-                $styles[] = $name . ':' . $value;
-            }
-        }
-        return ' style="' . addcslashes(implode(";", $styles), '"') . '"'; // Don't remove beginning white space
-    }
-    
 }
