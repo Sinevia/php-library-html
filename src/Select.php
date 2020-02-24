@@ -73,7 +73,7 @@ class Select extends Element {
      */
     function addItems($items) {
         if (is_array($items) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>addItems($action)</b>: Parameter <b>$items</b> MUST BE of type Array - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>addItems($action)</b>: Parameter <b>$items</b> MUST BE of type Array - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
         }
         foreach ($items as $key => $value) {
             $this->addItem($key, $value);
