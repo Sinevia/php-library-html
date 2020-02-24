@@ -16,7 +16,27 @@ Download this folder
 
 ## Examples
 
-1. Select
+### 1. Image ###
+```
+$image = (new \Sinevia\Html\Image)
+        ->setUrl('http://help.jpg')->setAlt('Help')
+        ->setOnClick('$("#info").toggle()')
+        ->toXhtml();
+```
+
+### 2. Input ###
+```
+$inputFirstName = (new \Sinevia\Html\Input)
+        ->setName('FirstName')
+        ->setValue($firstName)
+        ->setPlaceHolder('Your first name')
+        ->addClass('form-control')
+        ->toXhtml();
+```     
+
+### 3. Select ###
+
+- Select editor list
 ```
 echo (new Sinevia\Html\Select)
         ->addItems(App\Models\Articles\Article::getEditorList())
@@ -24,4 +44,33 @@ echo (new Sinevia\Html\Select)
         ->addClass('form-control')
         ->setName('Wysiwyg')
         ->toHtml();
+```
+- Select Birthday Day/Month/Year
+```
+$selectBirthDay = (new \Sinevia\Html\Select)
+        ->setName('BirthDay')
+        ->setSelectedItem($birthDay)
+        ->addClass('form-control')
+        ->addItem("", "- Select day -")
+        ->addItems(array_combine(range(1, 31), range(1, 31)))
+        ->setSelectedItem($birthDay)
+        ->toXhtml();
+
+$selectBirthMonth = (new \Sinevia\Html\Select)
+        ->setName('BirthMonth')
+        ->addClass('form-control')
+        ->addItem("", "- Select month -")
+        ->addItems(array_combine(range(1, 12), array_map(function($v) {
+                            return date('F', mktime(0, 0, 0, $v, 1));
+                        }, range(1, 12))))
+        ->setSelectedItem($birthMonth)
+        ->toXhtml();
+
+$selectBirthYear = (new \Sinevia\Html\Select)
+        ->setName('BirthYear')
+        ->addClass('form-control')
+        ->addItem("", "- Select year -")
+        ->addItems(array_combine(range(1930, 2020), range(1930, 2020)))
+        ->setSelectedItem($birthYear)
+        ->toXhtml();
 ```
