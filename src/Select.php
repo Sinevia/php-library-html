@@ -81,7 +81,7 @@ class Select extends Element {
         return $this;
     }
 
-    /** 
+    /**
      * Retrieves if this select is multiple
      * @return boolean The multiple as Boolean
      * @access public
@@ -90,7 +90,7 @@ class Select extends Element {
         return ($this->getAttribute("multiple") == "multiple") ? true : false;
     }
 
-    /** 
+    /**
      * Retrieves the onchange event.
      * @return mixed The onchange event as String (null, if not set)
      * @access public
@@ -99,7 +99,7 @@ class Select extends Element {
         return $this->getAttribute("onchange");
     }
 
-    /** 
+    /**
      * Retrieves the visible rows in the Select widget.
      * @return mixed The rows as Integer (null, if not set)
      * @access public
@@ -124,7 +124,7 @@ class Select extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<select' . $this->attributesToHtml() . '>' . $nl;
+        $html = $indent . '<select' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->items as $item) {
             $html .= $indent . $tab . '<option value="' . $item[0] . '"' . $item[2] . '>' . $item[1] . '</option>' . $nl;
         }
@@ -148,12 +148,7 @@ class Select extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<select';
-        if (count($this->attribute) > 0) {
-            $html .= $this->attributesToHtml();
-        } if (count($this->style) > 0) {
-            $html .= ' ' . $this->stylesT_to_html();
-        } $html .= '>' . $nl;
+        $html = $indent . '<select' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->items as $item) {
             $html .= $indent . $tab . '<option value="' . $item[0] . '"' . $item[2] . '>' . $item[1] . '</option>' . $nl;
         }
@@ -161,7 +156,7 @@ class Select extends Element {
         return $html;
     }
 
-    /** 
+    /**
      * Sets whether multiple selected options are to be allowed.
      * @return void The permission as Boolean or an instance of this Select
      * @access public
@@ -206,7 +201,7 @@ class Select extends Element {
         return $this;
     }
 
-    /** 
+    /**
      * Sets the visible rows in the Select widget.
      * @return mixed The rows as Integer (null, if not set) or an instance of this Select
      * @access public
