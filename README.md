@@ -4,6 +4,11 @@
 ![Tests](https://github.com/Sinevia/php-library-html/workflows/Test/badge.svg)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/Sinevia/php-library-html) 
 
+Programatically generate valid HTML.
+
+## Introduction ##
+This library helps generate valid HTML/XHTML using PHP. It has most of the HTML elements, as well as additional elements like Webpage, BorderLayout, etc.
+
 ## Installation
 
 1. Via Composer
@@ -74,3 +79,13 @@ $selectBirthYear = (new \Sinevia\Html\Select)
         ->setSelectedItem($birthYear)
         ->toXhtml();
 ```
+
+### 4. Webpage ###
+```
+$webpage = (new \Sinevia\Html\Webpage)
+        ->setTitle('Hello')
+        ->addChild('Hello World');
+echo $webpage->toHtml();
+```
+
+
