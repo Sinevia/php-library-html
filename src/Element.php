@@ -1224,7 +1224,7 @@ class Element {
                 continue;
             }
             $css = explode(':', trim($style));
-            $this->setCss(trim($css[0]), trim($css[1]));
+            $this->setCss(trim($css[0] ?? ''), trim($css[1] ?? ''));
         }
 
         return $this;
