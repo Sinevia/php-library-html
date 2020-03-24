@@ -95,11 +95,6 @@ class Webpage extends Element {
      */
     public function getEncoding() {
         return $this->getProperty('encoding');
-// 		if($this->getMeta("content-type")!=null){
-// 			$encoding = str_replace("text/html; charset=","",$this->getMeta("content-type"));
-// 			return $encoding;
-// 		}
-// 		return null;
     }
 
     /**
@@ -410,17 +405,18 @@ class Webpage extends Element {
         }
         /* Encoding - UTF-8 default */
         $encoding = $this->getEncoding();
-        if ($encoding == null)
+        if ($encoding == null) {
             $encoding = "UTF-8";
+        }
         // Internet Explorer 7.0 Has Bugs With Layout Display in Strict Mode!!!
         $xhtml = '<?xml version="1.0" encoding="' . $encoding . '"?>' . $nl;
         //$xhtml .= '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">'.$nl;
         $xhtml .= '<!DOCTYPE html>' . $nl;
-        $xhtml .= '<html xmlns="http://www.w3.org/1999/xhtml">' . $nl;
         /* Language - EN default */
         $language = $this->getLanguage();
-        if ($language == null)
+        if ($language == null) {
             $language = "en";
+        }
         $xhtml .= '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . $language . '">' . $nl;
         // START: HEAD
         $xhtml .= '<head>' . $nl;
@@ -431,8 +427,9 @@ class Webpage extends Element {
         /* Title */
         $xhtml .= $tab . '<title>' . $this->getProperty('title') . '</title>' . $nl;
         /* Favicon */
-        if ($this->getProperty("favicon") != null)
+        if ($this->getProperty("favicon") != null){
             $xhtml .= $tab . '<link rel="icon" href="' . $this->getProperty("favicon") . '" type="image/x-icon" />' . $nl;
+        }
         /* CSS and JavaScript */
         $xhtml .= 'S_INLINE_CSS_AND_SCRIPTS';
         $xhtml .= '</head>' . $nl;
