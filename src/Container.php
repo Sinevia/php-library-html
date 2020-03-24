@@ -3,7 +3,7 @@
 // ========================================================================= //
 // SINEVIA PUBLIC                                        http://sinevia.com  //
 // ------------------------------------------------------------------------- //
-// COPYRIGHT (c) 2018 Sinevia Ltd                        All rights resrved! //
+// COPYRIGHT (c) 2020 Sinevia Ltd                        All rights resrved! //
 // ------------------------------------------------------------------------- //
 // LICENCE: All information contained herein is, and remains, property of    //
 // Sinevia Ltd at all times.  Any intellectual and technical concepts        //
@@ -46,6 +46,7 @@ class Container extends Element {
      * @return String html string
      */
     function toHtml($compressed = true, $level = 0) {
+        return $this->_toHtml('', $compressed, $level);
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";

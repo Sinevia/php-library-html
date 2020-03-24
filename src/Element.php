@@ -1280,4 +1280,51 @@ class Element {
         }
     }
 
+    protected function _toHtml($tag, $compressed = true, $level = 0){
+        $nl = ($compressed)? "" : "\n";
+        $tab = ($compressed)? "" : "    ";
+        $indent = ($compressed)? "" : str_pad("", ($level * 4));
+
+        $html = "";
+
+        if($tag != ""){
+            $html .= $indent . '<'.$tag.  $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
+        }
+
+        foreach ($this->children as $child) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+                $html .= $child->toHtml($compressed, $level + 1) . $nl;
+            } else {
+                if ($child == '') {
+                    $child = '&nbsp;';
+                }
+                $html .= $indent . $tab . $child . $nl;
+            }
+        }
+
+        if($tag != ""){
+            $html .= $indent . '</'.$tag.'>';
+        }
+
+        $html .= $this->_get_js();
+        
+        return $html;
+    }
+
+    private function _get_js($tab = "", $nl = "") {
+        $inline_css_and_scripts = "";
+        foreach ($this->js as $js) {
+            $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
+        }
+        $children = $this->childrenTraverse();
+        foreach ($children as $child) {
+            if ($child instanceof Element) {
+                foreach ($child->js as $js) {
+                    $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
+                }
+            }
+        }
+        return $inline_css_and_scripts;
+    }
+
 }
