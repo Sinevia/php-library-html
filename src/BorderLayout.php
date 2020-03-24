@@ -3,7 +3,7 @@
 // ========================================================================= //
 // SINEVIA PUBLIC                                        http://sinevia.com  //
 // ------------------------------------------------------------------------- //
-// COPYRIGHT (c) 2018 Sinevia Ltd                        All rights resrved! //
+// COPYRIGHT (c) 2020 Sinevia Ltd                        All rights resrved! //
 // ------------------------------------------------------------------------- //
 // LICENCE: All information contained herein is, and remains, property of    //
 // Sinevia Ltd at all times.  Any intellectual and technical concepts        //
@@ -34,11 +34,11 @@ namespace Sinevia\Html;
  *
  * // Using the shortcut function
  * $borderlayout = (new BorderLayout())
-     ->addTop("HEADER")
-     ->addCenter("CONTENT")
-     ->addBottom("FOOTER")
-     ->addLeft("MENU")
-     ->addRight("ADDS");
+  ->addTop("HEADER")
+  ->addCenter("CONTENT")
+  ->addBottom("FOOTER")
+  ->addLeft("MENU")
+  ->addRight("ADDS");
  * </code>
  * @package GUI
  */
@@ -50,9 +50,12 @@ class BorderLayout extends Element {
     const POSITION_RIGHT = 'right';
     const POSITION_TOP = 'top';
 
-    //========================= START OF METHOD ===========================//
-    //  CONSTRUCTOR: __construct                                           //
-    //=====================================================================//
+    public $containers = [];
+
+//========================= START OF METHOD ===========================//
+//  CONSTRUCTOR: __construct                                           //
+//=====================================================================//
+
     /**
      * The constructor of the BorderLayout element.
      * By default the BorderLayout stretches to fit its parent widget.
@@ -60,7 +63,6 @@ class BorderLayout extends Element {
      */
     function __construct() {
         parent::__construct();
-        $this->containers = array();
         $this->setWidth("100%");
         $this->setHeight("100%");
         $this->setSpacing(0);
@@ -94,24 +96,24 @@ class BorderLayout extends Element {
      * @return void
      */
     function addChild($widget, $position = "center", $halign = "center", $valign = "middle") {
-        //Obsolete:07.02.2007: if(is_string($widget)==true)$widget=s_label()->text($widget);
-        // Checking widget
+//Obsolete:07.02.2007: if(is_string($widget)==true)$widget=s_label()->text($widget);
+// Checking widget
         if (is_string($widget) == false && ($widget instanceof Element) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$widget</b> MUST BE a String or sublass of Sinevia\Html\Element - <b>' . (is_object($widget) ? get_class($widget) : gettype($widget)) . '</b> given!');
         }
         if (is_string($position) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$position</b> MUST BE of type String - <b>' . (is_object($position) ? get_class($position) : gettype($position)) . '</b> given!');
         }
-        // Checking position
+// Checking position
         $allowed_params = array("top", "bottom", "left", "right", "center");
         if (in_array($position, $allowed_params) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$position</b> MUST BE of type String(' . implode(", ", $allowed_params) . ') - <b>' . ($position) . '</b> given!');
         }
-        // Checking horizontal alignment
+// Checking horizontal alignment
         if (is_string($halign) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$halign</b> MUST BE of type String - <b>' . (is_object($halign) ? get_class($halign) : gettype($halign)) . '</b> given!');
         }
-        // Checking vertical alignment
+// Checking vertical alignment
         if (is_string($valign) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$valign</b> MUST BE of type String - <b>' . (is_object($valign) ? get_class($valign) : gettype($valign)) . '</b> given!');
         }
@@ -230,9 +232,10 @@ class BorderLayout extends Element {
         return $this;
     }
 
-    //========================= START OF METHOD ===========================//
-    //  METHOD: width                                                      //
-    //=====================================================================//
+//========================= START OF METHOD ===========================//
+//  METHOD: width                                                      //
+//=====================================================================//
+
     /** Gets the width of this BorderLayout.
      * @return mixed The width in pixels or percentage or an instance of this Widget
      * @throws IllegalArgumentException if parameter $width is not Integer or String(i.e 100%)
@@ -240,16 +243,17 @@ class BorderLayout extends Element {
      * @access public
      */
     function getWidth($width = null) {
-        $width = str_replace("px", "", $this->attribute('width'));
+        $width = str_replace("px", "", $this->getAttribute('width'));
         return is_numeric($width) ? (int) $width : $width;
     }
 
-    //=====================================================================//
-    //  METHOD: width                                                    //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: to_html                                                    //
-    //=====================================================================//
+//=====================================================================//
+//  METHOD: width                                                    //
+//========================== END OF METHOD ============================//
+//========================= START OF METHOD ===========================//
+//  METHOD: to_html                                                    //
+//=====================================================================//
+
     /**
      * Returns the HTML representation of this BorderLayout with its children.
      * @param compressed compresses the HTML, removing the new lines and indent
@@ -272,7 +276,7 @@ class BorderLayout extends Element {
 
         $html = $indent . '<table' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
 
-        // TOP CONTAINER
+// TOP CONTAINER
         if (isset($this->containers['top']) == true) {
             $container = $this->containers['top'];
             $html .= $indent . $tab . '<tr>' . $nl;
@@ -302,7 +306,7 @@ class BorderLayout extends Element {
             $html .= $indent . '<table  border="0" cellpadding="0" cellspacing="0" width="100%" style="height:100%">' . $nl;
             $html .= $indent . $tab . '<tr>' . $nl;
         }
-        // LEFT CONTAINER
+// LEFT CONTAINER
         if (isset($this->containers['left']) == true) {
             $container = $this->containers['left'];
             $html .= $indent . $tab . $tab . '<td';
@@ -322,7 +326,7 @@ class BorderLayout extends Element {
             }
             $html .= $indent . $tab . $tab . '</td>' . $nl;
         }
-        // CENTER CONTAINER
+// CENTER CONTAINER
         if (isset($this->containers['center']) == true) {
             $container = $this->containers['center'];
             $html .= $indent . $tab . $tab . '<td';
@@ -343,7 +347,7 @@ class BorderLayout extends Element {
             }
             $html .= $indent . $tab . $tab . '</td>' . $nl;
         }
-        // RIGHT CONTAINER
+// RIGHT CONTAINER
         if (isset($this->containers['right']) == true) {
             $container = $this->containers['right'];
             $html .= $indent . $tab . $tab . '<td';
@@ -371,7 +375,7 @@ class BorderLayout extends Element {
         if (isset($this->containers["left"]) || isset($this->containers["right"]) || isset($this->containers["center"])) {
             $html .= $indent . $tab . '</tr>' . $nl;
         }
-        // BOTTOM CONTAINER
+// BOTTOM CONTAINER
         if (isset($this->containers['bottom']) == true) {
             $container = $this->containers['bottom'];
             $html .= $indent . $tab . '<tr>' . $nl;
@@ -397,12 +401,13 @@ class BorderLayout extends Element {
         return $html;
     }
 
-    //=====================================================================//
-    //  METHOD: toHtml                                                    //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: toXhtml                                                   //
-    //=====================================================================//
+//=====================================================================//
+//  METHOD: toHtml                                                    //
+//========================== END OF METHOD ============================//
+//========================= START OF METHOD ===========================//
+//  METHOD: toXhtml                                                   //
+//=====================================================================//
+
     /**
      * Returns the XHTML representation of this BorderLayout with its children.
      * @param compressed compresses the XHTML, removing the new lines and indent
@@ -419,8 +424,9 @@ class BorderLayout extends Element {
             $tab = "";
             $indent = "";
         }
-        if (count($this->containers) == 0)
-            $this->child(g::label()->text("&nbsp;"), "center");
+        if (count($this->containers) == 0) {
+            $this->addChild("&nbsp;", "center");
+        }
         $html = $indent . '<table';
         if (count($this->attributes) > 0) {
             $html .= $this->attributesToHtml();
@@ -432,8 +438,9 @@ class BorderLayout extends Element {
         if (isset($this->containers['top']) == true) {
             $container = $this->containers['top'];
             // START: Vertical Align
-            if ($container->valign() !== null)
-                $container->getAttribute("valign", $container->valign());
+            if ($container->getValign() !== null) {
+                $container->getAttribute("valign", $container->getValign());
+            }
             // END: Vertical Align
             $html .= $indent . $tab . '<tr>' . $nl;
             $html .= $indent . $tab . $tab . '<td';
@@ -466,8 +473,9 @@ class BorderLayout extends Element {
         if (isset($this->containers['left']) == true) {
             $container = $this->containers['left'];
             // START: Vertical Align
-            if ($container->valign() !== null)
-                $container->attribute("valign", $container->valign());
+            if ($container->getValign() !== null) {
+                $container->getAttribute("valign", $container->getValign());
+            }
             // END: Vertical Align
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
@@ -490,8 +498,9 @@ class BorderLayout extends Element {
         if (isset($this->containers['center']) == true) {
             $container = $this->containers['center'];
             // START: Vertical Align
-            if ($container->valign() !== null)
-                $container->attribute("valign", $container->valign());
+            if ($container->getValign() !== null) {
+                $container->getAttribute("valign", $container->getValign());
+            }
             // END: Vertical Align
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
@@ -514,8 +523,9 @@ class BorderLayout extends Element {
         if (isset($this->containers['right']) == true) {
             $container = $this->containers['right'];
             // START: Vertical Align
-            if ($container->valign() !== null)
-                $container->attribute("valign", $container->valign());
+            if ($container->getValign() !== null) {
+                $container->getAttribute("valign", $container->getValign());
+            }
             // END: Vertical Align
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
@@ -546,8 +556,9 @@ class BorderLayout extends Element {
         if (isset($this->containers['bottom']) == true) {
             $container = $this->containers['bottom'];
             // START: Vertical Align
-            if ($container->valign() !== null)
-                $container->attribute("valign", $container->valign());
+            if ($container->getValign() !== null) {
+                $container->getAttribute("valign", $container->getValign());
+            }
             // END: Vertical Align
             $html .= $indent . $tab . '<tr>' . $nl;
             $html .= $indent . $tab . $tab . '<td';
@@ -571,12 +582,4 @@ class BorderLayout extends Element {
         $html .= $indent . '</table>';
         return $html;
     }
-
-    //=====================================================================//
-    //  METHOD: toXhtml                                                   //
-    //========================== END OF METHOD ============================//
 }
-
-//===========================================================================//
-// CLASS: BorderLayout                                                       //
-//============================== END OF CLASS ===============================//

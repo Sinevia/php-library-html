@@ -3,7 +3,7 @@
 // ========================================================================= //
 // SINEVIA PUBLIC                                        http://sinevia.com  //
 // ------------------------------------------------------------------------- //
-// COPYRIGHT (c) 2016 Sinevia Ltd                        All rights resrved! //
+// COPYRIGHT (c) 2020 Sinevia Ltd                        All rights resrved! //
 // ------------------------------------------------------------------------- //
 // LICENCE: All information contained herein is, and remains, property of    //
 // Sinevia Ltd at all times.  Any intellectual and technical concepts        //
@@ -24,7 +24,7 @@ namespace Sinevia\Html;
  * placing a favicon, enable/disable scrolling etc.
  * <code>
  * $webpage = new Webpage();
- * $webpage->child("The simplest webpage possible!");
+ * $webpage->addChild("The simplest webpage possible!");
  * $webpage->display();
  * </code>
  */
@@ -350,6 +350,7 @@ class Webpage extends Element {
         if ($this->getProperty("favicon") != null)
             $html .= $tab . '<link rel="icon" href="' . $this->getProperty("favicon") . '" type="image/x-icon">' . $nl;
         /* CSS and JavaScript */
+        $html .= $tab . '<style>html,body{width:100%;height:100%;}</style>';
         $html .= 'S_INLINE_CSS_AND_SCRIPTS';
         $html .= '</head>' . $nl;
         // END HEAD
@@ -431,6 +432,7 @@ class Webpage extends Element {
             $xhtml .= $tab . '<link rel="icon" href="' . $this->getProperty("favicon") . '" type="image/x-icon" />' . $nl;
         }
         /* CSS and JavaScript */
+        $xhtml .= $tab . '<style>html,body{width:100%;height:100%;}</style>';
         $xhtml .= 'S_INLINE_CSS_AND_SCRIPTS';
         $xhtml .= '</head>' . $nl;
         // END HEAD
