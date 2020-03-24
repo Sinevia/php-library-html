@@ -15,38 +15,23 @@
 
 namespace Sinevia\Html;
 
-//============================= START OF CLASS ==============================//
-// CLASS: Div                                                           //
-//===========================================================================//
 /**
- * Creates an HTML LightPanel. LightPanel uses div as outer container.
- * Take care that for the moment the vertical alignment "middle" has
- * problems with IE. If you intend to use it,please consider the usage
- * of the Panel widget.
+ * Creates a Section element
  * <code>
  * // Creating a new Div
- * $panel = new Div();
+ * $section = new Section();
  * </code>
  */
-class Div extends Element {
+class Section extends Element {
 
-    //========================= START OF METHOD ===========================//
-    //  CONSTRUCTOR: __construct                                           //
-    //=====================================================================//
     /**
-     * The constructor of this LightPanel.
+     * The constructor of this Section.
      * @construct
      */
     function __construct() {
         parent::__construct();
     }
 
-    //=====================================================================//
-    //  CONSTRUCTOR: __construct                                           //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: toHtml                                                    //
-    //=====================================================================//
     /**
      * Returns the HTML representation of this widget
      * @param Boolean whether the HTML output should be compressed
@@ -63,7 +48,7 @@ class Div extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<div' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
+        $html = $indent . '<section' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
@@ -71,16 +56,10 @@ class Div extends Element {
                 $html .= $indent . $tab . $child . $nl;
             }
         }
-        $html .= $indent . '</div>';
+        $html .= $indent . '</section>';
         return $html;
     }
-
-    //=====================================================================//
-    //  METHOD: toHtml                                                    //
-    //========================== END OF METHOD ============================//
-    //========================= START OF METHOD ===========================//
-    //  METHOD: toXhtml                                                   //
-    //=====================================================================//
+    
     /**
      * Returns the XHTML representation of this widget
      * @param Boolean whether the XHTML output should be compressed
@@ -97,7 +76,7 @@ class Div extends Element {
             $tab = "";
             $indent = "";
         }
-        $html = $indent . '<div' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
+        $html = $indent . '<section' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toXhtml($compressed, $level + 1) . $nl;
@@ -105,7 +84,7 @@ class Div extends Element {
                 $html .= $indent . $tab . $child . $nl;
             }
         }
-        $html .= $indent . '</div>';
+        $html .= $indent . '</section>';
         return $html;
     }
 
