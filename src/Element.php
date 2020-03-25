@@ -99,6 +99,30 @@ class Element {
         return $this;
     }
 
+    /**
+     * Adds an inline JavaScript to this Element
+     * @return Element or an instance of this Element
+     * @throws \InvalidArgumentException if the supplied argument is not String
+     * @access public
+     */
+    function addJavaScript($js, $priority=0) {
+        if (is_string($js) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setJavaScipt($id): Parameter $js MUST BE of type String - ' . gettype($js) . ' given!');
+        }
+        $this->js[] = [$js, $priority];
+        return $this;
+    }
+
+    /**
+     * Adds a JavaScript file to the Element
+     * @param string $js_file
+     * @return Element an instance of this Element
+     */
+    function addJavaScriptFile($js_file, $priority=0) {
+        $this->js_files[] = [$js_file, $priority];
+        return $this;
+    }
+
     /** Returns, whether the Element has children
      * @access public
      */
@@ -1313,7 +1337,14 @@ class Element {
 
     private function _get_js($tab = "", $nl = "") {
         $inline_css_and_scripts = "";
-        foreach ($this->js as $js) {
+        foreach ($this->js as $entry) {
+            if(is_array($entry)){
+                $js = $entry[0] ?? '';
+                $priority = $entry[1] ?? 0;
+            } else {
+                $js = $entry;
+                $priority = 0;
+            }
             $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
         }
         $children = $this->childrenTraverse();

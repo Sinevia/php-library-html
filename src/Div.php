@@ -54,6 +54,8 @@ class Div extends Element {
      * @return String the HTML representation of this widget
      */
     function toHtml($compressed = true, $level = 0) {
+        return $this->_toHtml('div', $compressed, $level);
+        
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
