@@ -29,7 +29,7 @@ trait ElementJavaScriptTrait {
         if (is_string($js) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setJavaScipt($id): Parameter $js MUST BE of type String - ' . gettype($js) . ' given!');
         }
-        $this->js[] = [$js, $priority];
+        $this->js[] = [$js, $priority, 'script'];
         return $this;
     }
 
@@ -39,7 +39,7 @@ trait ElementJavaScriptTrait {
      * @return Element an instance of this Element
      */
     function addJavaScriptFile($js_file, $priority=0) {
-        $this->js_files[] = [$js_file, $priority];
+        $this->js_files[] = [$js_file, $priority, 'file'];
         return $this;
     }
 
@@ -73,11 +73,14 @@ trait ElementJavaScriptTrait {
         if($this->hasParent()==true){
             return ''; 
         }
-        $scripts = $this->js;
+        $scripts = array_merge($this->js, $this->js_files);
         $children = $this->childrenTraverse();
         foreach ($children as $child) {
             if ($child instanceof Element) {
                 foreach ($child->js as $entry) {
+                    $scripts[] = $entry;
+                }
+                foreach ($child->js_files as $entry) {
                     $scripts[] = $entry;
                 }
             }
@@ -88,19 +91,28 @@ trait ElementJavaScriptTrait {
             if(is_array($entry)){
                 $js = $entry[0] ?? '';
                 $priority = $entry[1] ?? 0;
+                $type = $entry[2] ?? 'script';
             } else {
                 $js = $entry;
                 $priority = 0;
+                $type = 'script';
             }
-            $scripts[$index] = [$js, $priority];
+            $scripts[$index] = [$js, $priority, $type];
         }
 
-        array_multisort (array_column($scripts, 0), SORT_DESC, $scripts); // Sort by priority
+        array_multisort (array_column($scripts, 1), SORT_NUMERIC, SORT_DESC, $scripts); // Sort by priority
 
         $html = "";
         foreach ($scripts as $script) {
             $js = $script[0];
-            $html .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
+            $type = $script[2];
+
+            if ($type == "file") {
+                $html .= $tab . '<script type="text/javascript" src="' . $js . '"></script>' . $nl;
+            }
+            if ($type == "script") {
+                $html .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
+            }
         }
 
         return $html;
