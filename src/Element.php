@@ -123,11 +123,20 @@ class Element {
         return $this;
     }
 
-    /** Returns, whether the Element has children
+    /** 
+     * Returns, whether this Element has children
      * @access public
      */
     function hasChildren() {
         return count($this->children) ? true : false;
+    }
+
+    /** 
+     * Returns, whether this Element has parent
+     * @access public
+     */
+    function hasParent() {
+        return is_null($this->parent) ? false : true;
     }
 
     /** Returns the children of this Element.
@@ -1316,7 +1325,7 @@ class Element {
         }
 
         foreach ($this->children as $child) {
-            if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
+            if (is_object($child) && is_subclass_of($child, "Sinevia\Html\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
             } else {
                 if ($child == '') {
@@ -1336,6 +1345,9 @@ class Element {
     }
 
     private function _get_js($tab = "", $nl = "") {
+        if($this->hasParent()==true){
+            return ''; 
+        }
         $inline_css_and_scripts = "";
         foreach ($this->js as $entry) {
             if(is_array($entry)){
@@ -1350,7 +1362,14 @@ class Element {
         $children = $this->childrenTraverse();
         foreach ($children as $child) {
             if ($child instanceof Element) {
-                foreach ($child->js as $js) {
+                foreach ($child->js as $entry) {
+                    if(is_array($entry)){
+                        $js = $entry[0] ?? '';
+                        $priority = $entry[1] ?? 0;
+                    } else {
+                        $js = $entry;
+                        $priority = 0;
+                    }
                     $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
                 }
             }
