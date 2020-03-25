@@ -36,9 +36,9 @@ class JavascriptTest extends \PHPUnit\Framework\TestCase
         $result = '';
         $result .= '<div></div>';
         $result .= '<div></div>';        
-        $result .= '<script type="text/javascript">alert("1")</script>';
-        $result .= '<script type="text/javascript">alert("2")</script>';
         $result .= '<script type="text/javascript">alert("3")</script>';
+        $result .= '<script type="text/javascript">alert("2")</script>';
+        $result .= '<script type="text/javascript">alert("1")</script>';
 
         $this->assertEquals($container->toHtml(), $result);
     }

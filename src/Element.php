@@ -24,14 +24,13 @@ namespace Sinevia\Html;
  * </code>
  */
 class Element {
+    use ElementJavaScriptTrait;
 
     protected $attributes = array(); // Attributes
     protected $css = array();       // Inline CSS
     protected $css_files = array(); // External CSS Files
     protected $children = array();  // Children
     protected $id = '';             // ID
-    protected $js = array();        // Inline JavaScript
-    protected $js_files = array();  // External JS Files
     protected $layout = null;       // Layout
     public $parent = null;       // Parent :: Public because of child!:: Don't use directly!
     protected $property = array();  // Properties
@@ -96,30 +95,6 @@ class Element {
 // 				$this->css = array_merge($this->css,$element->css);
             }
         }
-        return $this;
-    }
-
-    /**
-     * Adds an inline JavaScript to this Element
-     * @return Element or an instance of this Element
-     * @throws \InvalidArgumentException if the supplied argument is not String
-     * @access public
-     */
-    function addJavaScript($js, $priority=0) {
-        if (is_string($js) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setJavaScipt($id): Parameter $js MUST BE of type String - ' . gettype($js) . ' given!');
-        }
-        $this->js[] = [$js, $priority];
-        return $this;
-    }
-
-    /**
-     * Adds a JavaScript file to the Element
-     * @param string $js_file
-     * @return Element an instance of this Element
-     */
-    function addJavaScriptFile($js_file, $priority=0) {
-        $this->js_files[] = [$js_file, $priority];
         return $this;
     }
 
@@ -861,30 +836,6 @@ class Element {
     }
 
     /**
-     * Adds an inline JavaScript of this Element
-     * @return Element or an instance of this Element
-     * @throws \InvalidArgumentException if the supplied argument is not String
-     * @access public
-     */
-    function setJavaScript($js) {
-        if (is_string($js) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setJavaScipt($id): Parameter $js MUST BE of type String - ' . gettype($js) . ' given!');
-        }
-        $this->js[] = $js;
-        return $this;
-    }
-
-    /**
-     * Adds a CSS stylesheet to the Element
-     * @param unknown $css_file
-     * @return \Sinevia\Ui\Element
-     */
-    function setJavaScriptFile($js_file) {
-        $this->js_files[] = $js_file;
-        return $this;
-    }
-
-    /**
      * Sets the margin of this Element.
      * @param int margin from the top of the widget
      * @param int margin from the left of the widget
@@ -1342,39 +1293,6 @@ class Element {
         $html .= $this->_get_js();
         
         return $html;
-    }
-
-    private function _get_js($tab = "", $nl = "") {
-        if($this->hasParent()==true){
-            return ''; 
-        }
-        $inline_css_and_scripts = "";
-        foreach ($this->js as $entry) {
-            if(is_array($entry)){
-                $js = $entry[0] ?? '';
-                $priority = $entry[1] ?? 0;
-            } else {
-                $js = $entry;
-                $priority = 0;
-            }
-            $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
-        }
-        $children = $this->childrenTraverse();
-        foreach ($children as $child) {
-            if ($child instanceof Element) {
-                foreach ($child->js as $entry) {
-                    if(is_array($entry)){
-                        $js = $entry[0] ?? '';
-                        $priority = $entry[1] ?? 0;
-                    } else {
-                        $js = $entry;
-                        $priority = 0;
-                    }
-                    $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
-                }
-            }
-        }
-        return $inline_css_and_scripts;
     }
 
 }
