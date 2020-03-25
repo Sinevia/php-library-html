@@ -351,7 +351,7 @@ class Webpage extends Element {
             $html .= $tab . '<link rel="icon" href="' . $this->getProperty("favicon") . '" type="image/x-icon">' . $nl;
         /* CSS and JavaScript */
         $html .= $tab . '<style>html,body{width:100%;height:100%;}</style>';
-        $html .= 'S_INLINE_CSS_AND_SCRIPTS';
+        $html .= 'S_STYLES';
         $html .= '</head>' . $nl;
         // END HEAD
         // START: BODY
@@ -366,22 +366,18 @@ class Webpage extends Element {
                 $html .= $indent . $tab . $child . $nl;
             }
         }
+        $html .= 'S_SCRIPTS';
         $html .= '</body>' . $nl;
         // END: BODY
         $html .= '</html>';
 
-        // GETTING THE CSS AND JS :: HACK IN ORDER TO INITIALIZE ALL
-        $inline_css_and_scripts = "";
         /* External CSS Files */
-        $inline_css_and_scripts .= $this->_get_css_files($tab, $nl);
-        /* Inline CSS Styles */
-        //$inline_css_and_scripts .= $this->_get_css($tab, $nl);
-        /* External JavaScript Files */
-        $inline_css_and_scripts .= $this->_get_js_files($tab, $nl);
-        /* Inline JavaScript Scripts */
-        $inline_css_and_scripts .= $this->_get_js($tab, $nl);
+        $styles = $this->_get_css_files($tab, $nl);
+        $scripts = $this->_get_js($tab, $nl);
         /* Adding all (external and inline) CSS and JavaScript */
-        $html = implode($inline_css_and_scripts, explode('S_INLINE_CSS_AND_SCRIPTS', $html));
+        $html = implode($styles, explode('S_STYLES', $html));
+        $html = implode($scripts, explode('S_SCRIPTS', $html));
+        
         return $html;
     }
 
@@ -506,41 +502,41 @@ class Webpage extends Element {
         return $inline_css_and_scripts;
     }
 
-    private function _get_js($tab = "", $nl = "") {
-        $inline_css_and_scripts = "";
-        foreach ($this->js as $js) {
-            $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
-        }
-        $children = $this->childrenTraverse();
-        foreach ($children as $child) {
-            if ($child instanceof Element) {
-                foreach ($child->js as $js) {
-                    $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
-                }
-            }
-        }
-        return $inline_css_and_scripts;
-    }
+    // private function _get_js($tab = "", $nl = "") {
+    //     $inline_css_and_scripts = "";
+    //     foreach ($this->js as $js) {
+    //         $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
+    //     }
+    //     $children = $this->childrenTraverse();
+    //     foreach ($children as $child) {
+    //         if ($child instanceof Element) {
+    //             foreach ($child->js as $js) {
+    //                 $inline_css_and_scripts .= $tab . '<script type="text/javascript">' . $js . '</script>' . $nl;
+    //             }
+    //         }
+    //     }
+    //     return $inline_css_and_scripts;
+    // }
 
-    private function _get_js_files($tab = "", $nl = "") {
-        $inline_css_and_scripts = "";
-        $js_files = $this->js_files;
-        foreach ($this->childrenTraverse() as $child) {
-            if ($child instanceof Element) {
-                $js_files = array_merge($js_files, $child->js_files);
-            }
-        }
-        $js_files = array_unique($js_files);
-        foreach ($js_files as $js) {
-            // If Local GZIP compress!
-            //if (stripos($js, s::rurl()) !== false) {
-            //    $js = s::url_to_path($js);
-            //    $js = s::surl() . "/includes/phpc.php?f=" . base64_encode($js);
-            //}
-            $inline_css_and_scripts .= $tab . '<script src="' . $js . '" type="text/javascript"></script>' . $nl;
-        }
-        return $inline_css_and_scripts;
-    }
+    // private function _get_js_files($tab = "", $nl = "") {
+    //     $inline_css_and_scripts = "";
+    //     $js_files = $this->js_files;
+    //     foreach ($this->childrenTraverse() as $child) {
+    //         if ($child instanceof Element) {
+    //             $js_files = array_merge($js_files, $child->js_files);
+    //         }
+    //     }
+    //     $js_files = array_unique($js_files);
+    //     foreach ($js_files as $js) {
+    //         // If Local GZIP compress!
+    //         //if (stripos($js, s::rurl()) !== false) {
+    //         //    $js = s::url_to_path($js);
+    //         //    $js = s::surl() . "/includes/phpc.php?f=" . base64_encode($js);
+    //         //}
+    //         $inline_css_and_scripts .= $tab . '<script src="' . $js . '" type="text/javascript"></script>' . $nl;
+    //     }
+    //     return $inline_css_and_scripts;
+    // }
 
 }
 

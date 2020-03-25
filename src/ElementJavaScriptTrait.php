@@ -69,7 +69,7 @@ trait ElementJavaScriptTrait {
         return $this;
     }
 
-    private function _get_js($tab = "", $nl = "") {
+    protected function _get_js($tab = "", $nl = "") {
         if($this->hasParent()==true){
             return ''; 
         }
