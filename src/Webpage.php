@@ -429,7 +429,7 @@ class Webpage extends Element {
         }
         /* CSS and JavaScript */
         $xhtml .= $tab . '<style>html,body{width:100%;height:100%;}</style>';
-        $xhtml .= 'S_INLINE_CSS_AND_SCRIPTS';
+        $xhtml .= 'S_STYLES';
         $xhtml .= '</head>' . $nl;
         // END HEAD
         // START: BODY
@@ -443,22 +443,17 @@ class Webpage extends Element {
                 $xhtml .= $indent . $tab . $child . $nl;
             }
         }
+        $xhtml .= 'S_SCRIPTS';
         $xhtml .= '</body>' . $nl;
         // END: BODY
         $xhtml .= '</html>';
 
-        // GETTING THE CSS AND JS :: HACK IN ORDER TO INITIALIZE ALL
-        $inline_css_and_scripts = "";
         /* External CSS Files */
-        $inline_css_and_scripts .= $this->_get_css_files($tab, $nl);
-        /* Inline CSS Styles */
-        //$inline_css_and_scripts .= $this->_get_css($tab, $nl);
-        /* External JavaScript Files */
-        $inline_css_and_scripts .= $this->_get_js_files($tab, $nl);
-        /* Inline JavaScript Scripts */
-        $inline_css_and_scripts .= $this->_get_js($tab, $nl);
+        $styles = $this->_get_css_files($tab, $nl);
+        $scripts = $this->_get_js($tab, $nl);
         /* Adding all (external and inline) CSS and JavaScript */
-        $xhtml = implode($inline_css_and_scripts, explode('S_INLINE_CSS_AND_SCRIPTS', $xhtml));
+        $xhtml = implode($styles, explode('S_STYLES', $xhtml));
+        $xhtml = implode($scripts, explode('S_SCRIPTS', $xhtml));
         return $xhtml;
     }
 
