@@ -3,7 +3,7 @@
 // ========================================================================= //
 // SINEVIA PUBLIC                                        http://sinevia.com  //
 // ------------------------------------------------------------------------- //
-// COPYRIGHT (c) 2018 Sinevia Ltd                        All rights resrved! //
+// COPYRIGHT (c) 2020 Sinevia Ltd                        All rights resrved! //
 // ------------------------------------------------------------------------- //
 // LICENCE: All information contained herein is, and remains, property of    //
 // Sinevia Ltd at all times.  Any intellectual and technical concepts        //
@@ -54,7 +54,7 @@ class Label extends Element {
         if ($this->getProperty('text') == null) {
             $this->getProperty('text', "&nbsp;");
         }
-        $html = $indent . '<span' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
+        $html = $indent . '<label' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         foreach ($this->children as $child) {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
