@@ -42,15 +42,10 @@ class Label extends Element {
      * @return String html string
      */
     function toHtml($compressed = true, $level = 0) {
-        if ($compressed == false) {
-            $nl = "\n";
-            $tab = "    ";
-            $indent = str_pad("", ($level * 4));
-        } else {
-            $nl = "";
-            $tab = "";
-            $indent = "";
-        }
+        $nl = ($compressed) ? "" : "\n";
+        $tab = ($compressed) ? "" : "    ";
+        $indent = ($compressed) ? "" : str_pad("", ($level * 4));
+
         if ($this->getProperty('text') == null) {
             $this->getProperty('text', "&nbsp;");
         }
@@ -59,12 +54,13 @@ class Label extends Element {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
                 $html .= $child->toHtml($compressed, $level + 1) . $nl;
             } else {
-                if ($child == '')
+                if ($child == '') {
                     $child = '&nbsp;';
+                }
                 $html .= $indent . $tab . $child . $nl;
             }
         }
-        $html .= $indent . '</span>';
+        $html .= $indent . '</label>';
         return $html;
     }
 
@@ -75,15 +71,10 @@ class Label extends Element {
      * @return String html string
      */
     function toXhtml($compressed = true, $level = 0) {
-        if ($compressed == false) {
-            $nl = "\n";
-            $tab = "    ";
-            $indent = str_pad("", ($level * 4));
-        } else {
-            $nl = "";
-            $tab = "";
-            $indent = "";
-        }
+        $nl = ($compressed) ? "" : "\n";
+        $tab = ($compressed) ? "" : "    ";
+        $indent = ($compressed) ? "" : str_pad("", ($level * 4));
+
         if ($this->getProperty('text') == null) {
             $this->getProperty('text', "&nbsp;");
         }
@@ -92,8 +83,9 @@ class Label extends Element {
             if (is_object($child) && is_subclass_of($child, "Sinevia\Ui\Element")) {
                 $html .= $child->toXhtml($compressed, $level + 1) . $nl;
             } else {
-                if ($child == '')
+                if ($child == '') {
                     $child = '&nbsp;';
+                }
                 $html .= $indent . $tab . $child . $nl;
             }
         }
