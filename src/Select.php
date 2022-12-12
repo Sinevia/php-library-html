@@ -34,7 +34,8 @@ namespace Sinevia\Html;
  * }
  * </code>
  */
-class Select extends Element {
+class Select extends Element
+{
 
     protected $items = [];
 
@@ -42,7 +43,8 @@ class Select extends Element {
      * The constructor of this Select widget.
      * @construct
      */
-    function __construct($items = array()) {
+    function __construct($items = array())
+    {
         parent::__construct();
         if (is_array($items)) {
             $this->addItems($items);
@@ -57,7 +59,8 @@ class Select extends Element {
      * @param string $value
      * @param string $selected
      */
-    function addItem($key, $value, $selected = "") {
+    function addItem($key, $value, $selected = "")
+    {
         if ($selected == "") {
             $this->items[] = array($key, $value, $selected);
         } else {
@@ -71,7 +74,8 @@ class Select extends Element {
      * @param array $items Associative array
      * @return $this
      */
-    function addItems($items) {
+    function addItems($items)
+    {
         if (is_array($items) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>addItems($action)</b>: Parameter <b>$items</b> MUST BE of type Array - <b style="color:red">' . gettype($$items) . '</b> given!', E_USER_ERROR);
         }
@@ -86,7 +90,8 @@ class Select extends Element {
      * @return boolean The multiple as Boolean
      * @access public
      */
-    function getMultiple() {
+    function getMultiple()
+    {
         return ($this->getAttribute("multiple") == "multiple") ? true : false;
     }
 
@@ -95,7 +100,8 @@ class Select extends Element {
      * @return mixed The onchange event as String (null, if not set)
      * @access public
      */
-    function getOnChange() {
+    function getOnChange()
+    {
         return $this->getAttribute("onchange");
     }
 
@@ -104,7 +110,8 @@ class Select extends Element {
      * @return mixed The rows as Integer (null, if not set)
      * @access public
      */
-    function getRows() {
+    function getRows()
+    {
         return $this->getAttribute("size");
     }
 
@@ -114,7 +121,8 @@ class Select extends Element {
      * @param int the level of this widget in the widgets' hierarchy
      * @return String the HTML code of this widget
      */
-    function toHtml($compressed = true, $level = 0) {
+    function toHtml($compressed = true, $level = 0)
+    {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -138,7 +146,8 @@ class Select extends Element {
      * @param int the level of this widget in the widgets' hierarchy
      * @return String the HTML code of this widget
      */
-    function toXhtml($compressed = true, $level = 0) {
+    function toXhtml($compressed = true, $level = 0)
+    {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -161,7 +170,8 @@ class Select extends Element {
      * @return void The permission as Boolean or an instance of this Select
      * @access public
      */
-    function setMultiple($isMultiple) {
+    function setMultiple($isMultiple)
+    {
         if (is_bool($isMultiple) == false) {
             throw new \InvalidArgumentException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>setMultiple($multiple)</b>: Parameter <b>$isMultiple</b> MUST BE of type Boolean - <b style="color:red">' . gettype($isMultiple) . '</b> given!');
         }
@@ -184,7 +194,8 @@ class Select extends Element {
      * @param String the JavaScript action
      * @todo To add Ajax
      */
-    function setOnChange($action) {
+    function setOnChange($action)
+    {
         if (is_string($action) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>onChange($action)</b>: Parameter <b>$action</b> MUST BE of type String - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
         }
@@ -206,7 +217,8 @@ class Select extends Element {
      * @return mixed The rows as Integer (null, if not set) or an instance of this Select
      * @access public
      */
-    function setRows($numberOfRows) {
+    function setRows($numberOfRows)
+    {
         if (is_int($numberOfRows) == false) {
             throw new \InvalidArgumentException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>rows($rows)</b>: Parameter <b>$rows</b> MUST BE of type Integer - <b style="color:red">' . gettype($numberOfRows) . '</b> given!');
         }
@@ -221,7 +233,8 @@ class Select extends Element {
      * @param string $key
      * @return $this
      */
-    function setSelectedItem($key) {
+    function setSelectedItem($key)
+    {
         foreach ($this->items as $index => $entry) {
             if ($entry[0] == $key) {
                 $entry[2] = 'selected="selected"';
@@ -232,5 +245,4 @@ class Select extends Element {
         }
         return $this;
     }
-
 }

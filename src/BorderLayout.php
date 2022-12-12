@@ -42,7 +42,8 @@ namespace Sinevia\Html;
  * </code>
  * @package GUI
  */
-class BorderLayout extends Element {
+class BorderLayout extends Element
+{
 
     const POSITION_BOTTOM = 'bottom';
     const POSITION_CENTER = 'center';
@@ -52,16 +53,17 @@ class BorderLayout extends Element {
 
     public $containers = [];
 
-//========================= START OF METHOD ===========================//
-//  CONSTRUCTOR: __construct                                           //
-//=====================================================================//
+    //========================= START OF METHOD ===========================//
+    //  CONSTRUCTOR: __construct                                           //
+    //=====================================================================//
 
     /**
      * The constructor of the BorderLayout element.
      * By default the BorderLayout stretches to fit its parent widget.
      * @construct
      */
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->setWidth("100%");
         $this->setHeight("100%");
@@ -95,25 +97,26 @@ class BorderLayout extends Element {
      * @throws IllegalArgumentException if the supplied parameters, are not of the right type
      * @return void
      */
-    function addChild($widget, $position = "center", $halign = "center", $valign = "middle") {
-//Obsolete:07.02.2007: if(is_string($widget)==true)$widget=s_label()->text($widget);
-// Checking widget
+    function addChild($widget, $position = "center", $halign = "center", $valign = "middle")
+    {
+        //Obsolete:07.02.2007: if(is_string($widget)==true)$widget=s_label()->text($widget);
+        // Checking widget
         if (is_string($widget) == false && ($widget instanceof Element) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$widget</b> MUST BE a String or sublass of Sinevia\Html\Element - <b>' . (is_object($widget) ? get_class($widget) : gettype($widget)) . '</b> given!');
         }
         if (is_string($position) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$position</b> MUST BE of type String - <b>' . (is_object($position) ? get_class($position) : gettype($position)) . '</b> given!');
         }
-// Checking position
+        // Checking position
         $allowed_params = array("top", "bottom", "left", "right", "center");
         if (in_array($position, $allowed_params) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$position</b> MUST BE of type String(' . implode(", ", $allowed_params) . ') - <b>' . ($position) . '</b> given!');
         }
-// Checking horizontal alignment
+        // Checking horizontal alignment
         if (is_string($halign) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$halign</b> MUST BE of type String - <b>' . (is_object($halign) ? get_class($halign) : gettype($halign)) . '</b> given!');
         }
-// Checking vertical alignment
+        // Checking vertical alignment
         if (is_string($valign) == false) {
             throw new \RuntimeException('In class <b>' . get_class($this) . '</b> in method <b>child($widget,$position,$halign,$valign)</b>: Parameter <b>$valign</b> MUST BE of type String - <b>' . (is_object($valign) ? get_class($valign) : gettype($valign)) . '</b> given!');
         }
@@ -144,7 +147,8 @@ class BorderLayout extends Element {
      * @throws IllegalArgumentException if parameter $padding is not Integer
      * @return mixed the spacing (as Integer) or an instance of this widget
      */
-    function getPadding($padding = null, $left = 0, $bottom = 0, $right = 0) {
+    function getPadding($padding = null, $left = 0, $bottom = 0, $right = 0)
+    {
         return (int) $this->getAttribute("cellpadding");
     }
 
@@ -154,7 +158,8 @@ class BorderLayout extends Element {
      * @throws InvalidArgumentException if parameter $padding is not Integer
      * @return mixed the spacing (as Integer) or an instance of this widget
      */
-    function setPadding($padding = null, $left = 0, $bottom = 0, $right = 0) {
+    function setPadding($padding = null, $left = 0, $bottom = 0, $right = 0)
+    {
         if (is_int($padding) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($padding)</b>: Parameter <b>$padding</b> MUST BE of type Integer - <b>' . (is_object($padding) ? get_class($padding) : gettype($padding)) . '</b> given!');
         }
@@ -168,7 +173,8 @@ class BorderLayout extends Element {
      * @throws InvalidArgumentException if parameter $spacing is not Integer
      * @return mixed the spacing (as Integer) or an instance of this widget
      */
-    function setSpacing($spacing) {
+    function setSpacing($spacing)
+    {
         if (is_int($spacing) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>spacing($spacing)</b>: Parameter <b>$spacing</b> MUST BE of type Integer - <b>' . (is_object($spacing) ? get_class($spacing) : gettype($spacing)) . '</b> given!');
         }
@@ -182,31 +188,37 @@ class BorderLayout extends Element {
      * @throws IllegalArgumentException if parameter $spacing is not Integer
      * @return mixed the spacing (as Integer) or an instance of this widget
      */
-    function getSpacing($spacing = null) {
+    function getSpacing($spacing = null)
+    {
         return (int) $this->getAttribute("cellspacing");
     }
 
-    function addTop($widget, $halign = "center", $valign = "middle") {
+    function addTop($widget, $halign = "center", $valign = "middle")
+    {
         $this->addChild($widget, "top", $halign, $valign);
         return $this;
     }
 
-    function addBottom($widget, $halign = "center", $valign = "middle") {
+    function addBottom($widget, $halign = "center", $valign = "middle")
+    {
         $this->addChild($widget, "bottom", $halign, $valign);
         return $this;
     }
 
-    function addLeft($widget, $halign = "center", $valign = "middle") {
+    function addLeft($widget, $halign = "center", $valign = "middle")
+    {
         $this->addChild($widget, "left", $halign, $valign);
         return $this;
     }
 
-    function addRight($widget, $halign = "center", $valign = "middle") {
+    function addRight($widget, $halign = "center", $valign = "middle")
+    {
         $this->addChild($widget, "right", $halign, $valign);
         return $this;
     }
 
-    function addCenter($widget, $halign = "center", $valign = "middle") {
+    function addCenter($widget, $halign = "center", $valign = "middle")
+    {
         $this->addChild($widget, "center", $halign, $valign);
         return $this;
     }
@@ -217,7 +229,8 @@ class BorderLayout extends Element {
      * @tested true
      * @access public
      */
-    function setWidth($width) {
+    function setWidth($width)
+    {
         if ($width !== null && is_numeric($width) == false && (is_string($width) == true && substr($width, -1) == "%") == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>width($width)</b>: Parameter <b>$width</b> MUST BE of type Integer or String(i.e "100%") - <b style="color:red">' . (is_object($width) ? get_class($width) : gettype($width)) . '</b> given!');
         }
@@ -232,9 +245,9 @@ class BorderLayout extends Element {
         return $this;
     }
 
-//========================= START OF METHOD ===========================//
-//  METHOD: width                                                      //
-//=====================================================================//
+    //========================= START OF METHOD ===========================//
+    //  METHOD: width                                                      //
+    //=====================================================================//
 
     /** Gets the width of this BorderLayout.
      * @return mixed The width in pixels or percentage or an instance of this Widget
@@ -242,17 +255,18 @@ class BorderLayout extends Element {
      * @tested true
      * @access public
      */
-    function getWidth($width = null) {
+    function getWidth($width = null)
+    {
         $width = str_replace("px", "", $this->getAttribute('width'));
         return is_numeric($width) ? (int) $width : $width;
     }
 
-//=====================================================================//
-//  METHOD: width                                                    //
-//========================== END OF METHOD ============================//
-//========================= START OF METHOD ===========================//
-//  METHOD: to_html                                                    //
-//=====================================================================//
+    //=====================================================================//
+    //  METHOD: width                                                    //
+    //========================== END OF METHOD ============================//
+    //========================= START OF METHOD ===========================//
+    //  METHOD: to_html                                                    //
+    //=====================================================================//
 
     /**
      * Returns the HTML representation of this BorderLayout with its children.
@@ -260,7 +274,8 @@ class BorderLayout extends Element {
      * @param level the level of this widget
      * @return String html string
      */
-    function toHtml($compressed = true, $level = 0) {
+    function toHtml($compressed = true, $level = 0)
+    {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -276,16 +291,18 @@ class BorderLayout extends Element {
 
         $html = $indent . '<table' . $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
 
-// TOP CONTAINER
+        // TOP CONTAINER
         if (isset($this->containers['top']) == true) {
             $container = $this->containers['top'];
             $html .= $indent . $tab . '<tr>' . $nl;
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toHtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -306,15 +323,17 @@ class BorderLayout extends Element {
             $html .= $indent . '<table  border="0" cellpadding="0" cellspacing="0" width="100%" style="height:100%">' . $nl;
             $html .= $indent . $tab . '<tr>' . $nl;
         }
-// LEFT CONTAINER
+        // LEFT CONTAINER
         if (isset($this->containers['left']) == true) {
             $container = $this->containers['left'];
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toHtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -326,15 +345,17 @@ class BorderLayout extends Element {
             }
             $html .= $indent . $tab . $tab . '</td>' . $nl;
         }
-// CENTER CONTAINER
+        // CENTER CONTAINER
         if (isset($this->containers['center']) == true) {
             $container = $this->containers['center'];
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
 
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toHtml($compressed, ($level + 3)) . $nl;
@@ -347,15 +368,17 @@ class BorderLayout extends Element {
             }
             $html .= $indent . $tab . $tab . '</td>' . $nl;
         }
-// RIGHT CONTAINER
+        // RIGHT CONTAINER
         if (isset($this->containers['right']) == true) {
             $container = $this->containers['right'];
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toHtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -375,16 +398,18 @@ class BorderLayout extends Element {
         if (isset($this->containers["left"]) || isset($this->containers["right"]) || isset($this->containers["center"])) {
             $html .= $indent . $tab . '</tr>' . $nl;
         }
-// BOTTOM CONTAINER
+        // BOTTOM CONTAINER
         if (isset($this->containers['bottom']) == true) {
             $container = $this->containers['bottom'];
             $html .= $indent . $tab . '<tr>' . $nl;
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toHtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -401,12 +426,12 @@ class BorderLayout extends Element {
         return $html;
     }
 
-//=====================================================================//
-//  METHOD: toHtml                                                    //
-//========================== END OF METHOD ============================//
-//========================= START OF METHOD ===========================//
-//  METHOD: toXhtml                                                   //
-//=====================================================================//
+    //=====================================================================//
+    //  METHOD: toHtml                                                    //
+    //========================== END OF METHOD ============================//
+    //========================= START OF METHOD ===========================//
+    //  METHOD: toXhtml                                                   //
+    //=====================================================================//
 
     /**
      * Returns the XHTML representation of this BorderLayout with its children.
@@ -414,7 +439,8 @@ class BorderLayout extends Element {
      * @param level the level of this widget
      * @return String html string
      */
-    function toXhtml($compressed = true, $level = 0) {
+    function toXhtml($compressed = true, $level = 0)
+    {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -430,9 +456,11 @@ class BorderLayout extends Element {
         $html = $indent . '<table';
         if (count($this->attributes) > 0) {
             $html .= $this->attributesToHtml();
-        } if (count($this->css) > 0) {
+        }
+        if (count($this->css) > 0) {
             $html .= ' ' . $this->cssToHtml();
-        } $html .= '>' . $nl;
+        }
+        $html .= '>' . $nl;
 
         // TOP CONTAINER
         if (isset($this->containers['top']) == true) {
@@ -446,9 +474,11 @@ class BorderLayout extends Element {
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->to_xhtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -480,9 +510,11 @@ class BorderLayout extends Element {
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toXhtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -505,9 +537,11 @@ class BorderLayout extends Element {
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toXhtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -530,9 +564,11 @@ class BorderLayout extends Element {
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toXhtml($compressed, ($level + 3)) . $nl;
             } else {
@@ -564,9 +600,11 @@ class BorderLayout extends Element {
             $html .= $indent . $tab . $tab . '<td';
             if (count($container->attributes) > 0) {
                 $html .= $container->attributesToHtml();
-            } if (count($container->css) > 0) {
+            }
+            if (count($container->css) > 0) {
                 $html .= ' ' . $container->cssToHtml();
-            } $html .= '>' . $nl;
+            }
+            $html .= '>' . $nl;
             if (is_object($container->widget) == true && is_subclass_of($container->widget, "Sinevia\Html\Element")) {
                 $html .= $container->widget->toXhtml($compressed, ($level + 3)) . $nl;
             } else {

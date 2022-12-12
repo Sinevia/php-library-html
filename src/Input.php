@@ -18,7 +18,8 @@ namespace Sinevia\Html;
 //============================= START OF CLASS ==============================//
 // CLASS: Input                                                           //
 //===========================================================================//
-class Input extends Element {
+class Input extends Element
+{
 
     const TYPE_FILE = 'file';
     const TYPE_HIDDEN = 'hidden';
@@ -28,27 +29,31 @@ class Input extends Element {
      * The constructor of this LightPanel.
      * @construct
      */
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
     }
 
-    public function setType($type) {
-        if (is_string($type) == false AND is_numeric($type) == false) {
+    public function setType($type)
+    {
+        if (is_string($type) == false and is_numeric($type) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setType($type): Parameter $type MUST BE of type String - ' . (is_object($type) ? get_class($type) : gettype($type)) . ' given!');
         }
         $this->setAttribute("type", $type);
         return $this;
     }
 
-    public function setValue($text) {
-        if (is_string($text) == false AND is_numeric($text) == false AND is_null($text) == false) {
+    public function setValue($text)
+    {
+        if (is_string($text) == false and is_numeric($text) == false and is_null($text) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setValue($text): Parameter $text MUST BE of type String - ' . (is_object($text) ? get_class($text) : gettype($text)) . ' given!');
         }
         $this->setAttribute("value", $text);
         return $this;
     }
 
-    public function setPlaceHolder($text) {
+    public function setPlaceHolder($text)
+    {
         if (is_string($text) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setPlaceHolder($text): Parameter $text MUST BE of type String - ' . (is_object($text) ? get_class($text) : gettype($text)) . ' given!');
         }
@@ -62,7 +67,8 @@ class Input extends Element {
      * @param Integer the level of nesting of this widget
      * @return String the HTML representation of this widget
      */
-    function toHtml($compressed = true, $level = 0) {
+    function toHtml($compressed = true, $level = 0)
+    {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -82,7 +88,8 @@ class Input extends Element {
      * @param Integer the level of nesting of this widget
      * @return String the XHTML representation of this widget
      */
-    function toXhtml($compressed = true, $level = 0) {
+    function toXhtml($compressed = true, $level = 0)
+    {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -95,7 +102,6 @@ class Input extends Element {
         $html = $indent . '<input' . $this->attributesToHtml() . $this->cssToHtml() . '/>' . $nl;
         return $html;
     }
-
 }
 
 //===========================================================================//

@@ -19,11 +19,13 @@ namespace Sinevia\Html;
  * </code>
  * @package GUI
  */
-class Box extends BorderLayout {
+class Box extends BorderLayout
+{
 
     private $content_layout = false;
 
-    final public function __construct() {
+    final public function __construct()
+    {
         parent::__construct();
         $this->setWidth(0);
         $this->setHeight(1);
@@ -31,17 +33,20 @@ class Box extends BorderLayout {
         parent::addChild($this->content_layout, "center");
     }
 
-    function addChild($widget, $position = null, $halign = "center", $valign = "middle") {
+    function addChild($widget, $position = null, $halign = "center", $valign = "middle")
+    {
         $this->content_layout->addChild($widget, null, $halign, $valign);
         return $this;
     }
 
-    function getTitle() {
+    function getTitle()
+    {
         return $this->getProperty('title');
     }
 
-    function setTitle($title = null, $halign = "center", $valign = "middle") {
-        if (is_string($title) == false && ($title instanceof S_Label) == false) {
+    function setTitle($title = null, $halign = "center", $valign = "middle")
+    {
+        if (is_string($title) == false && ($title instanceof Label) == false) {
             trigger_error('ERROR: In class <b>' . get_class($this) . '</b> in method <b>title($title)</b>: Parameter <b>$title</b> MUST BE of type String or S_Label - <b style="color:red">' . gettype($title) . '</b> given!', E_USER_ERROR);
         }
         if (is_string($title)) {
@@ -54,7 +59,8 @@ class Box extends BorderLayout {
         return $this;
     }
 
-    function setSkin($skin) {
+    function setSkin($skin)
+    {
         if (is_string($skin) == false && ($skin instanceof Skin) == false) {
             trigger_error('ERROR: In class <b>' . get_class($this) . '</b> in method <b>title($title)</b>: Parameter <b>$title</b> MUST BE of type String or S_Skin - <b style="color:red">' . gettype($skin) . '</b> given!', E_USER_ERROR);
         }
@@ -65,11 +71,9 @@ class Box extends BorderLayout {
                 $skin_name = $skin . "_Skin";
                 $skin = new $skin_name();
                 $skin->apply($this);
-            } catch (Exception $e) {
-                
+            } catch (\Exception $e) {
             }
         }
         return $this;
     }
-
 }

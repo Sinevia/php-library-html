@@ -33,13 +33,15 @@ namespace Sinevia\Html;
  * $button = Ui::Button()->setText("Submit")->setType("submit");
  * </code>
  */
-class Button extends Element {
+class Button extends Element
+{
 
     /**
      * The constructor of Button.
      * @construct
      */
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->setFlow("horizontal");
         $this->setType("button");
@@ -50,7 +52,8 @@ class Button extends Element {
      * @return String The text as String (null, if not set)
      * @access public
      */
-    function getText() {
+    function getText()
+    {
         return $this->getProperty('text');
     }
 
@@ -61,7 +64,8 @@ class Button extends Element {
      * @throws \InvalidArgumentException if parameter $text is not is not String
      * @access public
      */
-    function setText($text) {
+    function setText($text)
+    {
         if (is_string($text) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method text($text): Parameter $text MUST BE of type String - ' . (is_object($text) ? get_class($text) : gettype($text)) . ' given!');
         }
@@ -76,7 +80,8 @@ class Button extends Element {
      * on the webpage.
      * @return String The title as String (null, if not set)
      */
-    public function getTitle() {
+    public function getTitle()
+    {
         return $this->getAttribute("title");
     }
 
@@ -89,7 +94,8 @@ class Button extends Element {
      * @return Button the instance of this Button
      * @throws \InvalidArgumentException if parameter $title is not is not String
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         if (is_string($title) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method title($title): Parameter $title MUST BE of type String - ' . (is_object($title) ? get_class($title) : gettype($title)) . ' given!');
         }
@@ -102,18 +108,20 @@ class Button extends Element {
      * @throws IllegalArgumentException if parameter $text is not is not String
      * @access public
      */
-    function getValue() {
-        return $this->getAttribute();
+    function getValue()
+    {
+        return $this->getAttribute("value");
     }
 
     /** Sets the value attribute of this Button.
      * @return mixed The text as String (null, if not set) or the instance of this Button
-     * @throws IllegalArgumentException if parameter $text is not is not String
+     * @throws InvalidArgumentException if parameter $text is not is not String
      * @access public
      */
-    function setValue($value = null) {
+    function setValue($value = null)
+    {
         if (is_string($value) == false) {
-            throw new IllegalArgumentException('In class ' . get_class($this) . ' in method value($value): Parameter $value MUST BE of type String - ' . (is_object($value) ? get_class($value) : gettype($value)) . ' given!');
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method value($value): Parameter $value MUST BE of type String - ' . (is_object($value) ? get_class($value) : gettype($value)) . ' given!');
         }
         $this->setAttribute('value', $value);
         return $this;
@@ -127,7 +135,8 @@ class Button extends Element {
      * @throws IllegalArgumentException if parameter $flow is not is not String ("horizontal", "vertical")
      * @return String The flow as String
      */
-    function getFlow() {
+    function getFlow()
+    {
         return $this->getProperty("flow");
     }
 
@@ -137,16 +146,17 @@ class Button extends Element {
      * flow will place the image left of the text, while the vertical flow
      * will place the text under the image.
      * @param String "horizontal" or "vertical"
-     * @throws IllegalArgumentException if parameter $flow is not is not String ("horizontal", "vertical")
+     * @throws InvalidArgumentException if parameter $flow is not is not String ("horizontal", "vertical")
      * @return mixed The flow as String or the instance of this Button
      */
-    function setFlow($flow) {
+    function setFlow($flow)
+    {
         $allowed_params = array("horizontal", "vertical");
         if (is_string($flow) == false) {
-            throw new IllegalArgumentException('In class ' . get_class($this) . ' in method flow($flow): Parameter $flow MUST BE of type String - ' . (is_object($flow) ? get_class($flow) : gettype($flow)) . ' given!');
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method flow($flow): Parameter $flow MUST BE of type String - ' . (is_object($flow) ? get_class($flow) : gettype($flow)) . ' given!');
         }
         if (in_array($flow, $allowed_params) == false) {
-            throw new IllegalArgumentException('In class ' . get_class($this) . ' in method flow($flow): Parameter $flow MUST BE of type String ("horizontal","vertical") - "' . ($flow) . '" given!');
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method flow($flow): Parameter $flow MUST BE of type String ("horizontal","vertical") - "' . ($flow) . '" given!');
         }
         $this->setProperty("flow", $flow);
         return $this;
@@ -159,7 +169,8 @@ class Button extends Element {
      * @throws IllegalArgumentException if parameter $image is not of type S_Image
      * @access public
      */
-    function getImage($image = null) {
+    function getImage($image = null)
+    {
         return $this->getProperty('image');
     }
 
@@ -170,9 +181,10 @@ class Button extends Element {
      * @throws IllegalArgumentException if parameter $image is not of type S_Image
      * @access public
      */
-    function setImage($image) {
-        if (($image instanceof S_Image) == false) {
-            throw new IllegalArgumentException('In class ' . get_class($this) . ' in method image($image): Parameter $image MUST BE of type S_Image - ' . (is_object($image) ? get_class($image) : gettype($image)) . ' given!');
+    function setImage($image)
+    {
+        if (($image instanceof Image) == false) {
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method image($image): Parameter $image MUST BE of type S_Image - ' . (is_object($image) ? get_class($image) : gettype($image)) . ' given!');
         }
         $this->setProperty('image', $image);
         return $this;
@@ -192,7 +204,8 @@ class Button extends Element {
      * @throws IllegalArgumentException if parameter $type is not String ("submit", "reset", "button")
      * @access public
      */
-    function getType($type = null) {
+    function getType($type = null)
+    {
         return $this->getAttribute('type');
     }
 
@@ -208,15 +221,16 @@ class Button extends Element {
      * </ul>
      * @param String the type (i.e "submit", "reset", "button")
      * @return Button an instance of this Button
-     * @throws IllegalArgumentException if parameter $type is not String ("submit", "reset", "button")
+     * @throws InvalidArgumentException if parameter $type is not String ("submit", "reset", "button")
      */
-    public function setType($type) {
+    public function setType($type)
+    {
         if (is_string($type) == false) {
-            throw new IllegalArgumentException('In class ' . get_class($this) . ' in method type($type): Parameter $type MUST BE of type String - ' . (is_object($type) ? get_class($type) : gettype($type)) . ' given!');
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method type($type): Parameter $type MUST BE of type String - ' . (is_object($type) ? get_class($type) : gettype($type)) . ' given!');
         }
         $allowed_params = array("button", "submit", "reset");
         if (in_array($type, $allowed_params) == false) {
-            throw new IllegalArgumentException('In class ' . get_class($this) . ' in method type($type): Parameter $type MUST BE of type String ("button","submit","reset") - "' . ($type) . '" given!');
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method type($type): Parameter $type MUST BE of type String ("button","submit","reset") - "' . ($type) . '" given!');
         }
         $this->setAttribute('type', $type);
         return $this;
@@ -228,7 +242,8 @@ class Button extends Element {
      * @param Integer the level of nesting of this Widget
      * @return String the HTML representation of this widget
      */
-    function toHtml($compressed = true, $level = 0) {
+    function toHtml($compressed = true, $level = 0)
+    {
         $html = $this->toXhtml($compressed, $level);
         return $html;
     }
@@ -239,7 +254,8 @@ class Button extends Element {
      * @param Integer the level of nesting of this Widget
      * @return String the XHTML representation of this widget
      */
-    function toXhtml($compressed = true, $level = 0) {
+    function toXhtml($compressed = true, $level = 0)
+    {
         if ($compressed == false) {
             $nl = "\n";
             $tab = "    ";
@@ -257,7 +273,7 @@ class Button extends Element {
             }
             if (is_object($this->getText()) && is_subclass_of($this->getText(), "Element")) {
                 $html .= $this->getText()->toXhtml($compressed, $level);
-            } elseif ($this->text() !== null) {
+            } elseif ($this->getText() !== null) {
                 $html .= ' <span>' . $this->getText() . '</span>';
             }
             $html .= $nl;
@@ -276,7 +292,6 @@ class Button extends Element {
         $html .= $indent . '</button>';
         return $html;
     }
-
 }
 
 //===========================================================================//

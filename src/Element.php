@@ -23,7 +23,8 @@ namespace Sinevia\Html;
  * $object = new Element();
  * </code>
  */
-class Element {
+class Element
+{
     use ElementJavaScriptTrait;
 
     protected $attributes = array(); // Attributes
@@ -40,7 +41,8 @@ class Element {
      * The constructor of Element
      * @construct
      */
-    function __construct() {
+    function __construct()
+    {
         $this->uid = uniqid(); // Setting auto unique id
     }
 
@@ -48,7 +50,8 @@ class Element {
      * @return void
      * @access public
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->children = null;
         $this->parent = null;
     }
@@ -58,7 +61,8 @@ class Element {
      * @return String the Element attributes
      * @access private
      */
-    protected function attributesToHtml() {
+    protected function attributesToHtml()
+    {
         $this->attributes['id'] = $this->id;
 
         if (count($this->attributes) < 1) {
@@ -81,7 +85,8 @@ class Element {
      * @param int the position of the child Element
      * @access public
      */
-    function addChild($element, $position = null) {
+    function addChild($element, $position = null)
+    {
         if ($this->layout != null) {
             $element->parent = $this->layout->addChild($element, $position);
         } else {
@@ -89,10 +94,10 @@ class Element {
             if ($element instanceof Element) {
                 $element->parent = $this;
                 // Passing CSS and JS up to the Webpage Tag
-// 				$this->js_files = array_merge($this->js_files,$element->js_files);
-// 				$this->jss = array_merge($this->js,$element->js);
-// 				$this->css_files = array_merge($this->css_files,$element->css_files);
-// 				$this->css = array_merge($this->css,$element->css);
+                // 				$this->js_files = array_merge($this->js_files,$element->js_files);
+                // 				$this->jss = array_merge($this->js,$element->js);
+                // 				$this->css_files = array_merge($this->css_files,$element->css_files);
+                // 				$this->css = array_merge($this->css,$element->css);
             }
         }
         return $this;
@@ -102,7 +107,8 @@ class Element {
      * Returns, whether this Element has children
      * @access public
      */
-    function hasChildren() {
+    function hasChildren()
+    {
         return count($this->children) ? true : false;
     }
 
@@ -110,14 +116,16 @@ class Element {
      * Returns, whether this Element has parent
      * @access public
      */
-    function hasParent() {
+    function hasParent()
+    {
         return is_null($this->parent) ? false : true;
     }
 
     /** Returns the children of this Element.
      * @access public
      */
-    function getChildren() {
+    function getChildren()
+    {
         return $this->children;
     }
 
@@ -125,7 +133,8 @@ class Element {
      * Traverses and returns the children with all sub children
      * @return Element[]
      */
-    function childrenTraverse() {
+    function childrenTraverse()
+    {
         $children = array();
         foreach ($this->children as $child) {
             $children[] = $child;
@@ -140,7 +149,8 @@ class Element {
      * Converts the Element styles to (X)HTML
      * @return String the Element style
      */
-    protected function cssToHtml() {
+    protected function cssToHtml()
+    {
         if (count($this->css) < 1) {
             return '';
         }
@@ -158,7 +168,8 @@ class Element {
      * @param Object $object
      * @return bool
      */
-    function equals($object) {
+    function equals($object)
+    {
         return ($this === $object);
     }
 
@@ -167,7 +178,8 @@ class Element {
      * @return mixed The display style as String (null, if not set)
      * @access public
      */
-    function getDisplay() {
+    function getDisplay()
+    {
         return $this->getProperty("display");
     }
 
@@ -180,7 +192,8 @@ class Element {
      * @param String the name of the attribute
      * @access public
      */
-    function getAttribute($attribute) {
+    function getAttribute($attribute)
+    {
         if (isset($this->attributes[$attribute])) {
             return $this->attributes[$attribute];
         }
@@ -195,7 +208,8 @@ class Element {
      * @return string | null The opacity as String (null, if not set)
      * @access public
      */
-    function getOpacity() {
+    function getOpacity()
+    {
         return $this->getCss('opacity');
     }
 
@@ -207,7 +221,8 @@ class Element {
      * @return string | null The background color as String (null, if not set)
      * @access public
      */
-    function getBackground() {
+    function getBackground()
+    {
         return $this->getProperty('background');
     }
 
@@ -220,7 +235,8 @@ class Element {
      * @return $this The background image URL as String (null, if not set)
      * @access public
      */
-    function getBackgroundImage() {
+    function getBackgroundImage()
+    {
         return $this->getProperty('background_image');
     }
 
@@ -236,11 +252,13 @@ class Element {
      * @return string The background border as String (null, if not set) or an instance of this Widget
      * @access public
      */
-    function getBorder() {
+    function getBorder()
+    {
         return $this->getCss('border');
     }
 
-    function getClass() {
+    function getClass()
+    {
         return $this->attributes["class"];
     }
 
@@ -252,7 +270,8 @@ class Element {
      * @return string The css style as String (null, if not set)
      * @param String the name of the css
      */
-    public function getCss($style) {
+    public function getCss($style)
+    {
         if (isset($this->css[$style])) {
             return $this->css[$style];
         }
@@ -266,7 +285,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $halign is not String
      * @access public
      */
-    function getFloat() {
+    function getFloat()
+    {
         return $this->getProperty('float');
     }
 
@@ -279,7 +299,8 @@ class Element {
      * @return mixed The Font as Font (null, if not set) or an instance of this Widget
      * @access public
      */
-    function getFont() {
+    function getFont()
+    {
         return $this->getProperty('font');
     }
 
@@ -290,7 +311,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $color is not String
      * @access public
      */
-    function getForeground() {
+    function getForeground()
+    {
         return $this->getProperty('foreground');
     }
 
@@ -305,11 +327,13 @@ class Element {
      * @throws InvalidArgumentException if parameter $halign is not String
      * @access public
      */
-    function getHalign() {
+    function getHalign()
+    {
         return $this->getProperty('halign');
     }
 
-    function getHeight() {
+    function getHeight()
+    {
         return $this->getAttribute('height');
     }
 
@@ -318,7 +342,8 @@ class Element {
      * @return string the id of the object
      * @access public
      */
-    function getId() {
+    function getId()
+    {
         if ($this->id == null) {
             $this->id = 'id_' . uniqid();
         }
@@ -331,7 +356,8 @@ class Element {
      * @return string The name as String (null, if not set)
      * @access public
      */
-    function getName() {
+    function getName()
+    {
         return $this->getAttribute('name');
     }
 
@@ -342,7 +368,8 @@ class Element {
      * @return string The onblur action as String (null, if not set)
      * @access public
      */
-    function getOnBlur() {
+    function getOnBlur()
+    {
         return $this->getAttribute("onblur");
     }
 
@@ -353,7 +380,8 @@ class Element {
      * @return string The onclick action as String (null, if not set)
      * @access public
      */
-    function getOnClick() {
+    function getOnClick()
+    {
         return $this->getAttribute("onclick");
     }
 
@@ -364,7 +392,8 @@ class Element {
      * @return string The ondblclick action as String (null, if not set)
      * @access public
      */
-    function getOnDoubleClick() {
+    function getOnDoubleClick()
+    {
         return $this->getAttribute("ondblclick");
     }
 
@@ -375,7 +404,8 @@ class Element {
      * @return mixed The onfocus action as String (null, if not set)
      * @access public
      */
-    function getOnFocus() {
+    function getOnFocus()
+    {
         return $this->getAttribute("onfocus");
     }
 
@@ -384,7 +414,8 @@ class Element {
      * @return mixed The onkeydown action as String (null, if not set)
      * @access public
      */
-    function getOnKeyDown() {
+    function getOnKeyDown()
+    {
         return $this->getAttribute("onkeydown");
     }
 
@@ -393,7 +424,8 @@ class Element {
      * @return mixed The onkeypress action as String (null, if not set)
      * @access public
      */
-    function getOnKeyPress() {
+    function getOnKeyPress()
+    {
         return $this->getAttribute("onkeypress");
     }
 
@@ -402,7 +434,8 @@ class Element {
      * @return mixed The onkeyup action as String (null, if not set)
      * @access public
      */
-    function getOnKeyUp() {
+    function getOnKeyUp()
+    {
         return $this->getAttribute("onkeyup");
     }
 
@@ -411,7 +444,8 @@ class Element {
      * @return mixed The onmousedown action as String (null, if not set)
      * @access public
      */
-    function getOnMouseDown() {
+    function getOnMouseDown()
+    {
         return $this->getAttribute("onmousedown");
     }
 
@@ -420,7 +454,8 @@ class Element {
      * @return mixed The onmousemove action as String (null, if not set)
      * @access public
      */
-    function getOnMouseMove() {
+    function getOnMouseMove()
+    {
         return $this->getAttribute("onmousemove");
     }
 
@@ -429,7 +464,8 @@ class Element {
      * @return mixed The onmouseout action as String (null, if not set)
      * @access public
      */
-    function getOnMouseOut() {
+    function getOnMouseOut()
+    {
         return $this->getAttribute("onmouseout");
     }
 
@@ -438,7 +474,8 @@ class Element {
      * @return mixed The onmouseover action as String (null, if not set)
      * @access public
      */
-    function getOnMouseOver() {
+    function getOnMouseOver()
+    {
         return $this->getAttribute("onmouseover");
     }
 
@@ -447,7 +484,8 @@ class Element {
      * @return mixed The onmouseup action as String (null, if not set)
      * @access public
      */
-    function getOnMouseUp() {
+    function getOnMouseUp()
+    {
         return $this->getAttribute("onmouseup");
     }
 
@@ -456,7 +494,8 @@ class Element {
      * @return string The padding as String (null, if not set)
      * @access public
      */
-    function getPadding() {
+    function getPadding()
+    {
         return $this->getCss('padding');
     }
 
@@ -465,7 +504,8 @@ class Element {
      * @return string The margin as String (null, if not set)
      * @access public
      */
-    function getMargin() {
+    function getMargin()
+    {
         return $this->getCss('margin');
     }
 
@@ -476,7 +516,8 @@ class Element {
      * @throws \InvalidArgumentException if parameter $property is not String
      * @access protected
      */
-    protected function getProperty($property) {
+    protected function getProperty($property)
+    {
         if (is_string($property) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method property($property,$value): Parameter $property MUST BE of type String - ' . (is_object($property) ? get_class($property) : gettype($property)) . ' given!');
         }
@@ -492,12 +533,14 @@ class Element {
      * @param String horizontal alignment (top,bottom or middle)
      * @return Element an instance of this object
      */
-    function getValign() {
+    function getValign()
+    {
         $this->getCss("vertical-align");
         return $this;
     }
 
-    function getWidth() {
+    function getWidth()
+    {
         return $this->getAttribute('width');
     }
 
@@ -511,7 +554,8 @@ class Element {
      * @throws \InvalidArgumentException if parameter $attribute or $value is not String
      * @access public
      */
-    function setAttribute($attribute, $value) {
+    function setAttribute($attribute, $value)
+    {
         if (is_string($attribute) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setAttribute($attribute,$value): Parameter $attribute MUST BE of type String. ' . (is_object($attribute) ? get_class($attribute) : gettype($attribute)) . ' given!');
         }
@@ -539,7 +583,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $color is not String
      * @access public
      */
-    function setBackground($color) {
+    function setBackground($color)
+    {
         if (is_string($color) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>background($color)</b>: Parameter <b>$color</b> MUST BE of type String - <b style="color:red">' . (is_object($color) ? get_class($color) : gettype($color)) . '</b> given!');
         }
@@ -570,7 +615,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $image is not String, or $repeat is not Boolean or String ("yes","y","no","n")
      * @access public
      */
-    function setBackgroundImage($image = null, $repeat = "y", $axis = "both") {
+    function setBackgroundImage($image = null, $repeat = "y", $axis = "both")
+    {
         if (is_string($image) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>background_image($image,$repeat)</b>: Parameter <b>$image</b> MUST BE of type String - <b style="color:red">' . (is_object($image) ? get_class($image) : gettype($image)) . '</b> given!');
         }
@@ -612,7 +658,8 @@ class Element {
      * @return mixed an instance of this Widget
      * @access public
      */
-    function setBorder($width = null, $style = "solid", $color = "black") {
+    function setBorder($width = null, $style = "solid", $color = "black")
+    {
         if (is_numeric($width) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>border($width,$style,$color)</b>: Parameter <b>$width</b> MUST BE of type String - <b style="color:red">' . (is_object($width) ? get_class($width) : gettype($width)) . '</b> given!');
         }
@@ -626,7 +673,8 @@ class Element {
         return $this;
     }
 
-    function addClass($classname = null) {
+    function addClass($classname = null)
+    {
         if (is_string($classname) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method classname($classname): Parameter $classname MUST BE of type String - ' . (is_object($classname) ? get_class($classname) : gettype($classname)) . ' given!');
         }
@@ -636,7 +684,8 @@ class Element {
         return $this;
     }
 
-    function setClass($classname = null) {
+    function setClass($classname = null)
+    {
         if (is_string($classname) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method classname($classname): Parameter $classname MUST BE of type String - ' . (is_object($classname) ? get_class($classname) : gettype($classname)) . ' given!');
         }
@@ -654,7 +703,8 @@ class Element {
      * @throws \InvalidArgumentException if parameter $style or $value is not String
      * @access public
      */
-    function setCss($name, $value) {
+    function setCss($name, $value)
+    {
         if (is_string($name) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method set_css($name,$value): Parameter $name MUST BE of type String' . (is_object($$name) ? get_class($name) : gettype($name)) . ' given!');
         }
@@ -670,7 +720,8 @@ class Element {
      * @param string $css_file
      * @return $this  An instance of this Element
      */
-    function setCssFile($css_file) {
+    function setCssFile($css_file)
+    {
         $this->css_files[] = $css_file;
         return $this;
     }
@@ -681,7 +732,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $display is not String
      * @access public
      */
-    function setDisplay($display) {
+    function setDisplay($display)
+    {
         if (is_string($display) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>display($display)</b>: Parameter <b>$display</b> MUST BE of type String - <b style="color:red">' . (is_object($display) ? get_class($display) : gettype($display)) . '</b> given!');
         }
@@ -705,7 +757,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $halign is not String
      * @access public
      */
-    function setFloat($float = null) {
+    function setFloat($float = null)
+    {
         if (is_string($float) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>float($float)</b>: Parameter <b>$float</b> MUST BE of type String - <b style="color:red">' . (is_object($float) ? get_class($float) : gettype($float)) . '</b> given!');
         }
@@ -731,7 +784,8 @@ class Element {
      * @return mixed The Font as Font (null, if not set) or an instance of this Widget
      * @access public
      */
-    function setFont($font = null) {
+    function setFont($font = null)
+    {
         if (($font instanceof Font) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>font($font)</b>: Parameter <b>$fonte</b> MUST BE of type S_Font - <b style="color:red">' . (is_object($font) ? get_class($font) : gettype($font)) . '</b> given!');
         }
@@ -783,7 +837,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $color is not String
      * @access public
      */
-    function setForeground($color = null) {
+    function setForeground($color = null)
+    {
         if (is_string($color) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>foreground($color)</b>: Parameter <b>$color</b> MUST BE of type String - <b style="color:red">' . (is_object($color) ? get_class($color) : gettype($color)) . '</b> given!');
         }
@@ -804,7 +859,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $halign is not String
      * @access public
      */
-    function setHalign($halign) {
+    function setHalign($halign)
+    {
         if (is_string($halign) == false)
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>halign($halign)</b>: Parameter <b>$halign</b> MUST BE of type String - <b style="color:red">' . (is_object($halign) ? get_class($halign) : gettype($halign)) . '</b> given!');
         // Checking position
@@ -817,7 +873,8 @@ class Element {
         return $this;
     }
 
-    function setHeight($value) {
+    function setHeight($value)
+    {
         $this->setAttribute('height', (string) $value);
         return $this;
     }
@@ -827,7 +884,8 @@ class Element {
      * @throws \InvalidArgumentException if id is not String
      * @access public
      */
-    function setId($id) {
+    function setId($id)
+    {
         if (is_string($id) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method id($id): Parameter $id MUST BE of type String - ' . gettype($id) . ' given!');
         }
@@ -845,7 +903,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $top,$left,$bottom or $right is not Integer
      * @access public
      */
-    function setMargin($top = 0, $left = 0, $bottom = 0, $right = 0) {
+    function setMargin($top = 0, $left = 0, $bottom = 0, $right = 0)
+    {
         if (is_int($top) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>margin($top,$left,$bottom,$right)</b>: Parameter <b>$top</b> MUST BE of type Integer - <b style="color:red">' . (is_object($top) ? get_class($top) : gettype($top)) . '</b> given!');
         }
@@ -872,7 +931,8 @@ class Element {
      * @param String the name of the Element
      * @throws \InvalidArgumentException if parameter $name is not String
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         if (is_string($name) == false)
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method name($name): Parameter $name MUST BE of type String - ' . (is_object($name) ? get_class($name) : gettype($name)) . ' given!');
         $this->setAttribute('name', $name);
@@ -890,7 +950,8 @@ class Element {
      * @return mixed The opacity as String (null, if not set) or an instance of this Widget
      * @access public
      */
-    function setOpacity($opacity) {
+    function setOpacity($opacity)
+    {
         if (is_int($opacity) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>opacity($opacity)</b>: Parameter <b>$opacity</b> MUST BE of type Integer - <b style="color:red">' . (is_object($opacity) ? get_class($opacity) : gettype($opacity)) . '</b> given!');
         }
@@ -918,7 +979,8 @@ class Element {
      * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnBlur($action = null) {
+    function setOnBlur($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnBlur($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -935,9 +997,10 @@ class Element {
      * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnClick($action = null) {
-//if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
-//if(($action instanceof S_Ajax)==true)$action = $action->to_js();
+    function setOnClick($action = null)
+    {
+        //if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
+        //if(($action instanceof S_Ajax)==true)$action = $action->to_js();
         if ($this->getAttribute("onclick") == null) {
             $this->setAttribute("onclick", htmlentities($action));
         } else {
@@ -959,9 +1022,10 @@ class Element {
      * @throws \InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnDoubleClick($action = null) {
-//if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
-//if(($action instanceof S_Ajax)==true)$action = $action->to_js();
+    function setOnDoubleClick($action = null)
+    {
+        //if(is_string($action)==false && ($action instanceof S_Ajax)==false)throw new \InvalidArgumentException('In class '.get_class($this).' in method on_click($action): Parameter $action MUST BE of type String or S_Ajax - '.(is_object($action)?get_class($action):gettype($action)).' given!');
+        //if(($action instanceof S_Ajax)==true)$action = $action->to_js();
         if ($this->getAttribute("ondblclick") == null) {
             $this->setAttribute("ondblclick", htmlentities($action));
         } else {
@@ -974,7 +1038,8 @@ class Element {
         return $this;
     }
 
-    private function setOnEvent($eventname, $action) {
+    private function setOnEvent($eventname, $action)
+    {
         if (($action instanceof Ajax) == true) {
             $action = $action->to_js();
         }
@@ -1001,7 +1066,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnFocus($action = null) {
+    function setOnFocus($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnFocus($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1017,7 +1083,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnKeyDown($action = null) {
+    function setOnKeyDown($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1033,7 +1100,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnKeyPress($action = null) {
+    function setOnKeyPress($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyPress($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1041,7 +1109,8 @@ class Element {
         return $this->setOnEvent("onkeypress", $action);
     }
 
-    /** Sets or retrieves the onkeyup Javascript event to this widget.
+    /** 
+     * Sets or retrieves the onkeyup Javascript event to this widget.
      * The attached action must be valid JavaScript code, which will be evaluated
      * when the event is triggered.
      * @param String the JavaScript action
@@ -1049,7 +1118,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnKeyUp($action = null) {
+    function setOnKeyUp($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1066,7 +1136,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnMouseDown($action = null) {
+    function setOnMouseDown($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1082,7 +1153,8 @@ class Element {
      * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnMouseMove($action = null) {
+    function setOnMouseMove($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseMove($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1098,7 +1170,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnMouseOut($action = null) {
+    function setOnMouseOut($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_out($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1115,7 +1188,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnMouseOver($action = null) {
+    function setOnMouseOver($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_over($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1132,7 +1206,8 @@ class Element {
      * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
-    function setOnMouseUp($action = null) {
+    function setOnMouseUp($action = null)
+    {
         if (is_string($action) == false && ($action instanceof Ajax) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
@@ -1150,7 +1225,8 @@ class Element {
      * @throws InvalidArgumentException if parameter $top,$left,$bottom or $right is not Integer
      * @access public
      */
-    function setPadding($top = 0, $left = 0, $bottom = 0, $right = 0) {
+    function setPadding($top = 0, $left = 0, $bottom = 0, $right = 0)
+    {
         if (is_int($top) == false) {
             throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($top,$left,$bottom,$right)</b>: Parameter <b>$top</b> MUST BE of type Integer - <b style="color:red">' . (is_object($top) ? get_class($top) : gettype($top)) . '</b> given!');
         }
@@ -1167,7 +1243,8 @@ class Element {
         return $this;
     }
 
-    function setParent($parent) {
+    function setParent($parent)
+    {
         $parent->addChild($this);
         return $this;
     }
@@ -1182,7 +1259,8 @@ class Element {
      * @throws \InvalidArgumentException if parameter $property is not String
      * @access protected
      */
-    protected function setProperty($property, $value) {
+    protected function setProperty($property, $value)
+    {
         if (is_string($property) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method property($property,$value): Parameter $property MUST BE of type String - ' . (is_object($property) ? get_class($property) : gettype($property)) . ' given!');
         }
@@ -1196,7 +1274,8 @@ class Element {
      * @return $this
      * @throws \InvalidArgumentException
      */
-    function setStyle($style) {
+    function setStyle($style)
+    {
         if (is_string($style) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method css_style($style): Parameter $style MUST BE of type String - ' . (is_object($style) ? get_class($style) : gettype($style)) . ' given!');
         }
@@ -1219,7 +1298,8 @@ class Element {
      * @param String horizontal alignment (top,bottom or middle)
      * @return LightPanel an instance of this object
      */
-    function setValign($valign) {
+    function setValign($valign)
+    {
         $allowed_params = array("top", "middle", "bottom");
 
         if (in_array($valign, $allowed_params) == false) {
@@ -1231,7 +1311,8 @@ class Element {
         return $this;
     }
 
-    function setWidth($value) {
+    function setWidth($value)
+    {
         $this->setAttribute('width', (string) $value);
         return $this;
     }
@@ -1242,7 +1323,8 @@ class Element {
      * @param Integer the level of nesting of this Element
      * @return String the (X)HTML representation of this Element
      */
-    function toHtml($compressed = true, $level = 0) {
+    function toHtml($compressed = true, $level = 0)
+    {
         if (strtolower(get_class($this)) == "Element") {
             throw new \RuntimeException("Class " . get_class($this) . " method toHtml() can not be used drectly. Use its subclasses instead!", E_USER_ERROR);
         } else {
@@ -1256,7 +1338,8 @@ class Element {
      * @param Integer the level of nesting of this Element
      * @return String the (X)HTML representation of this Element
      */
-    function toXhtml($compressed = true, $level = 0) {
+    function toXhtml($compressed = true, $level = 0)
+    {
         if (strtolower(get_class($this)) == "Element") {
             throw new \RuntimeException('In class ' . get_class($this) . ' method toXhtml() cannot be used directly. Use its subclasses instead!');
         } else {
@@ -1264,15 +1347,16 @@ class Element {
         }
     }
 
-    protected function _toHtml($tag, $compressed = true, $level = 0){
-        $nl = ($compressed)? "" : "\n";
-        $tab = ($compressed)? "" : "    ";
-        $indent = ($compressed)? "" : str_pad("", ($level * 4));
+    protected function _toHtml($tag, $compressed = true, $level = 0)
+    {
+        $nl = ($compressed) ? "" : "\n";
+        $tab = ($compressed) ? "" : "    ";
+        $indent = ($compressed) ? "" : str_pad("", ($level * 4));
 
         $html = "";
 
-        if($tag != ""){
-            $html .= $indent . '<'.$tag.  $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
+        if ($tag != "") {
+            $html .= $indent . '<' . $tag .  $this->attributesToHtml() . $this->cssToHtml() . '>' . $nl;
         }
 
         foreach ($this->children as $child) {
@@ -1286,13 +1370,12 @@ class Element {
             }
         }
 
-        if($tag != ""){
-            $html .= $indent . '</'.$tag.'>';
+        if ($tag != "") {
+            $html .= $indent . '</' . $tag . '>';
         }
 
         $html .= $this->_get_js();
-        
+
         return $html;
     }
-
 }

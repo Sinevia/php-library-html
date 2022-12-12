@@ -457,6 +457,7 @@ class Ajax
                 $keys[] = $key . ':"' . $value . '"';
             }
         }
+        
         $jquery = "$.ajax({" . implode(",", $keys) . "})";
         //return "alert('".$jquery."')";
         return $jquery;
