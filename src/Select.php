@@ -47,7 +47,7 @@ class Select extends Element {
         if (is_array($items)) {
             $this->addItems($items);
         } else {
-            s_throw_error("The Items For The Select Widget Must Be An Array!");
+            throw new \InvalidArgumentException("The Items For The Select Widget Must Be An Array!");
         }
     }
 
@@ -73,7 +73,7 @@ class Select extends Element {
      */
     function addItems($items) {
         if (is_array($items) == false) {
-            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>addItems($action)</b>: Parameter <b>$items</b> MUST BE of type Array - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>addItems($action)</b>: Parameter <b>$items</b> MUST BE of type Array - <b style="color:red">' . gettype($$items) . '</b> given!', E_USER_ERROR);
         }
         foreach ($items as $key => $value) {
             $this->addItem($key, $value);
@@ -163,7 +163,7 @@ class Select extends Element {
      */
     function setMultiple($isMultiple) {
         if (is_bool($isMultiple) == false) {
-            throw new RuntimeException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>setMultiple($multiple)</b>: Parameter <b>$isMultiple</b> MUST BE of type Boolean - <b style="color:red">' . gettype($isMultiple) . '</b> given!');
+            throw new \InvalidArgumentException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>setMultiple($multiple)</b>: Parameter <b>$isMultiple</b> MUST BE of type Boolean - <b style="color:red">' . gettype($isMultiple) . '</b> given!');
         }
 
         if ($isMultiple == true) {
@@ -186,7 +186,7 @@ class Select extends Element {
      */
     function setOnChange($action) {
         if (is_string($action) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>onChange($action)</b>: Parameter <b>$action</b> MUST BE of type String - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>onChange($action)</b>: Parameter <b>$action</b> MUST BE of type String - <b style="color:red">' . gettype($action) . '</b> given!', E_USER_ERROR);
         }
 
         if ($this->getAttribute("onchange") == null) {
@@ -208,7 +208,7 @@ class Select extends Element {
      */
     function setRows($numberOfRows) {
         if (is_int($numberOfRows) == false) {
-            throw new RuntimeException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>rows($rows)</b>: Parameter <b>$rows</b> MUST BE of type Integer - <b style="color:red">' . gettype($numberOfRows) . '</b> given!');
+            throw new \InvalidArgumentException('ERROR: In class <b>' . get_class($this) . '</b> in method <b>rows($rows)</b>: Parameter <b>$rows</b> MUST BE of type Integer - <b style="color:red">' . gettype($numberOfRows) . '</b> given!');
         }
 
         $this->setAttribute("size", (string) $numberOfRows);

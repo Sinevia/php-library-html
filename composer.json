@@ -23,5 +23,8 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit"
+    },
+    "require": {
+        "sinevia/php-library-utils": "^3.8"
     }
 }

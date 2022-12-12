@@ -656,7 +656,7 @@ class Element {
      */
     function setCss($name, $value) {
         if (is_string($name) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method set_css($name,$value): Parameter $name MUST BE of type String' . (is_object($attribute) ? get_class($name) : gettype($name)) . ' given!');
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method set_css($name,$value): Parameter $name MUST BE of type String' . (is_object($$name) ? get_class($name) : gettype($name)) . ' given!');
         }
         if (is_string($value) == false) {
             throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method set_css($name,$value): Parameter $value MUST BE of type String' . (is_object($value) ? get_class($value) : gettype($value)) . ' given!');
@@ -892,7 +892,7 @@ class Element {
      */
     function setOpacity($opacity) {
         if (is_int($opacity) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>opacity($opacity)</b>: Parameter <b>$opacity</b> MUST BE of type Integer - <b style="color:red">' . (is_object($opacity) ? get_class($opacity) : gettype($opacity)) . '</b> given!');
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>opacity($opacity)</b>: Parameter <b>$opacity</b> MUST BE of type Integer - <b style="color:red">' . (is_object($opacity) ? get_class($opacity) : gettype($opacity)) . '</b> given!');
         }
 
         $this->setCss('filter', 'alpha(opacity=' . $opacity . ')');
@@ -919,8 +919,8 @@ class Element {
      * @access public
      */
     function setOnBlur($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnBlur($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnBlur($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onblur", $action);
@@ -975,7 +975,7 @@ class Element {
     }
 
     private function setOnEvent($eventname, $action) {
-        if (($action instanceof S_Ajax) == true) {
+        if (($action instanceof Ajax) == true) {
             $action = $action->to_js();
         }
 
@@ -998,12 +998,12 @@ class Element {
      * when the event is triggered.
      * @param String the JavaScript action
      * @return mixed The an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
     function setOnFocus($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnFocus($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnFocus($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onfocus", $action);
@@ -1014,12 +1014,12 @@ class Element {
      * when the event is triggered.
      * @param String the JavaScript action
      * @return mixed The onkeydown action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
     function setOnKeyDown($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onkeydown", $action);
@@ -1030,12 +1030,12 @@ class Element {
      * when the event is triggered.
      * @param String the JavaScript action
      * @return mixed The onkeypress action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
     function setOnKeyPress($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyPress($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyPress($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onkeypress", $action);
@@ -1046,12 +1046,12 @@ class Element {
      * when the event is triggered.
      * @param String the JavaScript action
      * @return mixed The onkeyup action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
     function setOnKeyUp($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnKeyUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onkeyup", $action);
@@ -1063,12 +1063,12 @@ class Element {
      * when the event is triggered.
      * @param String the JavaScript action
      * @return mixed The onmousedown action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
     function setOnMouseDown($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseDown($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onmousedown", $action);
@@ -1083,8 +1083,8 @@ class Element {
      * @access public
      */
     function setOnMouseMove($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseMove($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseMove($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onmousemove", $action);
@@ -1095,12 +1095,12 @@ class Element {
      * when the event is triggered.
      * @param String the JavaScript action
      * @return mixed The on_mouse_out action as String (null, if not set) or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
     function setOnMouseOut($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_out($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_out($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onmouseout", $action);
@@ -1112,12 +1112,12 @@ class Element {
      * when the event is triggered.
      * @param String the JavaScript action
      * @return mixed The an instance of this Widget
-     * @throws IllegalArgumentException if parameter $action is not String or S_Ajax
+     * @throws InvalidArgumentException if parameter $action is not String or S_Ajax
      * @access public
      */
     function setOnMouseOver($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_over($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>on_mouse_over($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onmouseover", $action);
@@ -1133,8 +1133,8 @@ class Element {
      * @access public
      */
     function setOnMouseUp($action = null) {
-        if (is_string($action) == false && ($action instanceof S_Ajax) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or S_Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
+        if (is_string($action) == false && ($action instanceof Ajax) == false) {
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>setOnMouseUp($action)</b>: Parameter <b>$action</b> MUST BE of type String or Ajax - <b style="color:red">' . (is_object($action) ? get_class($action) : gettype($action)) . '</b> given!');
         }
 
         return $this->setOnEvent("onmouseup", $action);

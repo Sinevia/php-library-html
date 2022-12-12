@@ -34,7 +34,7 @@ class Input extends Element {
 
     public function setType($type) {
         if (is_string($type) == false AND is_numeric($type) == false) {
-            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setType($type): Parameter $type MUST BE of type String - ' . (is_object($text) ? get_class($type) : gettype($type)) . ' given!');
+            throw new \InvalidArgumentException('In class ' . get_class($this) . ' in method setType($type): Parameter $type MUST BE of type String - ' . (is_object($type) ? get_class($type) : gettype($type)) . ' given!');
         }
         $this->setAttribute("type", $type);
         return $this;

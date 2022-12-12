@@ -151,12 +151,12 @@ class BorderLayout extends Element {
     /**
      * Sets the padding of the cells of this Layout.
      * @param Integer the cells' padding
-     * @throws IllegalArgumentException if parameter $padding is not Integer
+     * @throws InvalidArgumentException if parameter $padding is not Integer
      * @return mixed the spacing (as Integer) or an instance of this widget
      */
     function setPadding($padding = null, $left = 0, $bottom = 0, $right = 0) {
         if (is_int($padding) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($padding)</b>: Parameter <b>$padding</b> MUST BE of type Integer - <b>' . (is_object($padding) ? get_class($padding) : gettype($padding)) . '</b> given!');
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>padding($padding)</b>: Parameter <b>$padding</b> MUST BE of type Integer - <b>' . (is_object($padding) ? get_class($padding) : gettype($padding)) . '</b> given!');
         }
         $this->setAttribute("cellpadding", (string) $padding);
         return $this;
@@ -165,12 +165,12 @@ class BorderLayout extends Element {
     /**
      * Sets the spacing between the cells of this Layout.
      * @param Integer the spacing between cells
-     * @throws IllegalArgumentException if parameter $spacing is not Integer
+     * @throws InvalidArgumentException if parameter $spacing is not Integer
      * @return mixed the spacing (as Integer) or an instance of this widget
      */
     function setSpacing($spacing) {
         if (is_int($spacing) == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>spacing($spacing)</b>: Parameter <b>$spacing</b> MUST BE of type Integer - <b>' . (is_object($spacing) ? get_class($spacing) : gettype($spacing)) . '</b> given!');
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>spacing($spacing)</b>: Parameter <b>$spacing</b> MUST BE of type Integer - <b>' . (is_object($spacing) ? get_class($spacing) : gettype($spacing)) . '</b> given!');
         }
         $this->setAttribute("cellspacing", (string) $spacing);
         return $this;
@@ -213,13 +213,13 @@ class BorderLayout extends Element {
 
     /** Sets the width of this BorderLayout.
      * @return mixed The width in pixels or percentage or an instance of this Widget
-     * @throws IllegalArgumentException if parameter $width is not Integer or String(i.e 100%)
+     * @throws InvalidArgumentException if parameter $width is not Integer or String(i.e 100%)
      * @tested true
      * @access public
      */
     function setWidth($width) {
         if ($width !== null && is_numeric($width) == false && (is_string($width) == true && substr($width, -1) == "%") == false) {
-            throw new IllegalArgumentException('In class <b>' . get_class($this) . '</b> in method <b>width($width)</b>: Parameter <b>$width</b> MUST BE of type Integer or String(i.e "100%") - <b style="color:red">' . (is_object($width) ? get_class($width) : gettype($width)) . '</b> given!');
+            throw new \InvalidArgumentException('In class <b>' . get_class($this) . '</b> in method <b>width($width)</b>: Parameter <b>$width</b> MUST BE of type Integer or String(i.e "100%") - <b style="color:red">' . (is_object($width) ? get_class($width) : gettype($width)) . '</b> given!');
         }
         if (substr($width, -1) == "%") {
             $this->setAttribute('width', $width);
